@@ -18,9 +18,7 @@ class Viewer:
         if not fps:
             fps = self.video.get(cv2.CAP_PROP_FPS)
 
-        frames = map(self._pretty_frame, self.frames)
-
-        for frame in frames:
+        for frame in list(map(self._pretty_frame, self.frames)):
             print(frame)
             time.sleep(1/fps)
             os.system('cls')
