@@ -31,10 +31,10 @@ class Video:
         self.width = self.video.get(3)  # float
         self.height = self.video.get(4) # float
 
-        if resize_amount > 1:
-            resize_amount /= 100
+        if resize > 1:
+            resize /= 100
 
-        self.resize_amount = resize_amount
+        self.resize = resize
         self.w_stretch = w_stretch
 
         if type(gradient) == int:
@@ -58,7 +58,7 @@ class Video:
             if not succ:
                 break
 
-            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount*self.w_stretch), int(img.shape[0]*self.resize_amount),))
+            img = cv2.resize(img, (int(img.shape[1]*self.resize*self.w_stretch), int(img.shape[0]*self.resize),))
 
             self.frames.append([list(map(self.asciify_pixel, row)) for row in img])
 
