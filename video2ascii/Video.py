@@ -12,6 +12,10 @@ class FileNotFound(Exception):
     def __str__(self):
         return self.msg
 
+gradients = [
+    ' `~+=*\\!0G@'
+]
+
 
 class Video:
     def __init__(self, filename: str, *, resize_amount: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0):
