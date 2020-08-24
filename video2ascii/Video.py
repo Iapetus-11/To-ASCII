@@ -11,20 +11,19 @@ class FileNotFound(Exception):
 
 
 class Video:
-    def __init__(self, filename: str, *, scaled_amount: int = 100, scaled_dim: str = 'w', w_stretch: float = 1, gradient: typing.Union[int, str] = 0):
+    def __init__(self, filename: str, *, resize_amount: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
         self.filename = filename
 
         self.video = cv2.VideoCapture(filename)
+        self.frames = []
 
-        if scaled_dim.lower() in ('w', 'width',):
-            pass
-        elif scaled_dim.lower() in ('h', 'height'):
-            pass
-        else:
-            raise ValueError('The scaled_dim kwarg must be of the value "w", "width", "h", or "height".')
+        if resize_amount > 1:
+            resize_amount /= 100
+
+        self.resize_amount = resize_amount
 
         if type(gradient) == int:
             if 0 > gradient > (len(gradients) - 1):
@@ -37,14 +36,15 @@ class Video:
     def asciify_pixel(p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
-    def asciify_frame(frame):
-        return map(asciify_pixel, frame)
-
     def convert():
         while True:
-            succ, image = self.video.read()
+            succ, img = self.video.read()
+
+            img = cv2.resize(self.video, (int(img.shape[1]*resize_amount), int(img.video.shape[0]*resize_amount),))
 
             if not succ:
                 break
 
-            for
+            self.frames.append([map(asciify_pixel, row) for row in img])
+
+        return Viewer(self.__dict__)
