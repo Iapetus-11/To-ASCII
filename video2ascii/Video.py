@@ -13,7 +13,9 @@ class FileNotFound(Exception):
         return self.msg
 
 gradients = [
-    ' `~+=!*/\\0G@'
+    ' `~+=!*/\\0G@',
+    ' `~+*/\\!G@',
+    ' `-~+\\!G@'
 ]
 
 
