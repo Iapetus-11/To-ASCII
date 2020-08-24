@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="video2ascii",
-    version="1.0.0",
+    version="1.0.1",
     author="Iapetus-11",
     description="A package which goes through a video frame by frame and converts it into ascii art!",
     long_description=long_description,
