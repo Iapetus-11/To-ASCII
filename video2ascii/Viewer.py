@@ -1,3 +1,4 @@
+import pygame
 import time
 import os
 import cv2
@@ -22,3 +23,8 @@ class Viewer:
             print(frame)
             time.sleep(1/fps)
             os.system('cls')
+
+    def view(self, *, fps=None):
+        fps = self.fps
+
+        disp = pygame.display.set_mode(())

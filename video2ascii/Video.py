@@ -26,6 +26,10 @@ class Video:
 
         self.video = cv2.VideoCapture(filename)
         self.frames = []
+        self.fps = self.video.get(cv2.CAP_PROP_FPS)
+
+        self.width  = self.video.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)  # float
+        self.height = self.video.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT) # float
 
         if resize_amount > 1:
             resize_amount /= 100
