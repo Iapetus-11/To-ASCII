@@ -7,12 +7,7 @@ class Viewer:
         self.__dict__ = meta
 
     def _pretty_frame(self, frame):
-        body = ''
-
-        for row in frame:
-            body += f'\n{"".join(row)}'
-
-        return body
+        return ''.join([f'\n{"".join(row)}' for row in frame])
 
     def view(self, *, fps: float=None):
         if not fps:
