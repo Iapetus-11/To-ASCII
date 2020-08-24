@@ -43,11 +43,11 @@ class Video:
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
-    def convert(self, ):
+    def convert(self):
         while True:
             succ, img = self.video.read()
 
-            img = cv2.resize(self.video, (int(img.shape[1]*resize_amount), int(img.video.shape[0]*resize_amount),))
+            img = cv2.resize(self.video, (int(img.shape[1]*self.resize_amount), int(img.video.shape[0]*self.resize_amount),))
 
             if not succ:
                 break
