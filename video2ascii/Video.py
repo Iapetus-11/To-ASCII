@@ -47,10 +47,10 @@ class Video:
         while True:
             succ, img = self.video.read()
 
-            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount), int(img.shape[0]*self.resize_amount),))
-
             if not succ:
                 break
+
+            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount), int(img.shape[0]*self.resize_amount),))
 
             self.frames.append([map(self.asciify_pixel, row) for row in img])
 
