@@ -1,5 +1,6 @@
 import cv2
 import os
+import typing
 
 from Viewer import Viewer
 
