@@ -17,9 +17,10 @@ converted.classic_view()  # play the converted frames
 ```
 
 ## Documentation
-`video2ascii.`**`Video(*, filename='filename', resize_amount=1, w_stretch=1, gradient=Union[int, str], verbose=False)`**
-### Kwargs:
+video2ascii.**Video(**\*, **filename**=*'filename'*, **resize_amount**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **verbose**=*False*)
+Note: only keyword args are accepted.
 * `filename` *the name of the file/video which is to be opened and processed*
 * `resize_amount` *the amount/1 which the video dimensions are multiplied by*
 * `w_stretch` *the amount that the width dimension is multiplied by*
 * `gradient` *either an integer from the preset gradients, or a custom gradient Example: '#$a=+-., '*
+* `verbose` *whether or not to show extra information*
