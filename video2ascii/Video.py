@@ -18,7 +18,7 @@ gradients = [
 
 
 class Video:
-    def __init__(self, filename: str, *, resize_amount: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0):
+    def __init__(self, filename: str, *, resize_amount: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
@@ -41,10 +41,13 @@ class Video:
         else:
             self.gradient = gradient
 
+        self.verbose = verbose
+
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
     def convert(self):
+        if self.verbose: print('Converting...')
         while True:
             succ, img = self.video.read()
 
@@ -55,4 +58,6 @@ class Video:
 
             self.frames.append([[list(map(self.asciify_pixel, row))] for row in img])
 
+
+        if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
