@@ -37,6 +37,12 @@ class Video:
 
         self.verbose = verbose
 
+        if self.verbose:
+            print(f'Dimensions: {self.width}x{self.height}')
+            print(f'Resize Factor: {self.resize}')
+            print(f'Scaled Dims: {self.width*self.resize*self.w_stretch}x{self.height*self.resize}')
+            print(f'Gradient: \'{self.gradient}\'')
+
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
