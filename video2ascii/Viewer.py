@@ -27,14 +27,14 @@ class Viewer:
         fps = self.fps
 
         pygame.init()
-        
+
         disp = pygame.display.set_mode((int(self.width), int(self.height),))
         pygame.display.set_caption('video2ascii')
 
         white = (255, 255, 255,)
         black = (0, 0, 0,)
 
-        font = pygame.font.Font('consolas', 5)
+        font = pygame.font.Font('CONSOLA.TTF', 5)
         for frame in map(self._pretty_frame, self.frames):
             disp.fill(black)
 
