@@ -47,7 +47,7 @@ class Video:
         while True:
             succ, img = self.video.read()
 
-            img = cv2.resize(self.video, (int(img.shape[1]*self.resize_amount), int(img.shape[0]*self.resize_amount),))
+            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount), int(img.shape[0]*self.resize_amount),))
 
             if not succ:
                 break
