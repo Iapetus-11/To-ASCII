@@ -5,13 +5,16 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="video2ascii",
-    version="1.1.1",
+    version="1.1.2",
     author="Iapetus-11",
     description="A package which goes through a video frame by frame and converts it into ascii art!",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Iapetus-11/video2ascii",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'opencv-python'
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
