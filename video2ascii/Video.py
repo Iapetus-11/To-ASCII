@@ -53,6 +53,6 @@ class Video:
 
             img = cv2.resize(img, (int(img.shape[1]*self.resize_amount*self.w_stretch), int(img.shape[0]*self.resize_amount),))
 
-            self.frames.append([list(map(self.asciify_pixel, row)) for row in img])
+            self.frames.append([[self.asciify_pixel(p) for p in row] for row in img])
 
         return Viewer(self.__dict__)
