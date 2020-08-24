@@ -21,4 +21,5 @@ class Viewer:
         for frame in map(self._pretty_frame, self.frames):
             print(frame)
             time.sleep(1/fps)
-            os.system('cls')
+            #os.system('cls')
+            print('\n'*50)
