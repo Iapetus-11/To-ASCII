@@ -13,7 +13,7 @@ from video2ascii import Video
 
 v = Video('my_file.mp4', resize_amount=.3, w_stretch=2, verbose=True)
 converted = v.convert()  # convert the frames into ascii
-converted.classic_view()  # play the converted frames
+converted.view()  # play the converted frames in the console
 ```
 
 ## Documentation
