@@ -38,7 +38,7 @@ class Viewer:
         for frame in map(self._pretty_frame, self.frames):
             disp.fill(black)
 
-            text = font.render(frame, white, black)
+            text = font.render(frame, True, white, black)
 
             textRect = text.get_rect()
             textRect.center = (self.width // 2, self.height // 2,)
