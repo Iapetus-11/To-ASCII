@@ -52,6 +52,6 @@ class Video:
             if not succ:
                 break
 
-            self.frames.append([map(asciify_pixel, row) for row in img])
+            self.frames.append([map(self.asciify_pixel, row) for row in img])
 
         return Viewer(self.__dict__)
