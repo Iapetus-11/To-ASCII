@@ -1,22 +1,10 @@
+import typing
 import cv2
 import os
-import typing
 
+from .Exceptions import *
+from .Constants import *
 from .Viewer import Viewer
-
-class FileNotFound(Exception):
-    def __init__(self, file: str, msg: str = 'File \'{0}\' not found!'):
-        self.file = file
-        self.msg = msg.format(file)
-
-    def __str__(self):
-        return self.msg
-
-gradients = [
-    ' `~+=!*/\\0G@',
-    ' `~+*/\\!G@',
-    ' `-~+\\!G@'
-]
 
 
 class Video:
