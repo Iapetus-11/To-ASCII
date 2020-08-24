@@ -2,7 +2,7 @@ import cv2
 import os
 import typing
 
-from Viewer import Viewer
+from .Viewer import Viewer
 
 class FileNotFound(Exception):
     def __init__(self, file: str, msg: str = 'File \'{0}\' not found!'):
