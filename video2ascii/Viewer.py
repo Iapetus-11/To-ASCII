@@ -3,8 +3,6 @@ import time
 import os
 import cv2
 
-pygame.init()
-
 class Viewer:
     def __init__(self, meta):
         self.__dict__ = meta
@@ -28,6 +26,8 @@ class Viewer:
     def view(self, *, fps=None):
         fps = self.fps
 
+        pygame.init()
+        
         disp = pygame.display.set_mode((int(self.width), int(self.height),))
         pygame.display.set_caption('video2ascii')
 
