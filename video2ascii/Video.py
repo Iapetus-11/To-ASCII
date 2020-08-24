@@ -18,7 +18,7 @@ gradients = [
 
 
 class Video:
-    def __init__(self, filename: str, *, resize_amount: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
+    def __init__(self, filename: str, *, resize: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
