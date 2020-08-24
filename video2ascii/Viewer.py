@@ -3,6 +3,7 @@ import time
 import os
 import cv2
 
+pygame.init()
 
 class Viewer:
     def __init__(self, meta):
@@ -27,4 +28,26 @@ class Viewer:
     def view(self, *, fps=None):
         fps = self.fps
 
-        disp = pygame.display.set_mode(())
+        disp = pygame.display.set_mode((self.width, self.height,))
+        pygame.display.set_caption('video2ascii')
+
+        white = (255, 255, 255,)
+        black = (0, 0, 0,)
+
+        font = pygame.font.Font('consolas', 5)
+        for frame in map(self._pretty_frame, self.frames):
+            disp.fill(black)
+
+            text = font.render(frame, white, black)
+
+            textRect = text.get_rect()
+            textRect.center = (self.width // 2, self.height // 2,)
+
+            disp.blit(text, textRect)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+            pygame.display.update()
