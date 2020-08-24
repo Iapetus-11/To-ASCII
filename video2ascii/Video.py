@@ -31,6 +31,7 @@ class Video:
             resize_amount /= 100
 
         self.resize_amount = resize_amount
+        self.w_stretch = w_stretch
 
         if type(gradient) == int:
             if 0 > gradient > (len(gradients) - 1):
@@ -50,7 +51,7 @@ class Video:
             if not succ:
                 break
 
-            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount), int(img.shape[0]*self.resize_amount),))
+            img = cv2.resize(img, (int(img.shape[1]*self.resize_amount*self.w_stretch), int(img.shape[0]*self.resize_amount),))
 
             self.frames.append([map(self.asciify_pixel, row) for row in img])
 
