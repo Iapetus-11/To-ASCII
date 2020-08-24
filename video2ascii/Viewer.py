@@ -28,7 +28,7 @@ class Viewer:
     def view(self, *, fps=None):
         fps = self.fps
 
-        disp = pygame.display.set_mode((self.width, self.height,))
+        disp = pygame.display.set_mode((int(self.width), int(self.height),))
         pygame.display.set_caption('video2ascii')
 
         white = (255, 255, 255,)
