@@ -15,7 +15,7 @@ class Viewer:
         return body
 
     def classic_view(self, *, fps=None):
-        frames = map(_pretty_frame, self.frames)
+        frames = map(self._pretty_frame, self.frames)
         fps = self.video.get(cv2.CAP_PROP_FPS)
 
         for frame in frames:
