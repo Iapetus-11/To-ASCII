@@ -55,7 +55,7 @@ class Video:
             if not succ:
                 break
 
-            img = cv2.scale(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
             with concurrent.futures.ThreadPoolExecutor(max_workers=self.process_cap) as executor:
                 self.frames.append([executor.map(self.asciify_pixel, row) for row in img])
