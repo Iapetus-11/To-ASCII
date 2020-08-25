@@ -60,7 +60,7 @@ class Video:
 
             img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-            self.frames.append(*map(self.asciify_row, img),)
+            self.frames.append(*map(self.asciify_row, img))
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
