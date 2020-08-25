@@ -1,7 +1,7 @@
 # video2ascii
 *Goes through a video frame by frame, and converts each frame into ascii art*
 
-[\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ)
+[\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
 
 * Works on most common video types
 * Works on gifs
