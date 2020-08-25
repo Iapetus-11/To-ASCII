@@ -13,7 +13,8 @@ setuptools.setup(
     url="https://github.com/Iapetus-11/video2ascii",
     packages=setuptools.find_packages(),
     install_requires=[
-        'opencv-python'
+        'opencv-python',
+        'opencv-contrib-python'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
