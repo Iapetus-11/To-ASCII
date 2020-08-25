@@ -52,17 +52,17 @@ class Video:
     def convert(self):
         if self.verbose: print('Converting...')
 
-        with Pool(self.processes) as pool:
-            while True:
-                succ, img = self.video.read()
+        while True:
+            succ, img = self.video.read()
 
-                if not succ:
-                    break
+            if not succ:
+                break
 
-                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                #self.frames.append([list(pool.map(self.asciify_pixel, row)) for row in img])
+            #self.frames.append([list(pool.map(self.asciify_pixel, row)) for row in img])
 
+            with Pool(self.processes) as pool:
                 for row in img:
                     self.frames.append(list(pool.map(self.asciify_pixel, row))
 
