@@ -1,4 +1,3 @@
-from multiprocessing import Pool
 import typing
 import cv2
 import os
@@ -9,7 +8,7 @@ from .Viewer import Viewer
 
 
 class Video:
-    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, processes: int = 4, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
@@ -37,34 +36,28 @@ class Video:
             self.gradient = gradient
 
         self.verbose = verbose
-        self.processes = processes
 
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
             print(f'scale Factor: {self.scale}')
             print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
             print(f'Gradient: \'{self.gradient}\'')
-            print(f'Processes: {self.processes}')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
     def convert(self):
         if self.verbose: print('Converting...')
-
         while True:
             succ, img = self.video.read()
 
             if not succ:
                 break
 
-            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+            img = cv2.scale(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-            #self.frames.append([list(pool.map(self.asciify_pixel, row)) for row in img])
+            self.frames.append([list(map(self.asciify_pixel, row)) for row in img])
 
-            with Pool(self.processes) as pool:
-                for row in img:
-                    self.frames.append(list(pool.map(self.asciify_pixel, row))
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
