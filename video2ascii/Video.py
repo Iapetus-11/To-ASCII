@@ -8,7 +8,7 @@ from .Viewer import Viewer
 
 
 class Video:
-    def __init__(self, filename: str, *, resize: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
@@ -21,10 +21,10 @@ class Video:
         self.width = self.video.get(3)  # float
         self.height = self.video.get(4) # float
 
-        if resize > 1:
-            resize /= 100
+        if scale > 1:
+            scale /= 100
 
-        self.resize = resize
+        self.scale = scale
         self.w_stretch = w_stretch
 
         if type(gradient) == int:
@@ -39,8 +39,8 @@ class Video:
 
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
-            print(f'Resize Factor: {self.resize}')
-            print(f'Scaled Dims: {self.width*self.resize*self.w_stretch}x{self.height*self.resize}')
+            print(f'scale Factor: {self.scale}')
+            print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
             print(f'Gradient: \'{self.gradient}\'')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
@@ -54,7 +54,7 @@ class Video:
             if not succ:
                 break
 
-            img = cv2.resize(img, (int(img.shape[1]*self.resize*self.w_stretch), int(img.shape[0]*self.resize),))
+            img = cv2.scale(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
             self.frames.append([list(map(self.asciify_pixel, row)) for row in img])
 
