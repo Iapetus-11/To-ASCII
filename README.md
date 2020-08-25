@@ -22,10 +22,10 @@ converted.view()  # play the converted frames in the console
 ```
 
 ## Documentation
-video2ascii.**Video**(**filename**=*'video.mp4'*, \*, **resize_amount**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **verbose**=*False*)
+video2ascii.**Video**(**filename**=*'video.mp4'*, \*, **scale**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **verbose**=*False*)
 Note: only filename can be a positional argument, the rest are kwargs.
 * `filename` *the name of the file/video which is to be opened and processed*
-* `resize` *the amount/1 which the video dimensions are multiplied by*
+* `scale` *the amount/1 which the video dimensions are multiplied by*
 * `w_stretch` *the amount that the width dimension is multiplied by*
 * `gradient` *either an integer from the preset gradients, or a custom gradient Example: '#$a=+-., '*
 * `verbose` *whether or not to show extra information*
