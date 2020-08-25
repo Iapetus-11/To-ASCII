@@ -1,3 +1,4 @@
+import concurrent.futures
 import typing
 import cv2
 import os
@@ -8,7 +9,7 @@ from .Viewer import Viewer
 
 
 class Video:
-    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, process_cap: int = 4, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
@@ -56,8 +57,8 @@ class Video:
 
             img = cv2.scale(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-            self.frames.append([list(map(self.asciify_pixel, row)) for row in img])
-
+            with ProcessPoolExecutor(max_workers=self.process_cap) as executor:
+                self.frames.append([executor.map(self.asciify_pixel, row) for row in img])
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
