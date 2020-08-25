@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="video2ascii",
-    version="1.4.1",
+    version="1.4.2",
     author="Iapetus-11",
     description="A package which goes through a video frame by frame and converts it into ascii art!",
     long_description=long_description,
@@ -13,8 +13,7 @@ setuptools.setup(
     url="https://github.com/Iapetus-11/video2ascii",
     packages=setuptools.find_packages(),
     install_requires=[
-        'opencv-python',
-        'opencv-contrib-python'
+        'opencv-python'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

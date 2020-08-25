@@ -59,7 +59,7 @@ class Video:
                 if not succ:
                     break
 
-                img = cv2.scale(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
                 self.frames.append([list(pool.map(self.asciify_pixel, row)) for row in img])
 
