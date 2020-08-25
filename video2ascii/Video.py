@@ -49,9 +49,10 @@ class Video:
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=self.process_cap) as executor:
-        def convert(self):
-            if self.verbose: print('Converting...')
+    def convert(self):
+        if self.verbose: print('Converting...')
+        
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.process_cap) as executor:
             while True:
                 succ, img = self.video.read()
 
