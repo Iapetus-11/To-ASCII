@@ -10,6 +10,11 @@ class Viewer:
         self.pretty_frames = list(map(self._pretty_frame, self.frames))
         self.end_frame = len(self.pretty_frames)
 
+        if os.name == 'nt':
+            self.clear_cmd = 'cls'
+        else:
+            self.clear_cmd = 'clear'
+
     def _pretty_frame(self, frame):
         return ''.join([f'\n{"".join(row)}' for row in frame])
 
@@ -20,7 +25,7 @@ class Viewer:
         for frame in self.pretty_frames:
             print(frame)
             time.sleep(1/fps)
-            os.system('cls')
+            os.system(self.clear_cmd)
 
     def __iter__(self):
         return self
