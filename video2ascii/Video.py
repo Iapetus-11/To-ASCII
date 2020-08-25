@@ -14,8 +14,6 @@ class Video:
 
         self.filename = filename
 
-        self.process_cap = process_cap
-
         self.video = cv2.VideoCapture(filename)
         self.frames = []
         self.fps = self.video.get(cv2.CAP_PROP_FPS)
