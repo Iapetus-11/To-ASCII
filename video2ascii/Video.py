@@ -53,7 +53,7 @@ class Video:
         return executor.map(self.asciify_pixel, row)
 
     def asciify_img(self, img, executor):
-        return executor.map(self.asciify_row, img, executor)
+        return executor.map(self.asciify_row, (img, executor,))
 
     def convert(self):
         if self.verbose: print('Converting...')
@@ -68,4 +68,4 @@ class Video:
 
                 img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                self.frames.append(executor.map(self.asciify_img, img, executor))
+                self.frames.append(executor.map(self.asciify_img, (img, executor,)))
