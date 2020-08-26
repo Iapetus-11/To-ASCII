@@ -46,6 +46,12 @@ class Video:
         self.current_frame = 0
         self.end_frame = len(self.pretty_frames)
 
+        # determine what the clear command will be when viewing the final pretty frames
+        if os.name == 'nt':
+            self.clear_cmd = 'cls'
+        else:
+            self.clear_cmd = 'clear'
+
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
             print(f'scale Factor: {self.scale}')
