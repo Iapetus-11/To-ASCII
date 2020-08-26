@@ -61,7 +61,7 @@ class Video:
 
         futures = []
 
-        executor = concurrent.futures.ProcessPoolExecutor
+        executor = concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers)
 
         while True:
             succ, img = self.video.read()
