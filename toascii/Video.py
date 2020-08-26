@@ -72,7 +72,7 @@ class Video:
         return ''.join([f'\n{"".join(row)}' for row in frame])
 
     def prettify_frames(self):  # return a flattened map of prettified frames
-        self.pretty_frames = (*map(self.pretty_frame, self.frames),)
+        self.pretty_frames = (*map(self.prettify_frame, self.frames),)
 
     def convert(self):  # function which is called to populate the list of converted frames (self.frames)
         if self.verbose: print('Converting...')
