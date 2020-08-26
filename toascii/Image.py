@@ -65,6 +65,8 @@ class Image:
         self.ascii_image = self.asciify_img(img)  # asciify image
         self.pretty_image = self.prettify(self.ascii_image)  # prettify image
 
+        if self.verbose: print('Done.')
+
         return self  # return self for fluent chaining
 
     def view(self):
