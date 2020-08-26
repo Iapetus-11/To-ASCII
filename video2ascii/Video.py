@@ -1,4 +1,4 @@
-import multiprocessing_on_dill as mp
+import multiprocessing as mp
 import typing
 import cv2
 import os
