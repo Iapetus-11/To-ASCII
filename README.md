@@ -23,6 +23,15 @@ converted = v.convert()  # convert the frames into ascii
 converted.view()  # play the converted frames in the console
 ```
 
+### Image:
+```
+from toascii import Image
+
+img = Image('my_image.png', resize=.1, verbose=True)  # load the image
+img.convert()  # convert the image to ascii
+img.view()  # view the final asciified image
+```
+
 ## Documentation
 toascii.**Video**(**filename**=*'video.mp4'*, \*, **scale**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **max_workers=*60*, **verbose**=*False*)
 Note: only filename can be a positional argument, the rest are kwargs.
