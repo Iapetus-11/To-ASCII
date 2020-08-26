@@ -67,8 +67,5 @@ class Video:
 
                 self.frames.append((executor.map(self.asciify_row, (executor, img,)),))
 
-        for future in concurrent.futures.as_completed(futures):
-            self.frames.append(future.result())
-
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
