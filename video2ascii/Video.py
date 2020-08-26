@@ -54,7 +54,7 @@ class Video:
         return (executor.map(self.asciify_pixel, row),)
 
     def asciify_img(self, executor, img):
-        return (executor.map(self.asciify_row, (executor, img,))
+        return (executor.map(self.asciify_row, (executor, img,)),)
 
     def convert(self):
         if self.verbose: print('Converting...')
