@@ -7,7 +7,7 @@ from .Constants import *
 
 
 class Video:
-    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):  # check to make sure file actually exists
             raise FileNotFound(filename)  # FileNotFound is from .Exceptions
 
