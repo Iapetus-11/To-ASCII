@@ -1,4 +1,4 @@
-import multiprocessing as mp
+import pathos.multiprocessing as mp
 import typing
 import cv2
 import os
