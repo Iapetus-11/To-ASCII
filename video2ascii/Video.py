@@ -54,8 +54,13 @@ class Video:
     def asciify_row(self, row):
         return (*map(self.asciify_pixel, row),)
 
+    def asciify_img(self, img):
+        return (*executor.map(self.asciify_row, img),)
+
     def convert(self):
         if self.verbose: print('Converting...')
+
+        futures = []
 
         with concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers) as executor:
             while True:
@@ -66,7 +71,10 @@ class Video:
 
                 img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                self.frames.append(executor.map(self.asciify_row, img))
+                futures.append(executor.submit(self.asciify_img, img))
+
+        for future in concurrent.futures.as_completed(futures):
+            self.frames.append(future.result())
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
