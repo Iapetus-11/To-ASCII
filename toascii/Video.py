@@ -43,7 +43,7 @@ class Video:
 
         self.verbose = verbose  # whether or not to do extra logging of information
 
-        # stuff for __iter__ to allow this to be used in a for loop to iterate through the frames
+        # for __iter__ to allow this to be used in a for loop to iterate through the frames
         self.current_frame = 0
         self.end_frame = len(self.pretty_frames)
 
