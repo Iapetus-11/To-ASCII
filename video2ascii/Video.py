@@ -48,6 +48,7 @@ class Video:
             print(f'Gradient: \'{self.gradient}\'')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
+        if type(p) == tuple: print(p)
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
     def asciify_row(self, row):
