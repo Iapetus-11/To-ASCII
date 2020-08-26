@@ -19,8 +19,8 @@ python3 -m pip install to-ascii
 from toascii import Video
 
 v = Video('my_file.mp4', resize=.1, verbose=True)
-converted = v.convert()  # convert the frames into ascii
-converted.view()  # play the converted frames in the console
+v.convert()  # convert the frames into ascii
+v.view()  # play the converted frames in the console
 ```
 
 ### Image:
