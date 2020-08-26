@@ -83,5 +83,7 @@ class Video:
 
         concurrent.futures.wait(futures)
 
+        print(len(self.frames))
+
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
