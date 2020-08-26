@@ -14,8 +14,8 @@ class Image:
         self.filename = filename
         self.image = cv2.imread(self.filename)  # load image
 
-        self.width = self.image[1]
-        self.height = self.image[0]
+        self.width = self.image.shape[1]
+        self.height = self.image.shape[0]
 
         self.ascii_image = None
         self.pretty_image = None
