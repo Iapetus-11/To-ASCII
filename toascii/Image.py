@@ -17,6 +17,9 @@ class Image:
         self.width = self.image[1]
         self.height = self.image[0]
 
+        self.ascii_image = None
+        self.pretty_image = None
+
         # if scale was given as a percentage (out of 100 rather than out of 1)
         if scale > 1:
             scale /= 100
@@ -53,3 +56,14 @@ class Image:
 
     def prettify(self, img):  # "render" the image in ascii so it can be print()ed later
         return ''.join([f'\n{"".join(row)}' for row in img])
+
+    def convert(self):
+        if self.verbose: print('Converting...')
+
+        # resize image to the scale specified in __init__
+        img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+
+        self.ascii_image = self.asciify_img(img)  # asciify image
+        self.pretty_image = self.prettify(img)  # prettify image
+
+        return self  # return self for fluent chaining
