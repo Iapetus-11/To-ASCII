@@ -15,7 +15,9 @@ class Video:
         self.filename = filename
         self.video = cv2.VideoCapture(filename)
 
+        # self.frames is a frames[frame[row[char, char,..], row[],..], frame[],..]
         self.frames = []  # converted frames (will be populated when convert() is called)
+        # self.pretty_frames is  frames[text, text, text,..]
         self.pretty_frames = None  # finished frames, "rendered" frames from self.frames
 
         self.fps = self.video.get(cv2.CAP_PROP_FPS)  # fps of the origin video
@@ -64,7 +66,7 @@ class Video:
     def prettify_frame(self, frame):  # "render" the frame so it can be print()ed later
         return ''.join([f'\n{"".join(row)}' for row in frame])
 
-    def prettify_frames(self):
+    def prettify_frames(self):  # return a flattened map of prettified frames
         self.pretty_frames = (*map(self.pretty_frame, self.frames),)
 
     def convert(self):  # function which is called to populate the list of converted frames
@@ -80,6 +82,7 @@ class Video:
 
             self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames
 
+        if self.verbose: print('Prettifying frames...')
         self.prettify_frames()
 
         if self.verbose: print('Done converting.')
