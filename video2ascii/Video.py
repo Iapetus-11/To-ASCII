@@ -1,3 +1,4 @@
+import concurrent.futures
 import typing
 import cv2
 import os
@@ -8,7 +9,7 @@ from .Viewer import Viewer
 
 
 class Video:
-    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, max_workers: int = 61, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
@@ -35,6 +36,9 @@ class Video:
         else:
             self.gradient = gradient
 
+        self.max_workers = max_workers
+        self.current_index = 0
+
         self.verbose = verbose
 
         if self.verbose:
@@ -49,18 +53,35 @@ class Video:
     def asciify_row(self, row):
         return (*map(self.asciify_pixel, row),)
 
+    def worker(self, img, index):
+        frame = (*map(self.asciify_row),)
+
+        while self.current_index != index:
+            pass
+
+        self.frames.append(frame)
+        self.current_index += 1
+
     def convert(self):
         if self.verbose: print('Converting...')
 
-        while True:
-            succ, img = self.video.read()
+        index = 0
+        futures = []
 
-            if not succ:
-                break
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers) as executor:
+            while True:
+                succ, img = self.video.read()
 
-            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+                if not succ:
+                    break
 
-            self.frames.append((*map(self.asciify_row, img),))
+                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+
+                futures.append(executor.submit(worker, img, index))
+
+                index += 1
+
+        concurrent.futures.wait(futures)
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
