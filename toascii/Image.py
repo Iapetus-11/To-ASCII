@@ -40,3 +40,16 @@ class Image:
         print(f'scale Factor: {self.scale}')
         print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
         print(f'Gradient: \'{self.gradient}\'')
+
+
+    def asciify_pixel(self, p):  # takes [r, g, b]
+        return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
+
+    def asciify_row(self, row):  # returns a flattened map (so a list)
+        return (*map(self.asciify_pixel, row),)  # use * (all/star operator) to "flatten" the map() instead of a lazy map
+
+    def asciify_img(self, img):  # returns a flattened map (so a list)
+        return (*map(self.asciify_row, img),)
+
+    def prettify(self, img):  # "render" the image in ascii so it can be print()ed later
+        return ''.join([f'\n{"".join(row)}' for row in img])
