@@ -63,7 +63,7 @@ class Image:
         img = cv2.resize(self.image, (int(self.width*self.scale*self.w_stretch), int(self.height*self.scale),))
 
         self.ascii_image = self.asciify_img(img)  # asciify image
-        self.pretty_image = self.prettify(img)  # prettify image
+        self.pretty_image = self.prettify(self.ascii_image)  # prettify image
 
         return self  # return self for fluent chaining
 
