@@ -87,6 +87,19 @@ class Video:
 
         return self  # returns self for fluent chaining
 
+    def view(self, *, fps: float=None):  # function to view all the frames in the console like a video
+        if fps is None:
+            spf = 1/self.fps
+        else:
+            spf = 1/fps
+
+        for frame in self.pretty_frames:
+            start = time.perf_counter()
+            print(frame)
+            diff = start - time.perf_counter()
+            time.sleep((diff + abs(diff)) / 2)
+            os.system(self.clear_cmd)
+
     def __iter__(self):  # allow iteration over the frames (like in a for loop)
         return self
 
