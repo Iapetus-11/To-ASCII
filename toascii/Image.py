@@ -38,12 +38,11 @@ class Image:
 
         self.verbose = verbose  # whether or not to do extra logging of information
 
-    if self.verbose:
-        print(f'Dimensions: {self.width}x{self.height}')
-        print(f'scale Factor: {self.scale}')
-        print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
-        print(f'Gradient: \'{self.gradient}\'')
-
+        if self.verbose:
+            print(f'Dimensions: {self.width}x{self.height}')
+            print(f'scale Factor: {self.scale}')
+            print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
+            print(f'Gradient: \'{self.gradient}\'')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
