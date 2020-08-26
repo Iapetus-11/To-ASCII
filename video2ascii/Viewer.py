@@ -20,11 +20,15 @@ class Viewer:
 
     def view(self, *, fps: float=None):
         if fps is None:
-            fps = self.video.get(cv2.CAP_PROP_FPS)
+            spf = 1/self.video.get(cv2.CAP_PROP_FPS)
+        else:
+            spf = 1/fps
 
         for frame in self.pretty_frames:
+            start = time.perf_counter()
             print(frame)
-            time.sleep(1/fps)
+            diff = start - time.perf_counter()
+            time.sleep(0 if diff > spf else diff)
             os.system(self.clear_cmd)
 
     def __iter__(self):
