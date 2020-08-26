@@ -61,19 +61,16 @@ class Video:
 
         futures = []
 
-        with Manager() as manager:
-            self.m_frames = manager.list()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+            while True:
+                succ, img = self.video.read()
 
-            with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-                while True:
-                    succ, img = self.video.read()
+                if not succ:
+                    break
 
-                    if not succ:
-                        break
+                img = list(cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),)))
 
-                    img = list(cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),)))
-
-                    futures.append(executor.submit(self.worker, img))
+                futures.append(executor.submit(self.worker, img))
 
         for future in concurrent.futures.as_completed(futures):
             self.frames.append(future.result())
