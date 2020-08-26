@@ -51,10 +51,10 @@ class Video:
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
     def asciify_row(self, executor, row):
-        return (executor.map(self.asciify_pixel, (self, row,)),)
+        return (map(self.asciify_pixel, row))
 
     def asciify_img(self, executor, img):
-        return (executor.map(self.asciify_row, (self, executor, img,)),)
+        return (map(self.asciify_row, (executor, img,)),)
 
     def convert(self):
         if self.verbose: print('Converting...')
@@ -68,7 +68,7 @@ class Video:
 
                 img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                self.frames.append((executor.map(self.asciify_img, (self, executor, img)),))
+                self.frames.append((map(self.asciify_img, (executor, img)),))
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
