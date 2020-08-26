@@ -57,7 +57,7 @@ class Video:
     def convert(self):
         if self.verbose: print('Converting...')
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers) as executor:
             while True:
                 succ, img = self.video.read()
 
