@@ -20,7 +20,7 @@ class Viewer:
 
     def view(self, *, fps: float=None):
         if fps is None:
-            spf = 1/self.video.get(cv2.CAP_PROP_FPS)
+            spf = 1/self.fps
         else:
             spf = 1/fps
 
