@@ -77,6 +77,7 @@ class Video:
                 procs.append(pool.apply_async(self.asciify_img, (img,)))
 
             pool.close()
+            pool.join()
 
             for proc in procs:
                 self.frames.append(proc.get())
