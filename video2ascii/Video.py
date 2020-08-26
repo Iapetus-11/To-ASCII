@@ -9,7 +9,7 @@ from .Viewer import Viewer
 
 
 class Video:
-    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, max_workers: int = 61, verbose=False):
+    def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, max_workers: int = 60, verbose=False):
         if not os.path.isfile(filename):
             raise FileNotFound(filename)
 
