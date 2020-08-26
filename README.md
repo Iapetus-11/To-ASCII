@@ -45,6 +45,7 @@ Note: only filename can be a positional argument, the rest are kwargs.
   * `convert` *actually converts the video into ascii*
   * `view` *view the converted video*
 
+
 toascii.**Image**(**filename**=*'image.png'*, \*, **scale**=*1*, **w_stretch**=*2*, **gradient**=*Union[int, str]*, **verbose**=*False*)
 Note: only filename can be a positional argument, the rest are kwargs.
 * Arguments:
