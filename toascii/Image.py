@@ -67,3 +67,6 @@ class Image:
         self.pretty_image = self.prettify(img)  # prettify image
 
         return self  # return self for fluent chaining
+
+    def view(self):
+        print(self.pretty_image)
