@@ -1,3 +1,4 @@
+from multiprocessing import Manager
 import concurrent.futures
 import typing
 import cv2
@@ -17,6 +18,7 @@ class Video:
 
         self.video = cv2.VideoCapture(filename)
         self.frames = []
+        self.m_frames = None
         self.fps = self.video.get(cv2.CAP_PROP_FPS)
 
         self.width = self.video.get(3)  # float
@@ -54,29 +56,30 @@ class Video:
         return (*map(self.asciify_pixel, row),)
 
     def worker(self, img):
-        (*map(self.asciify_row, img),)
+        self.m_frames.append((*map(self.asciify_row, img),))
 
     def convert(self):
         if self.verbose: print('Converting...')
 
         futures = []
 
-        executor = concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers)
+        with Manager() as manager:
+            self.m_frames = manager.list()
 
-        while True:
-            succ, img = self.video.read()
+            with concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers) as executor:
+                while True:
+                    succ, img = self.video.read()
 
-            if not succ:
-                break
+                    if not succ:
+                        break
 
-            img = list(cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),)))
+                    img = list(cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),)))
 
-            futures.append(executor.submit(self.worker, img))
+                    futures.append(executor.submit(self.worker, img))
 
         for future in concurrent.futures.as_completed(futures):
-            self.frames.append(future.result())
+            self.frames = self.m_frames
 
-        executor.shutdown()
         print(len(self.frames))
 
         if self.verbose: print('Done converting.')
