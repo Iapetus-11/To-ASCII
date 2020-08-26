@@ -74,7 +74,7 @@ class Video:
 
                 img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                procs.append(pool.apply_async(asciify_img, (img,)))
+                procs.append(pool.apply_async(self.asciify_img, (img,)))
 
             pool.close()
             pool.join()
