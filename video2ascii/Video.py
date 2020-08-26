@@ -16,18 +16,20 @@ class Video:
         self.filename = filename
 
         self.video = cv2.VideoCapture(filename)
-        self.frames = []
-        self.fps = self.video.get(cv2.CAP_PROP_FPS)
+        self.frames = []  # converted frames (will be populated when convert() is called)
+        self.fps = self.video.get(cv2.CAP_PROP_FPS)  # fps of the origin video
 
-        self.width = self.video.get(3)  # float
-        self.height = self.video.get(4) # float
+        self.width = self.video.get(3)  # float, width of the video
+        self.height = self.video.get(4)  # float, height of the video
 
+        # if scale was given as a percentage
         if scale > 1:
             scale /= 100
 
-        self.scale = scale
-        self.w_stretch = w_stretch
+        self.scale = scale  # scale which both dimensions are multiplied by
+        self.w_stretch = w_stretch  # scale which the width dimension is multiplied by (to account for text which is taller than it is wide)
 
+        # determine what the gradient / brightness to character mapping will be
         if type(gradient) == int:
             if 0 > gradient > (len(gradients) - 1):
                 raise IndexError(f'The gradient must either be a string or an integer between the value of 0 and {len(gradients)}.')
@@ -36,10 +38,9 @@ class Video:
         else:
             self.gradient = gradient
 
-        self.max_workers = max_workers
-        self.current_index = 0
+        self.max_workers = max_workers  # used for multiprocessing
 
-        self.verbose = verbose
+        self.verbose = verbose  # whether or not to do extra logging of information
 
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
@@ -51,23 +52,24 @@ class Video:
         if type(p) == tuple: print(p)
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
-    def asciify_row(self, row):
+    def asciify_row(self, row):  # returns a flattened map (so a list)
         return (*map(self.asciify_pixel, row),)
 
-    def asciify_img(self, img):
+    def asciify_img(self, img):  # returns a flattened map (so a list)
         return (*map(self.asciify_row, img),)
 
-    def convert(self):
+    def convert(self):  # function which is called to populate the list of converted frames
         if self.verbose: print('Converting...')
 
         while True:
-            succ, img = self.video.read()
+            succ, img = self.video.read()  # read frame from video
 
-            if not succ: break
+            if not succ: break  # if failed when reading
 
+            # resize image to scales specified in __init__
             img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-            self.frames.append(self.asciify_img(img))
+            self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames
 
         if self.verbose: print('Done converting.')
-        return Viewer(self.__dict__)
+        return Viewer(self.__dict__)  # create a new Viewer object with all the instance variables of this object
