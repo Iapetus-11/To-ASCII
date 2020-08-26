@@ -1,4 +1,4 @@
-import concurrent.futures
+import multiprocessing as mp
 import typing
 import cv2
 import os
@@ -55,27 +55,23 @@ class Video:
         return (*map(self.asciify_pixel, row),)
 
     def asciify_img(self, img):
-        print(type(img))
-        return (*executor.map(self.asciify_row, img),)
+        self.frames.append((*executor.map(self.asciify_row, img),))
 
     def convert(self):
         if self.verbose: print('Converting...')
 
-        futures = []
+        with mp.Manager() as manager:
+            self.frames = manager.list()
 
-        with concurrent.futures.ProcessPoolExecutor(max_workers=self.max_workers) as executor:
-            while True:
-                succ, img = self.video.read()
+            with mp.Pool(processes=self.max_workers) as pool:
+                while True:
+                    succ, img = self.video.read()
 
-                if not succ:
-                    break
+                    if not succ: break
 
-                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+                    img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-                futures.append(executor.submit(self.asciify_img, img))
-
-        for future in concurrent.futures.as_completed(futures):
-            self.frames.append(future.result())
+                    pool.map(self.asciify_row, img)
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
