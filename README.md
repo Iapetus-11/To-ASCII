@@ -1,20 +1,22 @@
-# video2ascii
-*Goes through a video frame by frame, and converts each frame into ascii art*
+# to-ascii
+*Converts videos, images, and gifs into ascii art!*
 
 [\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
 
+* Works on most common image types
 * Works on most common video types
 * Works on gifs
 
 ## Installation
 Via pip:
 ```
-python3 -m pip install video2ascii
+python3 -m pip install to-ascii
 ```
 
 ## Example Usage
+### Video / GIF:
 ```
-from video2ascii import Video
+from toascii import Video
 
 v = Video('my_file.mp4', resize=.3, w_stretch=2, verbose=True)
 converted = v.convert()  # convert the frames into ascii
@@ -22,7 +24,7 @@ converted.view()  # play the converted frames in the console
 ```
 
 ## Documentation
-video2ascii.**Video**(**filename**=*'video.mp4'*, \*, **scale**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **max_workers=*60*, **verbose**=*False*)
+toascii.**Video**(**filename**=*'video.mp4'*, \*, **scale**=*1*, **w_stretch**=*1*, **gradient**=*Union[int, str]*, **max_workers=*60*, **verbose**=*False*)
 Note: only filename can be a positional argument, the rest are kwargs.
 * `filename` *the name of the file/video which is to be opened and processed*
 * `scale` *the amount/1 which the video dimensions are multiplied by*
