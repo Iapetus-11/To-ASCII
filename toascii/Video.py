@@ -83,7 +83,7 @@ class Video:
             if not succ: break  # if failed when reading
 
             # resize image to scales specified in __init__
-            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+            img = cv2.resize(img, (int(self.width*self.scale*self.w_stretch), int(self.height*self.scale),))
 
             self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames
 
