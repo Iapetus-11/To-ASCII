@@ -45,7 +45,7 @@ class Video:
 
         # for __iter__ to allow this to be used in a for loop to iterate through the frames
         self.current_frame = 0
-        self.end_frame = len(self.pretty_frames)
+        self.end_frame = None
 
         # determine what the clear command will be when viewing the final pretty frames
         if os.name == 'nt':
@@ -89,6 +89,7 @@ class Video:
 
         if self.verbose: print('Prettifying frames...')
         self.prettify_frames()
+        self.end_frame = len(self.pretty_frames)
 
         if self.verbose: print('Done converting.')
 
