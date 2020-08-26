@@ -2,7 +2,7 @@ import time
 import os
 import cv2
 
-class Viewer:
+class VideoViewer:
     def __init__(self, meta):
         self.__dict__ = meta
 
