@@ -10,7 +10,7 @@ from .Constants import *
 class Video:
     def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 1, gradient: typing.Union[int, str] = 0, verbose=False):
         if not os.path.isfile(filename):  # check to make sure file actually exists
-            raise FileNotFound(filename)
+            raise FileNotFound(filename)  # FileNotFound is from .Exceptions
 
         self.filename = filename
         self.video = cv2.VideoCapture(filename)
@@ -25,7 +25,7 @@ class Video:
         self.width = self.video.get(3)  # float, width of the video
         self.height = self.video.get(4)  # float, height of the video
 
-        # if scale was given as a percentage
+        # if scale was given as a percentage (out of 100 rather than out of 1)
         if scale > 1:
             scale /= 100
 
@@ -68,7 +68,7 @@ class Video:
     def prettify_frames(self):  # return a flattened map of prettified frames
         self.pretty_frames = (*map(self.pretty_frame, self.frames),)
 
-    def convert(self):  # function which is called to populate the list of converted frames
+    def convert(self):  # function which is called to populate the list of converted frames (self.frames)
         if self.verbose: print('Converting...')
 
         while True:
