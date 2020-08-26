@@ -91,7 +91,7 @@ class Video:
         self.prettify_frames()
         self.end_frame = len(self.pretty_frames)
 
-        if self.verbose: print('Done converting.')
+        if self.verbose: print('Done.')
 
         return self  # returns self for fluent chaining
 
