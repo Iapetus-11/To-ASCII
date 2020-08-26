@@ -5,7 +5,7 @@ import os
 
 from .Exceptions import *
 from .Constants import *
-from .Viewer import Viewer
+from .Viewer import VideoViewer as Viewer
 
 
 class Video:
