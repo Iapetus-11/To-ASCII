@@ -55,7 +55,7 @@ class Video:
         return (*map(self.asciify_pixel, row),)
 
     def asciify_img(self, img):
-        self.frames.append((*executor.map(self.asciify_row, img),))
+        return (*map(self.asciify_row, img),)
 
     def convert(self):
         if self.verbose: print('Converting...')
@@ -63,15 +63,24 @@ class Video:
         with mp.Manager() as manager:
             self.frames = manager.list()
 
-            with mp.Pool(processes=self.max_workers) as pool:
-                while True:
-                    succ, img = self.video.read()
+            procs = []
 
-                    if not succ: break
+            pool = mp.Pool(processes=self.max_workers)
 
-                    img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+            while True:
+                succ, img = self.video.read()
 
-                    pool.map(self.asciify_row, img)
+                if not succ: break
+
+                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
+
+                procs.append(pool.apply_async(asciify_img, (img,)))
+
+            pool.close()
+            pool.join()
+
+            for proc in procs:
+                self.frames.append(proc.get())
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
