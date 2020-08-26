@@ -50,11 +50,11 @@ class Video:
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
-    def asciify_row(self, executor, row):
-        return (*map(self.asciify_pixel, row),)
+    def asciify_row(self, *args):
+        return (args[0].map(self.asciify_pixel, row),)
 
-    def asciify_img(self, executor, img):
-        return (*map(self.asciify_row, (executor, img,)),)
+    def asciify_img(self, *args):
+        return (args[0].map(self.asciify_row, (args[0], args[1],)),)
 
     def convert(self):
         if self.verbose: print('Converting...')
