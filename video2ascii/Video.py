@@ -51,7 +51,7 @@ class Video:
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
     def asciify_row(self, row):
-        return (*map(self.asciify_pixel, row))
+        return (*map(self.asciify_pixel, row),)
 
     def asciify_img(self, img):
         return (*map(self.asciify_row, img),)
