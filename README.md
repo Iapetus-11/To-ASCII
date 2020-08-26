@@ -18,7 +18,7 @@ python3 -m pip install to-ascii
 ```
 from toascii import Video
 
-v = Video('my_file.mp4', resize=.1, verbose=True)
+v = Video('my_file.mp4', scale=.1, verbose=True)
 v.convert()  # convert the frames into ascii
 v.view()  # play the converted frames in the console
 ```
@@ -27,7 +27,7 @@ v.view()  # play the converted frames in the console
 ```
 from toascii import Image
 
-img = Image('my_image.png', resize=.1, verbose=True)  # load the image
+img = Image('my_image.png', scale=.1, verbose=True)  # load the image
 img.convert()  # convert the image to ascii
 img.view()  # view the final asciified image
 ```
