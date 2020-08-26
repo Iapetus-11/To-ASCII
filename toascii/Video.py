@@ -1,4 +1,3 @@
-import multiprocessing as mp
 import typing
 import cv2
 import os
