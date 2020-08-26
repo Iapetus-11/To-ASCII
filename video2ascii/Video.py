@@ -1,4 +1,4 @@
-import pathos.multiprocessing as mp
+import multiprocessing as mp
 import typing
 import cv2
 import os
@@ -60,27 +60,14 @@ class Video:
     def convert(self):
         if self.verbose: print('Converting...')
 
-        with mp.Manager() as manager:
-            self.frames = manager.list()
+        while True:
+            succ, img = self.video.read()
 
-            procs = []
+            if not succ: break
 
-            pool = mp.Pool(processes=self.max_workers)
+            img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
 
-            while True:
-                succ, img = self.video.read()
-
-                if not succ: break
-
-                img = cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),))
-
-                procs.append(pool.apply_async(self.asciify_img, (img,)))
-
-            pool.close()
-            pool.join()
-
-            for proc in procs:
-                self.frames.append(proc.get())
+            self.frames.append(asciify_img(img))
 
         if self.verbose: print('Done converting.')
         return Viewer(self.__dict__)
