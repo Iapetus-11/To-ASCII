@@ -61,11 +61,9 @@ class Video:
                 succ, img = self.video.read()
 
                 if not succ:
-                    break
+                    if self.verbose: print('Done converting.')
+                    return Viewer(self.__dict__)
 
                 img = list(cv2.resize(img, (int(img.shape[1]*self.scale*self.w_stretch), int(img.shape[0]*self.scale),)))
 
                 self.frames.append((executor.map(self.asciify_row, (executor, img,)),))
-
-        if self.verbose: print('Done converting.')
-        return Viewer(self.__dict__)
