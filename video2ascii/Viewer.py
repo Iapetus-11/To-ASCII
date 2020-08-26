@@ -28,7 +28,7 @@ class Viewer:
             start = time.perf_counter()
             print(frame)
             diff = start - time.perf_counter()
-            time.sleep(0 if 0 < diff > spf else diff)
+            time.sleep(0 if 0 > diff > spf else diff)
             os.system(self.clear_cmd)
 
     def __iter__(self):
