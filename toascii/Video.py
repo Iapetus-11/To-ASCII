@@ -104,6 +104,7 @@ class Video:
             spf = 1/self.fps
         else:
             spf = 1/fps
+            
         try:
             for frame in self.pretty_frames:
                 start = time.perf_counter()
