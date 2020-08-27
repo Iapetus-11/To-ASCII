@@ -60,7 +60,7 @@ class Video:
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
             print(f'scale Factor: {self.scale}')
-            print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
+            print(f'Scaled Dims: {self.scaled_width}x{self.scaled_height}')
             print(f'Gradient: \'{self.gradient}\'')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
@@ -104,7 +104,7 @@ class Video:
             spf = 1/self.fps
         else:
             spf = 1/fps
-            
+
         try:
             for frame in self.pretty_frames:
                 start = time.perf_counter()
