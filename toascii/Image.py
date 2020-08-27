@@ -2,7 +2,7 @@ import typing
 import cv2
 import os
 
-from .ABC import *
+from .ABC import ABC
 from .Exceptions import *
 from .Constants import *
 
