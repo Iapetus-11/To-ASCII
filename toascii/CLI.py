@@ -4,6 +4,7 @@ def main():
 
     from .Image import Image
     from .Video import Video
+    from .Live import Live
 
     parser = argparse.ArgumentParser(
         prog='to-ascii',
