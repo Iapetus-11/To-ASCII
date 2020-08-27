@@ -6,5 +6,6 @@ class ABC:
     def asciify_row(self, row):  # returns a flattened map (so a list)
         return (*map(self.asciify_pixel, row),)  # use * (all/star operator) to "flatten" the map() instead of a lazy map
 
-    def asciify_img(self, img):  # returns a flattened map (so a list)
+    def asciify_img(self, img):  # returns a the actual asciified image
+        # uses a lazy map and flattens as it goes in the list comprehension
         return ''.join([f'\n{"".join(row)}' for row in map(self.asciify_row, img)])
