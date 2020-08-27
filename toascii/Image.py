@@ -54,7 +54,7 @@ class Image(ABC):
         if self.verbose: print('Converting...')
 
         # resize image to the scale specified in __init__
-        img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
+        img = cv2.resize(self.image, (self.scaled_width, self.scaled_height,))
 
         self.ascii_image = self.asciify_img(img)  # asciify image
 
