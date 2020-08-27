@@ -3,11 +3,12 @@ import time
 import cv2
 import os
 
+from .ABC import ABC
 from .Exceptions import *
 from .Constants import *
 
 
-class Video:
+class Video(ABC):
     def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, verbose: int = False):
         if not os.path.isfile(filename):  # check to make sure file actually exists
             raise FileNotFound(filename)  # FileNotFound is from .Exceptions
@@ -17,8 +18,6 @@ class Video:
 
         # self.frames is a frames[frame[row[char, char,..], row[],..], frame[],..]
         self.frames = []  # converted frames (will be populated when convert() is called)
-        # self.pretty_frames is  frames[text, text, text,..]
-        self.pretty_frames = None  # finished frames, "rendered" frames from self.frames
 
         self.fps = self.video.get(cv2.CAP_PROP_FPS)  # fps of the origin video
 
@@ -45,13 +44,15 @@ class Video:
         else:
             self.gradient = gradient
 
+        self.gradient_len = len(self.gradient)
+
         self.verbose = verbose  # whether or not to do extra logging of information
 
         # for __iter__ to allow this to be used in a for loop to iterate through the frames
         self.current_frame = 0
         self.end_frame = None
 
-        # determine what the clear command will be when viewing the final pretty frames
+        # determine what the clear command will be when viewing the final asciified frames
         if os.name == 'nt':
             self.clear_cmd = 'cls'
         else:
@@ -62,21 +63,6 @@ class Video:
             print(f'scale Factor: {self.scale}')
             print(f'Scaled Dims: {self.scaled_width}x{self.scaled_height}')
             print(f'Gradient: \'{self.gradient}\'')
-
-    def asciify_pixel(self, p):  # takes [r, g, b]
-        return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
-
-    def asciify_row(self, row):  # returns a flattened map (so a list)
-        return (*map(self.asciify_pixel, row),)  # use * (all/star operator) to "flatten" the map() instead of a lazy map
-
-    def asciify_img(self, img):  # returns a flattened map (so a list)
-        return (*map(self.asciify_row, img),)
-
-    def prettify_frame(self, frame):  # "render" the frame so it can be print()ed later
-        return ''.join([f'\n{"".join(row)}' for row in frame])
-
-    def prettify_frames(self):  # return a flattened map of prettified frames
-        self.pretty_frames = (*map(self.prettify_frame, self.frames),)
 
     def convert(self):  # function which is called to populate the list of converted frames (self.frames)
         if self.verbose: print('Converting...')
@@ -91,9 +77,7 @@ class Video:
 
             self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames
 
-        if self.verbose: print('Prettifying frames...')
-        self.prettify_frames()
-        self.end_frame = len(self.pretty_frames)
+        self.end_frame = len(self.frames)
 
         if self.verbose: print('Done.')
 
@@ -106,7 +90,7 @@ class Video:
             spf = 1/fps
 
         try:
-            for frame in self.pretty_frames:
+            for frame in self.frames:
                 start = time.perf_counter()
                 print(frame)
                 diff = start - time.perf_counter()
@@ -123,4 +107,4 @@ class Video:
             raise StopIteration
 
         self.current_frame += 1
-        return self.pretty_frames[self.current_frame - 1]
+        return self.frames[self.current_frame - 1]
