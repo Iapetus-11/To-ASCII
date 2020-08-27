@@ -47,7 +47,7 @@ class Image(ABC):
 
         if self.verbose:
             print(f'Dimensions: {self.width}x{self.height}')
-            print(f'scale Factor: {self.scale}')
+            print(f'Scale Factor: {self.scale}')
             print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
             print(f'Gradient: \'{self.gradient}\'')
 
