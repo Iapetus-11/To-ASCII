@@ -40,7 +40,7 @@ class Image(ABC):
         else:
             self.gradient = gradient
 
-        self.gradient_len = len(gradient)
+        self.gradient_len = len(self.gradient)
 
         self.verbose = verbose  # whether or not to do extra logging of information
 
