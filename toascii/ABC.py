@@ -1,7 +1,7 @@
 
 class ABC:
     def asciify_pixel(self, p):  # takes [r, g, b]
-        return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
+        return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(self.gradient_len-1))/255)]
 
     def asciify_row(self, row):  # returns a flattened map (so a list)
         return (*map(self.asciify_pixel, row),)  # use * (all/star operator) to "flatten" the map() instead of a lazy map
