@@ -11,6 +11,8 @@ class Live:
         self.source = source
         self.video = cv2.VideoCapture(self.source)
 
+        self.fps = fps
+
         self.width = self.video.get(3)  # float, width of the video
         self.height = self.video.get(4)  # float, height of the video
 
