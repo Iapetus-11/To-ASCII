@@ -8,7 +8,7 @@ from .Constants import *
 
 
 class Live(ABC):
-    def __init__(self, source: int = 0, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, fps: int = 10):
+    def __init__(self, source: int = 0, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, fps: int = 10, verbose: int = False):
         self.source = source
         self.video = cv2.VideoCapture(self.source)
 
@@ -45,6 +45,15 @@ class Live(ABC):
             self.clear_cmd = 'cls'
         else:
             self.clear_cmd = 'clear'
+
+        self.verbose = verbose
+
+        if self.verbose:
+            print(f'Dimensions: {self.width}x{self.height}')
+            print(f'Scale Factor: {self.scale}')
+            print(f'Scaled Dims: {self.scaled_width}x{self.scaled_height}')
+            print(f'Gradient: \'{self.gradient}\'')
+            print(f'FPS: {self.fps}')
 
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
