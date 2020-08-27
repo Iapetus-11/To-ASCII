@@ -32,6 +32,7 @@ class Video:
         self.scale = scale  # scale which both dimensions are multiplied by
         self.w_stretch = w_stretch  # scale which the width dimension is multiplied by (to account for text which is taller than it is wide)
 
+        # scaled dimensions
         self.scaled_width = int(self.width*self.scale*self.w_stretch)
         self.scaled_height = int(self.height*self.scale)
 
@@ -85,7 +86,7 @@ class Video:
 
             if not succ: break  # if failed when reading
 
-            # resize image to scales specified in __init__
+            # resize image to the scale specified in __init__
             img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
 
             self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames

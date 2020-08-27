@@ -27,6 +27,10 @@ class Image:
         self.scale = scale
         self.w_stretch = w_stretch
 
+        # scaled dimensions
+        self.scaled_width = int(self.width*self.scale*self.w_stretch)
+        self.scaled_height = int(self.height*self.scale)
+
         # determine what the gradient / brightness to character mapping will be
         if type(gradient) == int:
             if 0 > gradient > (len(gradients) - 1):
@@ -60,7 +64,7 @@ class Image:
         if self.verbose: print('Converting...')
 
         # resize image to the scale specified in __init__
-        img = cv2.resize(self.image, (int(self.width*self.scale*self.w_stretch), int(self.height*self.scale),))
+        img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
 
         self.ascii_image = self.asciify_img(img)  # asciify image
         self.pretty_image = self.prettify(self.ascii_image)  # prettify image
