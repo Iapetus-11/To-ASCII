@@ -15,7 +15,10 @@ setuptools.setup(
     install_requires=[
         'opencv-python'
     ],
-    data_files = [
+    scripts=[
+        'toascii/CLI'
+    ],
+    data_files=[
         ('', ['LICENSE'])
     ],
     classifiers=[
