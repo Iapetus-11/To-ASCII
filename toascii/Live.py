@@ -55,8 +55,6 @@ class Live(ABC):
             print(f'Gradient: \'{self.gradient}\'')
             print(f'FPS: {self.fps}')
 
-        self.scaled_width *= -1
-
     def view(self):
         spf = 1/self.fps
 
