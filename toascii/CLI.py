@@ -20,8 +20,8 @@ def main():
     args = parser.parse_args()
 
     try:  # attempt to make gradient an integer if the gradient was supposed to be an index
-        gradient = int(gradient)
-    except Exception:
+        args.gradient = int(args.gradient)
+    except ValueError:
         pass
 
     if args.filetype == 'video':
