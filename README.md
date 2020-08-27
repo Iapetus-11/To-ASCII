@@ -14,6 +14,10 @@ python3 -m pip install to-ascii
 ```
 
 ## Example Usage
+### CLI:
+```
+to-ascii -t filetype -f filename
+```
 ### Video / GIF:
 ```
 from toascii import Video
