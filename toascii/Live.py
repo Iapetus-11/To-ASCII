@@ -37,6 +37,7 @@ class Live(ABC):
         else:
             self.gradient = gradient
 
+        self.gradient = tuple([c for c in self.gradient])  # turn self.gradient into a tuple
         self.gradient_len = len(self.gradient)
 
         # determine what the clear command will be when viewing the final pretty frames

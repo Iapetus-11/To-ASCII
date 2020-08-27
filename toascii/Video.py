@@ -44,6 +44,7 @@ class Video(ABC):
         else:
             self.gradient = gradient
 
+        self.gradient = tuple([c for c in self.gradient])  # turn self.gradient into a tuple
         self.gradient_len = len(self.gradient)
 
         self.verbose = verbose  # whether or not to do extra logging of information
