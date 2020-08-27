@@ -7,6 +7,12 @@
 * Works on most common video types
 * Works on gifs
 
+## How does it work?
+### Videos:
+When the conversion process is started, the video file is opened up and went through frame by frame. Each frame is composed of a set of arrays like `[[[r, g, b], [r, g, b]], [[r, g, b], [r, g, b]]]`, the software then goes through each frame and calculates the average brightness of each pixel, which is then used to get a value from a gradient of ascii characters. Then, at the end, a set of "pretty" frames are made, that list looks like `['frame',  'frame',..]` with frame obviously being the ascii art for each frame. When `.view()` is called or the video is viewed, the software `print()`s out each frame and then `time.sleep()`s for a bit.
+### Images:
+The process is virtually identical to the one above, except it doesn't need to do a multitude of frames/images, it only needs to convert one. When `.view()` is called it just displays the image.
+
 ## Installation
 Via pip:
 ```
