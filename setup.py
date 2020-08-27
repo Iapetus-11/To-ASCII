@@ -15,9 +15,6 @@ setuptools.setup(
     install_requires=[
         'opencv-python'
     ],
-    scripts=[
-        'toascii/CLI.py'
-    ],
     data_files=[
         ('', ['LICENSE'])
     ],
@@ -26,5 +23,8 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6'
+    python_requires='>=3.6',
+    entry_points={
+        'console_scripts': ['toascii.CLI:main']
+    }
 )
