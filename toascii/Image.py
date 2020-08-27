@@ -2,11 +2,12 @@ import typing
 import cv2
 import os
 
+from .ABC import *
 from .Exceptions import *
 from .Constants import *
 
 
-class Image:
+class Image(ABC):
     def __init__(self, filename: str, *, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, verbose: int = False):
         if not os.path.isfile(filename):  # check for existence of file
             raise FileNotFound(filename)  # raise file not found error if it doesn't exist
@@ -18,7 +19,6 @@ class Image:
         self.height = self.image.shape[0]
 
         self.ascii_image = None
-        self.pretty_image = None
 
         # if scale was given as a percentage (out of 100 rather than out of 1)
         if scale > 1:
@@ -40,6 +40,8 @@ class Image:
         else:
             self.gradient = gradient
 
+        self.gradient_len = len(gradient)
+
         self.verbose = verbose  # whether or not to do extra logging of information
 
         if self.verbose:
@@ -48,18 +50,6 @@ class Image:
             print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
             print(f'Gradient: \'{self.gradient}\'')
 
-    def asciify_pixel(self, p):  # takes [r, g, b]
-        return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
-
-    def asciify_row(self, row):  # returns a flattened map (so a list)
-        return (*map(self.asciify_pixel, row),)  # use * (all/star operator) to "flatten" the map() instead of a lazy map
-
-    def asciify_img(self, img):  # returns a flattened map (so a list)
-        return (*map(self.asciify_row, img),)
-
-    def prettify(self, img):  # "render" the image in ascii so it can be print()ed later
-        return ''.join([f'\n{"".join(row)}' for row in img])
-
     def convert(self):
         if self.verbose: print('Converting...')
 
@@ -67,11 +57,10 @@ class Image:
         img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
 
         self.ascii_image = self.asciify_img(img)  # asciify image
-        self.pretty_image = self.prettify(self.ascii_image)  # prettify image
 
         if self.verbose: print('Done.')
 
         return self  # return self for fluent chaining
 
     def view(self):
-        print(self.pretty_image)
+        print(self.ascii_image)
