@@ -22,7 +22,7 @@ try:  # attempt to make gradient an integer if the gradient was supposed to be a
 except Exception:
     pass
 
-if filetype == 'video':
+if args.filetype == 'video':
     c = Video(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
 else:
     c = Image(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
