@@ -64,7 +64,7 @@ class Live:
                 img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
 
                 # print asciified image
-                print(asciify_img(img))
+                print(self.asciify_img(img))
 
                 diff = start - time.perf_counter()
                 time.sleep((diff + abs(diff)) / 2)
