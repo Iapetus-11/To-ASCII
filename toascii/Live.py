@@ -64,8 +64,8 @@ class Live(ABC):
 
                 succ, img = self.video.read()
 
-                # resize image to scaled dims in __init__
-                img = cv2.resize(img, (self.scaled_width, self.scaled_height,))
+                # resize image to scaled dims in __init__ and flip it on the vertical axis
+                img = cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1)
 
                 # print asciified image
                 print(self.asciify_img(img))
