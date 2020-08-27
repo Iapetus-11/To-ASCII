@@ -104,13 +104,15 @@ class Video:
             spf = 1/self.fps
         else:
             spf = 1/fps
-
-        for frame in self.pretty_frames:
-            start = time.perf_counter()
-            print(frame)
-            diff = start - time.perf_counter()
-            time.sleep((diff + abs(diff)) / 2)
-            os.system(self.clear_cmd)
+        try:
+            for frame in self.pretty_frames:
+                start = time.perf_counter()
+                print(frame)
+                diff = start - time.perf_counter()
+                time.sleep((diff + abs(diff)) / 2)
+                os.system(self.clear_cmd)
+        except KeyboardInterrupt:
+            pass
 
     def __iter__(self):  # allow iteration over the frames (like in a for loop)
         return self
