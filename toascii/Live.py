@@ -25,6 +25,21 @@ class Live:
         self.scaled_width = int(self.width*self.scale*self.w_stretch)
         self.scaled_height = int(self.height*self.scale)
 
+        # determine what the gradient / brightness to character mapping will be
+        if type(gradient) == int:
+            if 0 > gradient > (len(gradients) - 1):
+                raise IndexError(f'The gradient must either be a string or an integer between the value of 0 and {len(gradients)}.')
+            else:
+                self.gradient = gradients[gradient]
+        else:
+            self.gradient = gradient
+
+        # determine what the clear command will be when viewing the final pretty frames
+        if os.name == 'nt':
+            self.clear_cmd = 'cls'
+        else:
+            self.clear_cmd = 'clear'
+
     def asciify_pixel(self, p):  # takes [r, g, b]
         return self.gradient[int((((int(p[0]) + int(p[1]) + int(p[2])) / 3)*(len(self.gradient)-1))/255)]
 
