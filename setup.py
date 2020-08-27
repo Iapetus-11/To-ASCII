@@ -25,6 +25,6 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     entry_points={
-        'console_scripts': ['toascii.CLI:main']
+        'console_scripts': ['to-ascii=toascii.CLI:main']
     }
 )
