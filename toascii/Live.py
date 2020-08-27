@@ -3,10 +3,11 @@ import time
 import cv2
 import os
 
+from .ABC import ABC
 from .Constants import *
 
 
-class Live:
+class Live(ABC):
     def __init__(self, source: int = 0, scale: float = 1, w_stretch: float = 2, gradient: typing.Union[int, str] = 0, fps: int = 10):
         self.source = source
         self.video = cv2.VideoCapture(self.source)
@@ -35,6 +36,8 @@ class Live:
                 self.gradient = gradients[gradient]
         else:
             self.gradient = gradient
+
+        self.gradient_len = len(self.gradient)
 
         # determine what the clear command will be when viewing the final pretty frames
         if os.name == 'nt':
