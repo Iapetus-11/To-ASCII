@@ -67,11 +67,11 @@ class Live(ABC):
                 # resize image to scaled dims in __init__ and flip it on the vertical axis
                 img = cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1)
 
-                # print asciified image
-                print(self.asciify_img(img))
-
                 diff = start - time.perf_counter()
                 time.sleep((diff + abs(diff)) / 2)
                 os.system(self.clear_cmd)
+
+                # print asciified image
+                print(self.asciify_img(img))
         except KeyboardInterrupt:
             pass
