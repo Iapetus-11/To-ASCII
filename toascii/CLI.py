@@ -52,7 +52,6 @@ def main():
             c.view()
         except KeyboardInterrupt:
             print('Exiting...')
-            pass
 
 if __name__ == '__main__':
     main()
