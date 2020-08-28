@@ -34,6 +34,14 @@ v.convert()  # convert the frames into ascii
 v.view()  # play the converted frames in the console
 ```
 
+### Live Video:
+```
+from toascii import Live
+
+l = Live(scale=.1, verbose=True)
+l.view()
+```
+
 ### Image:
 ```
 from toascii import Image
