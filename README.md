@@ -1,10 +1,11 @@
 # To-Ascii ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=64b594)
-*Converts videos, images, and gifs into ascii art!*
+*Converts videos, images, gifs, and even live video into ascii art!*
 
 [\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
 
 * Works on most common image types
 * Works on most common video types
+* Works on LIVE VIDEO
 * Works on gifs
 
 ## How does it work?
