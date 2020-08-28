@@ -41,6 +41,8 @@ def main():
             print(f'ERROR (Please report this!): {e}')
             return
 
+        return
+
     if args.filetype == 'video':
         c = Video(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
     else:
