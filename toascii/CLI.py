@@ -41,19 +41,18 @@ def main():
             print(f'ERROR (Please report this!): {e}')
             return
 
-        return
-
-    if args.filetype == 'video':
+    elif args.filetype == 'video':
         c = Video(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
     else:
         c = Image(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
 
-    try:
-        c.convert()
-        c.view()
-    except KeyboardInterrupt:
-        print('Exiting...')
-        pass
+    if args.filetype != 'live':
+        try:
+            c.convert()
+            c.view()
+        except KeyboardInterrupt:
+            print('Exiting...')
+            pass
 
 if __name__ == '__main__':
     main()
