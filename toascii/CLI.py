@@ -31,7 +31,7 @@ def main():
         except ValueError:
             source = 0
 
-        l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
+        l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, fps=25, verbose=True)
 
         try:
             l.view()
