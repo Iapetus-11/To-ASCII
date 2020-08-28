@@ -96,3 +96,28 @@ img.view()  # view the final asciified image
     * `verbose: boolean` *whether or not to do verbose logging*
 
 <br>
+
+* toascii.**Live**(**source**=*0*, \*, **scale**=*1*, **w_stretch**=*2*, **gradient**=*Union[int, str]*, **fps**=*10*, **verbose**=*False*)
+  * Note: only source can be a positional argument, the rest are kwargs.
+  * Arguments:
+    * `source: int` *the number relating to the video camera to be used, default is 0*
+    * `scale: str` *the amount/1 which the source video dimensions are multiplied by*
+    * `w_stretch: float` *the amount that the width dimension is multiplied by*
+    * `gradient: int` *either an integer from the preset gradients, or a custom gradient Example: '#$a=+-., '*
+    * `fps: float` *the fps used when showing the live video source*
+    * `verbose: boolean` *whether or not to show extra information*
+  * Functions:
+    * `view()` *view the live video*
+  * Attributes:
+    * `source: int` *the name of the file/video which was opened and processed*
+    * `video: cv2.VideoCapture` *the actual `cv2.VideoCapture` object*
+    * `fps: float` *the fps of the live source video*
+    * `width: int` *the unaltered width of the live source video*
+    * `height: int` *the unaltered height of the live source video*
+    * `scale: float` *the scale which is applied to both the dimensions of the live source video*
+    * `w_stretch: float` *the scale which is only applied to the width dimension*
+    * `scaled_width: int` *the final scaled width*
+    * `scaled_height: int` *the final scaled height*
+    * `gradient: tuple` *the gradient used*
+    * `gradient_len: int` *the number of characters in the gradient*
+    * `verbose: boolean` *whether or not to do verbose logging*
