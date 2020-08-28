@@ -12,7 +12,7 @@ def main():
     )
 
     # cli args
-    parser.add_argument('-t', '--type', type=str, choices=['image', 'video', 'livevideo'], dest='filetype', help='The type of file', action='store', required=True)
+    parser.add_argument('-t', '--type', type=str, choices=['image', 'video', 'live'], dest='filetype', help='The type of file', action='store', required=True)
     parser.add_argument('-f', '--file', type=str, dest='filename', help='The name of the file to convert', action='store', required=True)
     parser.add_argument('-s', '--scale', type=float, dest='scale', default=.1, help='The scale of the final dimensions', action='store')
     parser.add_argument('-w', '--width-stretch', type=float, dest='width_stretch', default=2, help='Scale which only applies to the width', action='store')
@@ -25,14 +25,24 @@ def main():
     except ValueError:
         pass
 
+    if args.filetype == 'live':
+        try:
+            source = int(args.filename)
+        except ValueError:
+            source = 0
+
+        l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
+
+        try:
+            l.view()
+        except KeyboardInterrupt:
+            return
+        except Exception as e:
+            print(f'ERROR (Please report this!): {e}')
+            return
+
     if args.filetype == 'video':
         c = Video(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
-    elif args.filetype == 'livevideo':
-        try:
-            port = int(args.filename)
-        except Exception:
-            port = 0
-        c = Live(scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
     else:
         c = Image(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
 
