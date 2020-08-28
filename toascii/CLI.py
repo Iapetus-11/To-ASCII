@@ -8,7 +8,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         prog='to-ascii',
-        description='A tool which can convert videos, images, and gifs to ascii art!'
+        description='A tool which can convert videos, images, gifs, and even live video to ascii art!'
     )
 
     # cli args
