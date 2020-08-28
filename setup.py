@@ -7,7 +7,7 @@ setuptools.setup(
     name='to-ascii',
     version='3.3.0',
     author='Iapetus-11',
-    description='A package which can convert videos, images, and gifs to ascii art!',
+    description='A package which can convert videos, images, gifs, and even live video to ascii art!',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/Iapetus-11/to-ascii',
