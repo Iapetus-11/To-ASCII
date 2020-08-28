@@ -52,8 +52,8 @@ img.view()  # view the final asciified image
     * `gradient` *either an integer from the preset gradients, or a custom gradient Example: '#$a=+-., '*
     * `verbose` *whether or not to show extra information*
   * Functions:
-    * `convert` *actually converts the video into ascii*
-    * `view` *view the converted video*
+    * `convert()` *actually converts the video into ascii*
+    * `view(fps: float)` *view the converted video*
   * Attributes:
     * `filename` **str** *the name of the file/video which was opened and processed*
     * `video` **cv2.VideoCapture** *the actual `cv2.VideoCapture` object*
@@ -80,8 +80,8 @@ img.view()  # view the final asciified image
     * `gradient` *either an integer from the preset gradients, or a custom gradient Example: '#$a=+-., '*
     * `verbose` *whether or not to show extra information*
   * Functions:
-    * `convert` *actually converts the image into ascii*
-    * `view` *view the converted image*
+    * `convert()` *actually converts the image into ascii*
+    * `view()` *view the converted image*
   * Attributes:
     * `filename` **str** *the name of the file/video which was opened and processed*
     * `image` **array** *actual numpy array returned from `cv2.imread()`*
@@ -94,3 +94,5 @@ img.view()  # view the final asciified image
     * `gradient` **tuple** *the gradient used*
     * `gradient_len` **int** *the number of characters in the gradient*
     * `verbose` **boolean** *whether or not to do verbose logging*
+
+<br>
