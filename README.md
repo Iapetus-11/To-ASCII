@@ -54,6 +54,20 @@ img.view()  # view the final asciified image
   * Functions:
     * `convert` *actually converts the video into ascii*
     * `view` *view the converted video*
+  * Attributes:
+    * `filename` **str** *the name of the file/video which was opened and processed*
+    * `video` **cv2.VideoCapture** *the actual `cv2.VideoCapture` object*
+    * `frames` **list** *the converted frames, will be populated when `.convert()` is called*
+    * `fps` **float** *the fps of the video*
+    * `width` **int** *the unaltered width of the video*
+    * `height` **int** *the unaltered height of the video*
+    * `scale` **float** *the scale which is applied to both the dimensions of the video*
+    * `w_stretch` **float** *the scale which is only applied to the width dimension*
+    * `scaled_width` **int** *the final scaled width*
+    * `scaled_height` **int** *the final scaled height*
+    * `gradient` **tuple** *the gradient used*
+    * `gradient_len` **int** *the number of characters in the gradient*
+    * `verbose` **boolean** *whether or not to do verbose logging*
 
 <br>
 
@@ -68,3 +82,15 @@ img.view()  # view the final asciified image
   * Functions:
     * `convert` *actually converts the image into ascii*
     * `view` *view the converted image*
+  * Attributes:
+    * `filename` **str** *the name of the file/video which was opened and processed*
+    * `image` **array** *actual numpy array returned from `cv2.imread()`*
+    * `width` **int** *the unaltered width of the image*
+    * `height` **int** *the unaltered height of the image*
+    * `scale` **float** *the scale which is applied to both the dimensions of the image*
+    * `w_stretch` **float** *the scale which is only applied to the width dimension*
+    * `scaled_width` **int** *the final scaled width*
+    * `scaled_height` **int** *the final scaled height*
+    * `gradient` **tuple** *the gradient used*
+    * `gradient_len` **int** *the number of characters in the gradient*
+    * `verbose` **boolean** *whether or not to do verbose logging*
