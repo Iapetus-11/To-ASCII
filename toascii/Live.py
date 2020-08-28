@@ -52,7 +52,7 @@ class Live(ABC):
             print(f'Dimensions: {self.width}x{self.height}')
             print(f'Scale Factor: {self.scale}')
             print(f'Scaled Dims: {self.scaled_width}x{self.scaled_height}')
-            print(f'Gradient: \'{self.gradient}\'')
+            print(f'Gradient: \'{"".join(self.gradient)}\'')
             print(f'FPS: {self.fps}')
 
     def view(self):

@@ -49,7 +49,7 @@ class Image(ABC):
             print(f'Dimensions: {self.width}x{self.height}')
             print(f'Scale Factor: {self.scale}')
             print(f'Scaled Dims: {self.width*self.scale*self.w_stretch}x{self.height*self.scale}')
-            print(f'Gradient: \'{self.gradient}\'')
+            print(f'Gradient: \'{"".join(self.gradient)}\'')
 
     def convert(self):
         if self.verbose: print('Converting...')

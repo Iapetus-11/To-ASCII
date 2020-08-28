@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='to-ascii',
-    version='3.4.10',
+    version='3.4.11',
     author='Iapetus-11',
     description='A package which can convert videos, images, gifs, and even live video to ascii art!',
     long_description=long_description,
