@@ -68,7 +68,7 @@ class Live(ABC):
                 img = cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1)
 
                 diff = start - time.perf_counter()
-                time.sleep((diff + abs(diff)) / 2)
+                time.sleep((spf - diff + abs(spf - diff)) / 2)
                 os.system(self.clear_cmd)
 
                 # print asciified image
