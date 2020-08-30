@@ -94,10 +94,8 @@ class Video(ABC):
 
         try:
             for frame in self.frames:
-                start = time.perf_counter()
                 print(frame)
-                diff = start - time.perf_counter()
-                time.sleep((spf - diff + abs(spf - diff)) / 2)
+                time.sleep(spf)
                 os.system(self.clear_cmd)
         except KeyboardInterrupt:
             pass
