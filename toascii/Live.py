@@ -65,13 +65,13 @@ class Live(ABC):
                 succ, img = self.video.read()
 
                 # resize image to scaled dims in __init__ and flip it on the vertical axis
-                img = cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1)
+                img = self.asciify_img(cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1))
 
                 diff = start - time.perf_counter()
                 time.sleep((spf - diff + abs(spf - diff)) / 2)
                 os.system(self.clear_cmd)
 
                 # print asciified image
-                print(self.asciify_img(img))
+                print(img)
         except KeyboardInterrupt:
             pass
