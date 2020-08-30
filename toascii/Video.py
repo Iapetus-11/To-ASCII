@@ -79,6 +79,7 @@ class Video(ABC):
 
             self.frames.append(self.asciify_img(img))  # add the asciified image to the list of converted frames
 
+        self.frames = tuple(self.frames)
         self.end_frame = len(self.frames)
 
         if self.verbose: print('Done.')
