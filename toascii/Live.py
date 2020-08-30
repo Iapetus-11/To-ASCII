@@ -55,8 +55,11 @@ class Live(ABC):
             print(f'Gradient: \'{"".join(self.gradient)}\'')
             print(f'FPS: {self.fps}')
 
-    def view(self):
-        spf = 1/self.fps
+    def view(self, *, fps=None):
+        if fps is None:
+            spf = 1/self.fps
+        else:
+            spf = 1/fps
 
         try:
             while True:
