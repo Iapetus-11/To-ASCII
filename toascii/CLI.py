@@ -17,6 +17,7 @@ def main():
     parser.add_argument('-s', '--scale', type=float, dest='scale', default=.1, help='The scale of the final dimensions', action='store')
     parser.add_argument('-w', '--width-stretch', type=float, dest='width_stretch', default=2, help='Scale which only applies to the width', action='store')
     parser.add_argument('-g', '--gradient', type=str, dest='gradient', default='0', help='The gradient pattern which will be used', action='store')
+    parser.add_argument('-r', '--fps', type=int, dest='fps', default=30, help='The FPS cap which will be used when viewing video and live video', action='store')
 
     args = parser.parse_args()
 
@@ -34,12 +35,13 @@ def main():
         l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, fps=25, verbose=True)
 
         try:
-            l.view()
+            l.view(fps=args.fps)
         except KeyboardInterrupt:
             return
         except Exception as e:
             print(f'ERROR (Please report this!): {e}')
             return
+        return
 
     elif args.filetype == 'video':
         c = Video(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
@@ -48,7 +50,10 @@ def main():
 
     try:
         c.convert()
-        c.view()
+        if args.filetype == 'video':
+            c.view(args.fps)
+        else:
+            c.view()
     except KeyboardInterrupt:
         print('Exiting...')
 
