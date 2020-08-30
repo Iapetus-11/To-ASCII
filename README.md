@@ -1,4 +1,4 @@
-# To-Ascii ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=64b594)
+# To-Ascii ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=64b594) ![PYPI Version](https://img.shields.io/pypi/v/to-ascii.svg)
 *Converts videos, images, gifs, and even live video into ascii art!*
 
 [\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
