@@ -46,12 +46,11 @@ def main():
     else:
         c = Image(args.filename, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, verbose=True)
 
-    if args.filetype != 'live':
-        try:
-            c.convert()
-            c.view()
-        except KeyboardInterrupt:
-            print('Exiting...')
+    try:
+        c.convert()
+        c.view()
+    except KeyboardInterrupt:
+        print('Exiting...')
 
 if __name__ == '__main__':
     main()
