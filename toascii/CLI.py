@@ -32,10 +32,10 @@ def main():
         except ValueError:
             source = 0
 
-        l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, fps=25, verbose=True)
+        l = Live(source, scale=args.scale, w_stretch=args.width_stretch, gradient=args.gradient, fps=args.fps, verbose=True)
 
         try:
-            l.view(fps=args.fps)
+            l.view()
         except KeyboardInterrupt:
             return
         except Exception as e:
