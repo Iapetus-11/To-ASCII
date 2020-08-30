@@ -23,8 +23,15 @@ python3 -m pip install to-ascii
 ## Example Usage
 ### CLI:
 ```
-to-ascii -t filetype -f filename
+to-ascii -t [video, image, live] -f filename -s scale -g gradient -r fps
 ```
+Examples:
+```
+to-ascii -t video -f squish_cat.mp4 -s .05 -g 0 -r 30
+to-ascii -t live -f 0 -s .05 -g 0 -r 30
+to-ascii -t image -f barry.png -s .1 -g customgradient
+```
+
 ### Video / GIF:
 ```
 from toascii import Video
