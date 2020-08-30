@@ -51,7 +51,7 @@ def main():
     try:
         c.convert()
         if args.filetype == 'video':
-            c.view(args.fps)
+            c.view(fps=args.fps)
         else:
             c.view()
     except KeyboardInterrupt:
