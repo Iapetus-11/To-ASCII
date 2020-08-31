@@ -75,3 +75,7 @@ class Live(ABC):
                 print(img)
         except KeyboardInterrupt:
             pass
+
+    def fetch_frame(self):
+        succ, img = self.video.read()
+        return self.asciify_img(cv2.flip(cv2.resize(img, (self.scaled_width, self.scaled_height,)), 1))
