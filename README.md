@@ -33,7 +33,7 @@ to-ascii -t image -f barry.png -s .1 -g customgradient
 ```
 
 ### Video / GIF:
-```
+```py
 from toascii import Video
 
 v = Video('my_file.mp4', scale=.1, verbose=True)
@@ -42,7 +42,7 @@ v.view()  # play the converted frames in the console
 ```
 
 ### Live Video:
-```
+```py
 from toascii import Live
 
 l = Live(scale=.1, verbose=True)
@@ -50,7 +50,7 @@ l.view()
 ```
 
 ### Image:
-```
+```py
 from toascii import Image
 
 img = Image('my_image.png', scale=.1, verbose=True)  # load the image
