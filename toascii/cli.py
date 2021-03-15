@@ -24,7 +24,7 @@ def main():
     args = sys.argv[1:]
     # source, scale, width_stretch, gradient
 
-    if len(args) not in (2, 3, 4):
+    if len(args) not in (3, 4, 5):
         print(INVALID_ARGS)
         exit(1)
 
