@@ -1,11 +1,12 @@
 import setuptools
+import toascii
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="to-ascii",
-    version="3.5.8",
+    version=toascii.__version__,
     author="Iapetus-11",
     description="A package which can convert videos, images, gifs, and even live video to ascii art!",
     long_description=long_description,
