@@ -8,7 +8,7 @@ setuptools.setup(
     name="to-ascii",
     version=toascii.__version__,
     author="Iapetus-11",
-    description="A package which can convert videos, images, gifs, and even live video to ascii art!",
+    description="A package which can convert videos, images, gifs, and even live video to ASCII art!",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Iapetus-11/to-ascii",
@@ -21,5 +21,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
-    entry_points={"console_scripts": ["to-ascii=toascii.CLI:main"]},
+    entry_points={"console_scripts": ["asciify=toascii.cli:main"]},
 )
