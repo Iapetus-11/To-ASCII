@@ -64,4 +64,4 @@ class VideoConverter:
                 print(self.line_breaks + frame + "\r", end="")
                 time.sleep(spf - (start - time.time()))
         except KeyboardInterrupt:
-            pass
+            print()

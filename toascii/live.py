@@ -56,5 +56,7 @@ class LiveVideoConverter:
             except:
                 pass
 
+            print()
+
             self.width = None
             self.height = None
