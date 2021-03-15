@@ -11,7 +11,7 @@ setuptools.setup(
     description="A package which can convert videos, images, gifs, and even live video to ASCII art!",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Iapetus-11/to-ascii",
+    url="https://github.com/Iapetus-11/To-ASCII",
     packages=setuptools.find_packages(),
     install_requires=["opencv-python"],
     data_files=[("", ["LICENSE"])],
