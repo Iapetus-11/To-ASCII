@@ -25,10 +25,12 @@ class VideoConverter:
             round(self.height * self.scale),
         )
 
-        if os.name == "nt":
-            self.clear = lambda: os.system("cls")
-        else:
-            self.clear = lambda: os.system("clear")
+        self.line_breaks = "\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])
+
+        # if os.name == "nt":
+        #     self.clear = lambda: os.system("cls")
+        # else:
+        #     self.clear = lambda: os.system("clear")
 
     def convert(self):
         def convert_(frame):
@@ -59,8 +61,7 @@ class VideoConverter:
         try:
             for frame in self.ascii_frames:
                 start = time.time()
-                print(frame)
+                print(self.line_breaks + frame + "\r", end="")
                 time.sleep(spf - (start - time.time()))
-                self.clear()
         except KeyboardInterrupt:
             pass
