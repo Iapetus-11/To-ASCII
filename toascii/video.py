@@ -4,7 +4,7 @@ import os
 
 
 class VideoConverter:
-    def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str):
+    def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str, loop: bool = False):
         if not os.path.isfile(filename):
             raise FileNotFoundError(filename)
 
@@ -13,6 +13,7 @@ class VideoConverter:
         self.width_stretch = width_stretch
         self.gradient = list(gradient)
         self.gradient_length = len(gradient)
+        self.loop = loop
 
         self.video = cv2.VideoCapture(filename)
         self.ascii_frames = []
@@ -59,9 +60,13 @@ class VideoConverter:
             spf = 1 / fps
 
         try:
-            for frame in self.ascii_frames:
-                start = time.time()
-                print(self.line_breaks + frame + "\r", end="")
-                time.sleep(spf - (start - time.time()))
+            while True:
+                for frame in self.ascii_frames:
+                    start = time.time()
+                    print(self.line_breaks + frame + "\r", end="")
+                    time.sleep(spf - (start - time.time()))
+
+                if not self.loop:
+                    break
         except KeyboardInterrupt:
             print()
