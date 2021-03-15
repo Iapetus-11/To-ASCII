@@ -14,7 +14,7 @@ class ImageConverter:
         self.gradient_length = len(gradient)
 
         self.image = cv2.imread(filename)
-        self.ascii = None
+        self.ascii_image = None
         self.width, self.height = reversed(self.image.shape[:2])
 
         self.scaled_dimensions = (
@@ -33,9 +33,9 @@ class ImageConverter:
 
                 yield "\n"
 
-        self.ascii = "".join(convert_())
+        self.ascii_image = "".join(convert_())
 
         return self
 
     def view(self):
-        print(self.ascii)
+        print(self.ascii_image)
