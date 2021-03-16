@@ -43,10 +43,33 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
   - Parameters:
     - `filename` - *the file path of the image to convert*
     - `scale` - *the value to scale the image by*
-    - `width_stretch` - *the value to scale with width extra by*
+    - `width_stretch` - *the value to scale the width extra by*
     - `gradient` - *the gradient to use when asciifying the image*
   - Attributes:
-    - `ascii_image` - *the asciified image, only present after `ImageConverter.convert()` has been called*
+    - `ascii_image` - *the asciified image as a string, only present after `ImageConverter.convert()` has been called*
   - Methods:
     - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
     - `view()` - *displays the converted image in the console*
+
+- toascii.**VideoConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*, loop: *bool*)
+  - Parameters:
+    - `filename` - *the file path of the video to convert*
+    - `scale` - *the value to scale the video dimensions by*
+    - `width_stretch` - *the value to scale the video width extra by*
+    - `gradient` - *the gradient to use when asciifying the video*
+    - `loop` - *whether to loop the video at the end when viewing it, defaults to `False`*
+  - Attributes:
+    - `ascii_frames` - *the asciified video's frames in a list, only present after `VideoConverter.convert()` has been called*
+  - Methods:
+    - `convert()` - *converts the source video into ascii and stores it in the `ascii_frames` attribute*
+    - `view()` - *plays the converted video in the console*
+
+- toascii.**LiveVideoConverter**(source: *Union[str, int]*, scale: *float*, width_stretch: *float*, gradient: *str*)
+  - Parameters:
+    - `source` - *the source device / camera to grab the frames from*
+    - `scale` - *the value to scale the video dimensions by*
+    - `width_stretch` - *the value to scale the video width extra by*
+    - `gradient` - *the gradient to use when asciifying the video*
+  - Methods:
+    - `get_ascii_frame()` - *grabs a frame from the camera and converts it*
+    - `view()` - *view the live video in the console*
