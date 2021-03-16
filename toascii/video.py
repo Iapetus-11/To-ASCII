@@ -24,8 +24,8 @@ class VideoConverter(Converter):
         self._width = self._video.get(3)
         self._height = self._video.get(4)
         self._scaled_dims = (
-            round(self.width * self.scale * self.width_stretch),
-            round(self.height * self.scale),
+            round(self._width * self.scale * self.width_stretch),
+            round(self._height * self.scale),
         )
         self._line_breaks = ("\n" * (os.get_terminal_size().lines - self._scaled_dims[1])) + "\r"
 
@@ -45,7 +45,7 @@ class VideoConverter(Converter):
 
     def view(self, fps: float = None):
         if fps is None:
-            spf = 1 / self.fps
+            spf = 1 / self._fps
         else:
             spf = 1 / fps
 
@@ -53,7 +53,7 @@ class VideoConverter(Converter):
             while True:
                 for frame in self.ascii_frames:
                     start = time.time()
-                    print(self.line_breaks + frame, end="")
+                    print(self._line_breaks + frame, end="")
                     time.sleep(spf - (start - time.time()))
 
                 if not self.loop:
