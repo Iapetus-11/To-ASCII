@@ -39,7 +39,7 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
 ```
 
 ## API Reference
-- toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
+- *class* toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
   - Parameters:
     - `filename` - *the file path of the image to convert*
     - `scale` - *the value to scale the image by*
@@ -52,7 +52,7 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
     - `view()` - *displays the converted image in the console*
 
 
-- toascii.**VideoConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*, loop: *bool*)
+- *class* toascii.**VideoConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*, loop: *bool*)
   - Parameters:
     - `filename` - *the file path of the video to convert*
     - `scale` - *the value to scale the video dimensions by*
@@ -66,7 +66,7 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
     - `view()` - *plays the converted video in the console*
 
 
-- toascii.**LiveVideoConverter**(source: *Union[str, int]*, scale: *float*, width_stretch: *float*, gradient: *str*)
+- *class* toascii.**LiveVideoConverter**(source: *Union[str, int]*, scale: *float*, width_stretch: *float*, gradient: *str*)
   - Parameters:
     - `source` - *the source device / camera to grab the frames from*
     - `scale` - *the value to scale the video dimensions by*
