@@ -32,7 +32,7 @@ class LiveVideoConverter:
 
     def view(self):
         try:
-            self._video = cv2._videoCapture(self.source)
+            self._video = cv2.VideoCapture(self.source)
             self._width = self._video.get(4)
             self._height = self._video.get(3)
 
