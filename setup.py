@@ -9,7 +9,7 @@ setuptools.setup(
     name="to-ascii",
     version=toascii.__version__,
     author="Iapetus-11",
-    description="A package which can convert videos, images, gifs, and even live video to ASCII art!",
+    description=toascii.__doc__,
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Iapetus-11/To-ASCII",
