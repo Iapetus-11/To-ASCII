@@ -39,14 +39,14 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
 ```
 
 ## API Reference
-### toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
-- Parameters:
-  - `filename` - *the file path of the image to convert*
-  - `scale` - *the value to scale the image by*
-  - `width_stretch` - *the value to scale with width extra by*
-  - `gradient` - *the gradient to use when asciifying the image*
-- Attributes:
-  - `ascii_image` - *the asciified image, only present after `ImageConverter.convert()` has been called*
-- Methods:
-  - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
-  - `view()` - *displays the converted image in the console*
+- toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
+  - Parameters:
+    - `filename` - *the file path of the image to convert*
+    - `scale` - *the value to scale the image by*
+    - `width_stretch` - *the value to scale with width extra by*
+    - `gradient` - *the gradient to use when asciifying the image*
+  - Attributes:
+    - `ascii_image` - *the asciified image, only present after `ImageConverter.convert()` has been called*
+  - Methods:
+    - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
+    - `view()` - *displays the converted image in the console*
