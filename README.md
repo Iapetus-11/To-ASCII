@@ -51,6 +51,7 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
     - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
     - `view()` - *displays the converted image in the console*
 
+
 - toascii.**VideoConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*, loop: *bool*)
   - Parameters:
     - `filename` - *the file path of the video to convert*
@@ -63,6 +64,7 @@ asciify video ~/Videos/bruhh.mp4 .05 3.5 high
   - Methods:
     - `convert()` - *converts the source video into ascii and stores it in the `ascii_frames` attribute*
     - `view()` - *plays the converted video in the console*
+
 
 - toascii.**LiveVideoConverter**(source: *Union[str, int]*, scale: *float*, width_stretch: *float*, gradient: *str*)
   - Parameters:
