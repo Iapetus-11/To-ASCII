@@ -76,10 +76,7 @@ def main():
         gradient = gradients.LOW
 
     try:
-        if args[5].lower() == "loop":
-            loop = True
-        else:
-            loop = False
+        loop = args[5].lower() == "loop"
     except IndexError:
         loop = False
 
