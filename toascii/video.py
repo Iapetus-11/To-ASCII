@@ -26,7 +26,7 @@ class VideoConverter:
             round(self.height * self.scale),
         )
 
-        self.line_breaks = "\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])
+        self.line_breaks = ("\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])) + "\r"
 
         # if os.name == "nt":
         #     self.clear = lambda: os.system("cls")
@@ -63,7 +63,7 @@ class VideoConverter:
             while True:
                 for frame in self.ascii_frames:
                     start = time.time()
-                    print(self.line_breaks + frame + "\r", end="")
+                    print(self.line_breaks + frame, end="")
                     time.sleep(spf - (start - time.time()))
 
                 if not self.loop:
