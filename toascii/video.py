@@ -27,21 +27,15 @@ class VideoConverter:
 
         self.ascii_frames = []
 
+    def asciify(self, frame):
+        for row in frame:
+            for b, g, r in row:
+                lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
+                yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
 
-        # if os.name == "nt":
-        #     self.clear = lambda: os.system("cls")
-        # else:
-        #     self.clear = lambda: os.system("clear")
+            yield "\n"
 
     def convert(self):
-        def convert_(frame):
-            for row in frame:
-                for b, g, r in row:
-                    lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                    yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
-
-                yield "\n"
-
         while True:
             success, frame = self._video.read()
 
@@ -49,7 +43,7 @@ class VideoConverter:
                 break
 
             frame = cv2.resize(frame, self._scaled_dims).tolist()
-            self.ascii_frames.append("".join(convert_(frame)))
+            self.ascii_frames.append("".join(self.asciify(frame)))
 
         return self
 
