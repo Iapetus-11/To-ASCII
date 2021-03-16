@@ -1,8 +1,10 @@
 import cv2
 import os
 
+from .converter import Converter
 
-class ImageConverter:
+
+class ImageConverter(Converter):
     def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str):
         if not os.path.isfile(filename):
             raise FileNotFoundError(filename)
@@ -21,14 +23,6 @@ class ImageConverter:
         )
 
         self.ascii_image = None
-
-    def asciify(self, image):
-        for row in image:
-            for b, g, r in row:
-                lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
-
-            yield "\n"
 
     def convert(self):
         image = cv2.resize(self._image, self._scaled_dims).tolist()

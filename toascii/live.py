@@ -3,8 +3,10 @@ import time
 import cv2
 import os
 
+from .converter import Converter
 
-class LiveVideoConverter:
+
+class LiveVideoConverter(Converter):
     def __init__(self, source: typing.Union[str, int], scale: float, width_stretch: float, gradient: str):
         self.source = source
         self.scale = scale
@@ -17,14 +19,6 @@ class LiveVideoConverter:
         self._height = None
         self._scaled_dims = None
         self._line_breaks = None
-
-    def asciify(self, frame):
-        for row in frame:
-            for b, g, r in row:
-                lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
-
-            yield "\n"
 
     def get_ascii_frame(self):
         success, frame = self._video.read()

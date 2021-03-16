@@ -2,8 +2,10 @@ import time
 import cv2
 import os
 
+from .converter import Converter
 
-class VideoConverter:
+
+class VideoConverter(Converter):
     def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str, loop: bool = False):
         if not os.path.isfile(filename):
             raise FileNotFoundError(filename)
@@ -26,14 +28,6 @@ class VideoConverter:
         self._line_breaks = ("\n" * (os.get_terminal_size().lines - self._scaled_dims[1])) + "\r"
 
         self.ascii_frames = []
-
-    def asciify(self, frame):
-        for row in frame:
-            for b, g, r in row:
-                lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
-
-            yield "\n"
 
     def convert(self):
         while True:
