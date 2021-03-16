@@ -15,7 +15,7 @@ pip install to-ascii
 ```
 
 ## CLI Usage:
-*Note: Required arguments are surrounded in <>, optional arguments are surrounded in [].*
+*Note: Required arguments are surrounded in `<>`, optional arguments are surrounded in `[]`.*
 
 ```
 asciify <type> <source> <scale> [width stretch] [gradient] [loop]
@@ -37,3 +37,16 @@ asciify image ~/Downloads/image4.png .6 2.5 block
 asciify image ~/Downloads/image4.png .6 2.5 kkadjfjkdfkaj
 asciify video ~/Videos/bruhh.mp4 .05 3.5 high
 ```
+
+## API Reference
+### toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
+- Parameters:
+  - `filename` - *the file path of the image to convert*
+  - `scale` - *the value to scale the image by*
+  - `width_stretch` - *the value to scale with width extra by*
+  - `gradient` - *the gradient to use when asciifying the image*
+- Attributes:
+  - `ascii_image` - *the asciified image, only present after `ImageConverter.convert()` has been called*
+- Methods:
+  - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
+  - `view()` - *displays the converted image in the console*
