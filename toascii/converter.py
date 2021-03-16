@@ -1,4 +1,3 @@
-
 class Converter:
     """Base converter class, contains the asciify() method which is used in all Converter subclasses."""
 

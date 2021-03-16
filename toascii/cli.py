@@ -22,6 +22,7 @@ loop            If "loop" is the 5th argument, the displayed ASCII video will lo
 Required arguments are surrounded in <>, optional arguments are surrounded in [].
 """
 
+
 def main():
     args = sys.argv[1:]
     # source, scale, width_stretch, gradient
@@ -88,6 +89,7 @@ def main():
         VideoConverter(source, scale, width_stretch, gradient, loop).convert().view()
     elif type_.lower() == "live":
         LiveVideoConverter(source, scale, width_stretch, gradient).view()
+
 
 if __name__ == "__main__":
     main()
