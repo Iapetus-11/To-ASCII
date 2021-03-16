@@ -7,6 +7,8 @@ from .converter import Converter
 
 
 class LiveVideoConverter(Converter):
+    """A converter class which handles converting live video from a camera to ASCII."""
+
     def __init__(self, source: typing.Union[str, int], scale: float, width_stretch: float, gradient: str):
         self.source = source
         self.scale = scale

@@ -5,6 +5,8 @@ from .converter import Converter
 
 
 class ImageConverter(Converter):
+    """A converter class which handles converting images into ASCII."""
+
     def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str):
         if not os.path.isfile(filename):
             raise FileNotFoundError(filename)

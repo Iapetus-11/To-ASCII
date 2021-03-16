@@ -1,5 +1,7 @@
 
 class Converter:
+    """Base converter class, contains the asciify() method which is used in all Converter subclasses."""
+
     def asciify(self, image):
         for row in image:
             for b, g, r in row:

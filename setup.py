@@ -1,4 +1,5 @@
 import setuptools
+
 import toascii
 
 with open("README.md", "r") as fh:

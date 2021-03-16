@@ -6,6 +6,8 @@ from .converter import Converter
 
 
 class VideoConverter(Converter):
+    """A converter class to handle converting videos and gifs to ASCII."""
+
     def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str, loop: bool = False):
         if not os.path.isfile(filename):
             raise FileNotFoundError(filename)
