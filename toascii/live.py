@@ -10,38 +10,38 @@ class LiveVideoConverter:
         self.scale = scale
         self.width_stretch = width_stretch
         self.gradient = list(gradient)
-        self.gradient_length = len(gradient)
 
-        self.video = None
-        self.width = None
-        self.height = None
-        self.scaled_dimensions = None
-        self.line_breaks = None
+        self._gradient_len = len(gradient)
+        self._video = None
+        self._width = None
+        self._height = None
+        self._scaled_dims = None
+        self._line_breaks = None
 
     def asciify(self, frame):
         for row in frame:
             for b, g, r in row:
                 lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                yield self.gradient[int((lumination / 255) * (self.gradient_length - 1))]
+                yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
 
             yield "\n"
 
     def get_ascii_frame(self):
-        success, frame = self.video.read()
-        return success, "".join(self.asciify(cv2.resize(frame, self.scaled_dimensions).tolist()))
+        success, frame = self._video.read()
+        return success, "".join(self.asciify(cv2.resize(frame, self._scaled_dims).tolist()))
 
     def view(self):
         try:
-            self.video = cv2.VideoCapture(self.source)
-            self.width = self.video.get(4)
-            self.height = self.video.get(3)
+            self._video = cv2._videoCapture(self.source)
+            self._width = self._video.get(4)
+            self._height = self._video.get(3)
 
-            self.scaled_dimensions = (
-                round(self.width * self.scale * self.width_stretch),
-                round(self.height * self.scale),
+            self._scaled_dims = (
+                round(self._width * self.scale * self.width_stretch),
+                round(self._height * self.scale),
             )
 
-            self.line_breaks = ("\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])) + "\r"
+            self._line_breaks = ("\n" * (os.get_terminal_size().lines - self._scaled_dims[1])) + "\r"
 
             while True:
                 success, ascii_frame = self.get_ascii_frame()
@@ -49,14 +49,14 @@ class LiveVideoConverter:
                 if not success:
                     break
 
-                print(self.line_breaks + ascii_frame, end="")
+                print(self._line_breaks + ascii_frame, end="")
         finally:
             try:
-                self.video.release()
+                self._video.release()
             except:
                 pass
 
             print()
 
-            self.width = None
-            self.height = None
+            self._width = None
+            self._height = None

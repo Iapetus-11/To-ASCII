@@ -12,21 +12,21 @@ class VideoConverter:
         self.scale = scale
         self.width_stretch = width_stretch
         self.gradient = list(gradient)
-        self.gradient_length = len(gradient)
         self.loop = loop
 
-        self.video = cv2.VideoCapture(filename)
-        self.ascii_frames = []
-        self.fps = self.video.get(cv2.CAP_PROP_FPS)
-        self.width = self.video.get(3)
-        self.height = self.video.get(4)
-
-        self.scaled_dimensions = (
+        self._gradient_len = len(gradient)
+        self._video = cv2.VideoCapture(filename)
+        self._fps = self._video.get(cv2.CAP_PROP_FPS)
+        self._width = self._video.get(3)
+        self._height = self._video.get(4)
+        self._scaled_dims = (
             round(self.width * self.scale * self.width_stretch),
             round(self.height * self.scale),
         )
+        self._line_breaks = ("\n" * (os.get_terminal_size().lines - self._scaled_dims[1])) + "\r"
 
-        self.line_breaks = ("\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])) + "\r"
+        self.ascii_frames = []
+
 
         # if os.name == "nt":
         #     self.clear = lambda: os.system("cls")
@@ -38,17 +38,17 @@ class VideoConverter:
             for row in frame:
                 for b, g, r in row:
                     lumination = 0.2126 * r + 0.7152 * g + 0.0722 * b
-                    yield self.gradient[int((lumination / 255) * (self.gradient_length - 1))]
+                    yield self.gradient[int((lumination / 255) * (self._gradient_len - 1))]
 
                 yield "\n"
 
         while True:
-            success, frame = self.video.read()
+            success, frame = self._video.read()
 
             if not success:
                 break
 
-            frame = cv2.resize(frame, self.scaled_dimensions).tolist()
+            frame = cv2.resize(frame, self._scaled_dims).tolist()
             self.ascii_frames.append("".join(convert_(frame)))
 
         return self
