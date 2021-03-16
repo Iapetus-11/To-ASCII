@@ -41,7 +41,7 @@ class LiveVideoConverter:
                 round(self.height * self.scale),
             )
 
-            self.line_breaks = "\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])
+            self.line_breaks = ("\n" * (os.get_terminal_size().lines - self.scaled_dimensions[1])) + "\r"
 
             while True:
                 success, ascii_frame = self.get_ascii_frame()
@@ -49,7 +49,7 @@ class LiveVideoConverter:
                 if not success:
                     break
 
-                print(self.line_breaks + ascii_frame + "\r", end="")
+                print(self.line_breaks + ascii_frame, end="")
         finally:
             try:
                 self.video.release()
