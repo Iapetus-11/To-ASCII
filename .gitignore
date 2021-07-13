@@ -1,7 +1,3 @@
 hentai_test.mp4
 
-__pycache__
-
-build
-dist
-to_ascii.egg-info
+__pycache__/
