@@ -44,11 +44,7 @@ class VideoConverter(Converter):
         return self
 
     def view(self, fps: float = None):
-        if fps is None:
-            spf = 1 / self._fps
-        else:
-            spf = 1 / fps
-
+        spf = 1 / self._fps if fps is None else 1 / fps
         try:
             while True:
                 for frame in self.ascii_frames:
