@@ -44,10 +44,9 @@ def main():
     except ValueError:
         pass
 
-    if isinstance(source, str):
-        if not os.path.isfile(source):
-            print(f"File {source} not found.")
-            exit(1)
+    if isinstance(source, str) and not os.path.isfile(source):
+        print(f"File {source} not found.")
+        exit(1)
 
     try:
         scale = float(args[2])
