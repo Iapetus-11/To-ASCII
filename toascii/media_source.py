@@ -38,9 +38,9 @@ class VideoSource:
     def __init__(self, source: VIDEO_SOURCE):
         if not isinstance(source, VIDEO_SOURCE):
             raise TypeError(INVALID_MEDIA_SOURCE.format(source=source))
-        
+
         self.source: Optional[VIDEO_SOURCE] = source
-        
+
         self._video_cap: Optional[cv2.VideoCapture] = None
         self._temp_file: Optional[tempfile.NamedTemporaryFile] = None
 
@@ -75,4 +75,3 @@ class VideoSource:
 
         if exc_value:
             raise exc_value
-

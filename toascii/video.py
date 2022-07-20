@@ -1,4 +1,3 @@
-
 import os
 import time
 from typing import Generator, Optional
@@ -30,7 +29,7 @@ class Video:
                 break
 
             yield self.converter.asciify_image(cv2.resize(frame, resize_dims))
-        
+
     def frames_to_ascii(self) -> Generator[str, None, None]:
         with VideoSource(self.source) as video:
             for frame in self._frames_to_ascii(video):
@@ -54,7 +53,6 @@ class Video:
             seconds_per_frame = 1 / (self.fps if self.fps else video_fps)
 
             line_breaks = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
-
 
             for frame in frames:
                 start = time.time()

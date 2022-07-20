@@ -5,6 +5,7 @@ import numpy as np
 
 from .options import ConverterOptions
 
+
 class BaseConverter(ABC):
     def __init__(self):
         self._options = None

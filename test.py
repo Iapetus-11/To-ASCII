@@ -1,4 +1,3 @@
-
 from toascii.converters import ColorConverter, GrayscaleConverter
 from toascii.extensions.color_converter_nim import ColorConverterNim
 from toascii.gradients import HIGH, BLOCK, LOW
