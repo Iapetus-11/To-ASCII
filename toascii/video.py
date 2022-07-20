@@ -58,4 +58,3 @@ class Video:
                 start = time.time()
                 print(line_breaks + frame, end="\r")
                 time.sleep(seconds_per_frame - (start - time.time()))
-                # os.system("cls")

@@ -6,14 +6,19 @@ import tempfile
 
 import numpy as np
 
+# type aliases
 IMAGE_SOURCE = Union[str, bytes, io.IOBase]
 VIDEO_SOURCE = Union[IMAGE_SOURCE, int]
+
+# used for isinstance/subclass checks because <Py3.10 doesn't support those with generics
+T_IMAGE_SOURCE = (str, bytes, io.IOBase)
+T_VIDEO_SOURCE = (*T_IMAGE_SOURCE, int)
 
 INVALID_MEDIA_SOURCE = "{source!r} is not an instance of bytes or IOBase."
 
 
 def load_image(source: IMAGE_SOURCE) -> np.ndarray:
-    if not isinstance(source, IMAGE_SOURCE):
+    if not isinstance(source, T_IMAGE_SOURCE):
         raise TypeError(INVALID_MEDIA_SOURCE.format(source=source))
 
     # attempt to load an image from a file, where src is the path
@@ -36,7 +41,7 @@ def load_image(source: IMAGE_SOURCE) -> np.ndarray:
 
 class VideoSource:
     def __init__(self, source: VIDEO_SOURCE):
-        if not isinstance(source, VIDEO_SOURCE):
+        if not isinstance(source, T_VIDEO_SOURCE):
             raise TypeError(INVALID_MEDIA_SOURCE.format(source=source))
 
         self.source: Optional[VIDEO_SOURCE] = source

@@ -1,5 +1,4 @@
-from toascii.converters import ColorConverter, GrayscaleConverter
-from toascii.extensions.color_converter_nim import ColorConverterNim
+from toascii.converters import ColorConverter, GrayscaleConverter, ColorConverterNim
 from toascii.gradients import HIGH, BLOCK, LOW
 from toascii.image import Image
 from toascii.converters.options import ConverterOptions
@@ -12,6 +11,13 @@ from toascii.video import Video
 
 # ## 16 pt ft
 
-p = "C:\\Users\miloi\\Downloads\\sam_low.gif"
-v = Video(p, ConverterOptions(gradient=LOW, height=64, x_stretch=3.5), ColorConverterNim())
+# p = "C:\\Users\miloi\\Videos\\based_omni_man.mp4"
+# v = Video(p, ConverterOptions(gradient=LOW, height=48, x_stretch=6, saturation=1, contrast=.25), ColorConverterNim())
+# v.view()
+
+# p = "C:\\Users\miloi\\Downloads\\rick_roll.mp4"
+# v = Video(p, ConverterOptions(gradient=LOW, height=48, x_stretch=4, saturation=1, contrast=.25), ColorConverterNim())
+# v.view()
+
+v = Video(0, ConverterOptions(gradient=LOW, height=56, x_stretch=4, saturation=0.15, contrast=.1), ColorConverterNim())
 v.view()
