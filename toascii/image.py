@@ -1,36 +1,18 @@
-import cv2
-import os
-
-from .converter import Converter
+from .converters import BaseConverter, ConverterOptions
+from .media_source import IMAGE_SOURCE, load_image
 
 
-class ImageConverter(Converter):
-    """A converter class which handles converting images into ASCII."""
+class Image:
+    def __init__(self, source: IMAGE_SOURCE, options: ConverterOptions, converter: BaseConverter):
+        self.source = source
+        self.options = options
+        self.converter = converter
+        self.converter.options = options
 
-    def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str):
-        if not os.path.isfile(filename):
-            raise FileNotFoundError(filename)
+    def to_ascii(self) -> str:
+        image = load_image(self.source)
+        image = self.converter.resize_image(image)
+        return self.converter.asciify_image()
 
-        self.filename = filename
-        self.scale = scale
-        self.width_stretch = width_stretch
-        self.gradient = list(gradient)
-
-        self._gradient_len = len(gradient)
-        self._image = cv2.imread(filename)
-        self._width, self._height = reversed(self._image.shape[:2])
-        self._scaled_dims = (
-            round(self._width * self.scale * self.width_stretch),
-            round(self._height * self.scale),
-        )
-
-        self.ascii_image = None
-
-    def convert(self):
-        image = cv2.resize(self._image, self._scaled_dims).tolist()
-        self.ascii_image = "".join(self.asciify(image))
-
-        return self
-
-    def view(self):
-        print(self.ascii_image)
+    def view(self) -> None:
+        print(self.to_ascii())
