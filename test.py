@@ -1,7 +1,8 @@
-from toascii.converters import ColorConverter, GrayscaleConverter, ColorConverterNim
-from toascii.gradients import HIGH, BLOCK, LOW
-from toascii.image import Image
+from toascii.converters import (ColorConverter, ColorConverterNim,
+                                GrayscaleConverter)
 from toascii.converters.options import ConverterOptions
+from toascii.gradients import BLOCK, HIGH, LOW
+from toascii.image import Image
 from toascii.video import Video
 
 # p = "C:\\Users\\miloi\\Pictures\\walle2adj.png"
@@ -19,5 +20,11 @@ from toascii.video import Video
 # v = Video(p, ConverterOptions(gradient=LOW, height=48, x_stretch=4, saturation=1, contrast=.25), ColorConverterNim())
 # v.view()
 
-v = Video(0, ConverterOptions(gradient=LOW, height=56, x_stretch=4, saturation=0.15, contrast=.1), ColorConverterNim())
+v = Video(
+    0,
+    ConverterOptions(
+        gradient=LOW, height=56, x_stretch=4, saturation=0.15, contrast=0.1
+    ),
+    ColorConverterNim(),
+)
 v.view()

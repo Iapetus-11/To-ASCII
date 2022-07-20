@@ -1,4 +1,4 @@
-from .video import Video
-from .image import Image
-from .converters import *
 from . import gradients
+from .converters import *
+from .image import Image
+from .video import Video

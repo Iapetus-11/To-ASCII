@@ -1,9 +1,9 @@
-from typing import Any, Optional, Union
 import io
-import cv2
 import pathlib
 import tempfile
+from typing import Any, Optional, Union
 
+import cv2
 import numpy as np
 
 # type aliases

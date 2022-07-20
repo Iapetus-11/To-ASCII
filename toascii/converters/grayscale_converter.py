@@ -1,4 +1,5 @@
 from typing import Generator
+
 import numpy as np
 
 from .base_converter import BaseConverter

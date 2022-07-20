@@ -1,6 +1,7 @@
 from typing import Dict, Generator, List, Tuple, Union
-import numpy as np
+
 import colorama
+import numpy as np
 
 from .grayscale_converter import GrayscaleConverter
 
@@ -49,8 +50,15 @@ RGB_TO_COLORAMA_NAME = {
 
 # all possible rgb values to color ascii codes
 RGB_TO_ASCII_CODE: Dict[T_COLOR, str] = {
-    a: getattr(colorama.Fore, RGB_TO_COLORAMA_NAME[min(RGB_TO_COLORAMA_NAME.keys(), key=(lambda b: _dist_3d(a, b)))]) for a in _gen_colors()
+    a: getattr(
+        colorama.Fore,
+        RGB_TO_COLORAMA_NAME[
+            min(RGB_TO_COLORAMA_NAME.keys(), key=(lambda b: _dist_3d(a, b)))
+        ],
+    )
+    for a in _gen_colors()
 }
+
 
 def _rgb2hsl(c: T_COLOR) -> T_HSL_COLOR:
     r = c[0] / 255.0
@@ -59,58 +67,66 @@ def _rgb2hsl(c: T_COLOR) -> T_HSL_COLOR:
     cMin = min(r, min(g, b))
     cMax = max(r, max(g, b))
     delta = cMax - cMin
-    h, s, l = [0.0]*3
+    h, s, l = [0.0] * 3
 
-    if delta == 0.0: h = 0.0
-    elif cMax == r: h = ((g - b) / delta) % 6.0
-    elif cMax == g: h = ((b - r) / delta) + 2.0
-    else: h = ((r - g) / delta) + 4.0
+    if delta == 0.0:
+        h = 0.0
+    elif cMax == r:
+        h = ((g - b) / delta) % 6.0
+    elif cMax == g:
+        h = ((b - r) / delta) + 2.0
+    else:
+        h = ((r - g) / delta) + 4.0
 
     h = round(h * 60.0)
 
-    if (h < 0.0): h += 360.0
+    if h < 0.0:
+        h += 360.0
 
     l = (cMax + cMin) / 2.0
 
-    if delta == 0.0: s = 0.0
-    else: s = delta / (1 - abs(2.0 * l - 1.0))
+    if delta == 0.0:
+        s = 0.0
+    else:
+        s = delta / (1 - abs(2.0 * l - 1.0))
 
     s *= 100.0
     l *= 100.0
 
     return [h, s, l]
 
+
 def _hsl2rgb(c: T_HSL_COLOR) -> T_COLOR:
     h = c[0]
     s = c[1] / 100.0
     l = c[2] / 100.0
 
-    r, g, b = [0.0]*3
+    r, g, b = [0.0] * 3
     c = (1.0 - abs(2 * l - 1.0)) * s
     x = c * (1.0 - abs((h / 60.0) % 2.0 - 1.0))
     m = l - c / 2.0
 
-    if (0 <= h and h < 60):
+    if 0 <= h and h < 60:
         r = c
         g = x
         b = 0
-    elif (60 <= h and h < 120):
+    elif 60 <= h and h < 120:
         r = x
         g = c
         b = 0
-    elif (120 <= h and h < 180):
+    elif 120 <= h and h < 180:
         r = 0
         g = c
         b = x
-    elif (180 <= h and h < 240):
+    elif 180 <= h and h < 240:
         r = 0
         g = x
         b = c
-    elif (240 <= h and h < 300):
+    elif 240 <= h and h < 300:
         r = x
         g = 0
         b = c
-    elif (300 <= h and h < 360):
+    elif 300 <= h and h < 360:
         r = c
         g = 0
         b = x
@@ -120,6 +136,7 @@ def _hsl2rgb(c: T_HSL_COLOR) -> T_COLOR:
     b = round((b + m) * 255)
 
     return [r, g, b]
+
 
 def _saturate(pixel: T_COLOR, saturation: float) -> T_COLOR:
     hsl = _rgb2hsl(pixel)
@@ -133,6 +150,7 @@ def _saturate(pixel: T_COLOR, saturation: float) -> T_COLOR:
 
     return _hsl2rgb(hsl)
 
+
 class ColorConverter(GrayscaleConverter):
     def _contrast(self, image: np.ndarray) -> np.ndarray:
         if self.options.contrast is not None:
@@ -142,7 +160,7 @@ class ColorConverter(GrayscaleConverter):
             image = np.clip(image, min_val, max_val)
             image = ((image - min_val) / (max_val - min_val)) * 255
             image = image.astype(np.uint8)
-        
+
         return image
 
     def _asciify_image(self, image: np.ndarray) -> Generator[str, None, None]:
@@ -153,7 +171,9 @@ class ColorConverter(GrayscaleConverter):
         for row in image:
             for pixel in row:
                 pixel = list(reversed(pixel))
-                yield RGB_TO_ASCII_CODE[_trunc_color(*_saturate(pixel, self.options.saturation))]
+                yield RGB_TO_ASCII_CODE[
+                    _trunc_color(*_saturate(pixel, self.options.saturation))
+                ]
 
                 lum = self._luminosity(*pixel)
                 yield self.options.gradient[int((lum / 255) * g_l_m)]

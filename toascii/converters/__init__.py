@@ -1,7 +1,7 @@
-from .extensions.unsupported_extension import UnsupportedExtension
 from .base_converter import BaseConverter
-from .grayscale_converter import GrayscaleConverter
 from .color_converter import ColorConverter
+from .extensions.unsupported_extension import UnsupportedExtension
+from .grayscale_converter import GrayscaleConverter
 from .options import ConverterOptions
 
 try:

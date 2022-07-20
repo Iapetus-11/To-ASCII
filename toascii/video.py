@@ -3,12 +3,19 @@ import time
 from typing import Generator, Optional
 
 import cv2
+
+from .converters import BaseConverter, ConverterOptions
 from .media_source import IMAGE_SOURCE, VideoSource
-from .converters import ConverterOptions, BaseConverter
 
 
 class Video:
-    def __init__(self, source: IMAGE_SOURCE, options: ConverterOptions, converter: BaseConverter, fps: Optional[float] = None):
+    def __init__(
+        self,
+        source: IMAGE_SOURCE,
+        options: ConverterOptions,
+        converter: BaseConverter,
+        fps: Optional[float] = None,
+    ):
         self.source = source
         self.options = options
         self.converter = converter

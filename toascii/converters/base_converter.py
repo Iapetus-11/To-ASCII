@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Tuple
+
 import cv2
 import numpy as np
 
@@ -27,7 +28,9 @@ class BaseConverter(ABC):
 
         raise NotImplementedError
 
-    def calculate_dimensions(self, initial_height: int, initial_width: int) -> Tuple[int, int]:
+    def calculate_dimensions(
+        self, initial_height: int, initial_width: int
+    ) -> Tuple[int, int]:
         width = self.options.width
         height = self.options.height
 
