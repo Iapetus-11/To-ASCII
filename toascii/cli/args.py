@@ -118,7 +118,7 @@ ARGS: Dict[Union[str, int], ArgDef] = {
         ArgDef("y_stretch", "--ystretch", ca_float, optional=True),
         ArgDef("saturation", "--saturation", ca_float, optional=True),
         ArgDef("contrast", "--contrast", ca_float, optional=True),
-        ArgDef("loop", "--loop", None, optional=True)
+        ArgDef("loop", "--loop", None, optional=True),
     ]
 }
 

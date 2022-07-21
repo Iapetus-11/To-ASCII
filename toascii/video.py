@@ -72,12 +72,12 @@ class Video:
 
             def _view():
                 start = time.time()
-                
+
                 for frame in frames:
                     print(line_breaks + frame, end="\r")
                     time.sleep(seconds_per_frame - (start - time.time()))
                     start = time.time()
-            
+
             _view()
             while self.loop:
                 _view()

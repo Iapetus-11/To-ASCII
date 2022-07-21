@@ -1,13 +1,13 @@
 import os
 from typing import Union
 
-from .. import ConverterOptions, Image, Video, gradients, __version__
+from .. import ConverterOptions, Image, Video, __version__, gradients
 from .args import MediaType, get_args
 
 
 def main():
     print(f"To-ASCII version {__version__}")
-    
+
     args = get_args()
 
     if "gradient" not in args:

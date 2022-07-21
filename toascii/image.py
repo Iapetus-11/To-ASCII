@@ -3,9 +3,7 @@ from .media_source import IMAGE_SOURCE, load_image
 
 
 class Image:
-    def __init__(
-        self, source: IMAGE_SOURCE, converter: BaseConverter
-    ):
+    def __init__(self, source: IMAGE_SOURCE, converter: BaseConverter):
         self.source = source
         self.converter = converter
         self.options = converter.options
