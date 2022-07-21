@@ -1,13 +1,12 @@
-import pathlib
 from typing import Generator
 
-import nimporter
 import numpy as np
+
+from .extension_utils import build_extensions
+build_extensions()
 
 from ..html_color_converter import HtmlColorConverter
 from . import html_color_converter
-
-nimporter.build_nim_extensions(pathlib.Path("./toascii/converters/extensions"))
 
 
 class HtmlColorConverterNim(HtmlColorConverter):

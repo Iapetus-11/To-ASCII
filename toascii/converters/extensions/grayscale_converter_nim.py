@@ -1,13 +1,12 @@
-import pathlib
 from typing import Generator
 
-import nimporter
 import numpy as np
+
+from .extension_utils import build_extensions
+build_extensions()
 
 from ..grayscale_converter import GrayscaleConverter
 from . import grayscale_converter
-
-nimporter.build_nim_extensions(pathlib.Path("./toascii/converters/extensions"))
 
 
 class GrayscaleConverterNim(GrayscaleConverter):

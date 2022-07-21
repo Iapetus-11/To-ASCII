@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "to-ascii"
-version = "5.0.0"
+version = "5.0.1"
 description = "Convert videos, images, gifs, and even live video to ASCII art!"
 authors = ["Milo Weinberg <iapetus011@gmail.com>"]
 license = "MIT"

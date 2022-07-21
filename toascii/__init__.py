@@ -3,4 +3,5 @@ from .converters import *
 from .image import Image
 from .video import Video
 
-__version__ = "5.0.0"
+import pkg_resources
+__version__ = pkg_resources.get_distribution("to-ascii").version

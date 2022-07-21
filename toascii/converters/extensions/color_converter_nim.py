@@ -1,13 +1,12 @@
-import pathlib
 from typing import Generator
 
-import nimporter
 import numpy as np
+
+from .extension_utils import build_extensions
+build_extensions()
 
 from ..color_converter import RGB_TO_ASCII_CODE, ColorConverter
 from . import color_converter
-
-nimporter.build_nim_extensions(pathlib.Path("./toascii/converters/extensions"))
 
 color_converter.setRgbValuesMap(list(RGB_TO_ASCII_CODE.items()))
 
