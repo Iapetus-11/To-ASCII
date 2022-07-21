@@ -5,6 +5,7 @@ class UnsupportedExtensionException(RuntimeError):
         self.ext_name = ext_name
         self.from_exc = from_exc
 
+
 def unsupported_extension(ext_name: str, exception: Exception):
     class _UnsupportedExtension:
         def __init__(self, *args, **kwargs):

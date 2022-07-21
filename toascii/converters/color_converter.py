@@ -18,6 +18,7 @@ def _gen_colors() -> Generator[T_COLOR, None, None]:
             for b in range(0, COLOR_TRUNC_TO):
                 yield (r, g, b)
 
+
 def _dist_3d(a: T_COLOR, b: T_COLOR) -> float:
     return abs((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2)
 

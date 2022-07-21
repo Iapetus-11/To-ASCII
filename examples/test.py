@@ -25,6 +25,6 @@ v = Video(
     ConverterOptions(
         gradient=LOW, height=56, x_stretch=4, saturation=0.5, contrast=0.01
     ),
-    ColorConverterNim()
+    ColorConverterNim(),
 )
 v.view()

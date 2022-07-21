@@ -4,11 +4,12 @@ import numpy as np
 
 from .color_converter import ColorConverter
 
-
 COLOR_TRUNC = 64
+
 
 def _trunc_color(r: int, g: int, b: int) -> Tuple[int, int, int]:
     return (r // COLOR_TRUNC, g // COLOR_TRUNC, b // COLOR_TRUNC)
+
 
 def _untrunc_color(r: int, g: int, b: int) -> Tuple[int, int, int]:
     return (r * COLOR_TRUNC, g * COLOR_TRUNC, b * COLOR_TRUNC)
@@ -27,7 +28,7 @@ class HtmlColorConverter(ColorConverter):
                 color = self._saturate((r, g, b), self.options.saturation)
                 lum = self._luminosity(r, g, b)
                 char = self.options.gradient[int((lum / 255) * g_l_m)]
-                
+
                 if color != last_color:
                     if last_color is not None:
                         yield "</span>"
@@ -43,4 +44,3 @@ class HtmlColorConverter(ColorConverter):
 
     def asciify_image(self, image: np.ndarray) -> str:
         return f'<div style="font-family:monospace;background-color:black;white-space:pre;">{"".join(self._asciify_image(image))}</div>'
-
