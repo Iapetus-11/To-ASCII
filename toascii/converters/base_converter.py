@@ -17,9 +17,7 @@ class BaseConverter(ABC):
 
         raise NotImplementedError
 
-    def calculate_dimensions(
-        self, initial_height: int, initial_width: int
-    ) -> Tuple[int, int]:
+    def calculate_dimensions(self, initial_height: int, initial_width: int) -> Tuple[int, int]:
         width = self.options.width
         height = self.options.height
 

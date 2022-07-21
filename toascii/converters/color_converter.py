@@ -52,9 +52,7 @@ RGB_TO_COLORAMA_NAME = {
 RGB_TO_ASCII_CODE: Dict[T_COLOR, str] = {
     a: getattr(
         colorama.Fore,
-        RGB_TO_COLORAMA_NAME[
-            min(RGB_TO_COLORAMA_NAME.keys(), key=(lambda b: _dist_3d(a, b)))
-        ],
+        RGB_TO_COLORAMA_NAME[min(RGB_TO_COLORAMA_NAME.keys(), key=(lambda b: _dist_3d(a, b)))],
     )
     for a in _gen_colors()
 }

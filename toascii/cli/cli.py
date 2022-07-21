@@ -19,11 +19,7 @@ def main():
         args["height"] = max(height, 16)
 
     conv_opts = ConverterOptions(
-        **{
-            k: v
-            for k, v in args.items()
-            if k in ConverterOptions.schema()["properties"].keys()
-        }
+        **{k: v for k, v in args.items() if k in ConverterOptions.schema()["properties"].keys()}
     )
 
     cls = {MediaType.IMAGE: Image, MediaType.VIDEO: Video}[args["media_type"]]
