@@ -4,7 +4,7 @@
 * Works on most image and video types including GIFs
 * Works on LIVE VIDEO
 
-<img src="https://user-images.githubusercontent.com/38477514/180253533-e0725ba5-6c6d-408d-a643-ff02f021cff8.png" width="350" /> <img src="https://user-images.githubusercontent.com/38477514/180254306-9e8eca93-ea38-47bf-b1c2-72ad75244604.png" width="350" /> <img src="https://user-images.githubusercontent.com/38477514/180251469-8826a23d-a292-42b2-83c6-c9a637214b5e.png" width="350" /> <img src="https://user-images.githubusercontent.com/38477514/180251666-49b07f5f-da3c-4790-85b9-ba72dbca606b.png" width="350" />
+<img src="https://user-images.githubusercontent.com/38477514/180253533-e0725ba5-6c6d-408d-a643-ff02f021cff8.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180254306-9e8eca93-ea38-47bf-b1c2-72ad75244604.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180251469-8826a23d-a292-42b2-83c6-c9a637214b5e.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180251666-49b07f5f-da3c-4790-85b9-ba72dbca606b.png" width="360" />
 
 [\[Video Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Video Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
 
@@ -80,11 +80,11 @@ toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32
     - `resize_image`(`image`: *`numpy.ndarray`*) -> *`numpy.ndarray`*
 - Implementations:
     - [`GrayscaleConverter`](toascii/converters/grayscale_converter.py) - *converts media to grayscale ascii*
-    - [`GrayscaleConverterNim`](toascii/converters/extensions/grayscale_converter_nim.py) - *converters media to grayscale ascii, implemented in [Nim](https://nim-lang.org/), requires the [Nim compiler](https://nim-lang.org/install.html)*
+    - [`GrayscaleConverterNim`](toascii/converters/extensions/grayscale_converter_nim.py) - *converters media to grayscale ascii, see the [Extensions](#extensions) section*
     - [`ColorConverter`](toascii/converters/color_converter.py) - *converts media to colored ascii using [Colorama](https://pypi.org/project/colorama/)*
-    - [`ColorConverterNim`](toascii/converters/extensions/color_converter_nim.py) - *converts media to colored ascii using [Colorama](https://pypi.org/project/colorama/) implemented in [Nim](https://nim-lang.org/), requires the [Nim compiler]()*
+    - [`ColorConverterNim`](toascii/converters/extensions/color_converter_nim.py) - *converts media to colored ascii using [Colorama](https://pypi.org/project/colorama/), see the [Extensions](#extensions) section*
     - [`HtmlColorConverter`](toascii/converters/html_color_converter.py) - *converts media to ascii in colored html spans*
-    - [`HtmlColorConverterNim`](toascii/converters/extensions/html_color_converter_nim.py) - *converts media to ascii in colored html spans implemented in [Nim](https://nim-lang.org/), requires the [Nim compiler](https://nim-lang.org/install.html)*
+    - [`HtmlColorConverterNim`](toascii/converters/extensions/html_color_converter_nim.py) - *converts media to ascii in colored html spans, see the [Extensions](#extensions) section*
 #### *class* [`Image`](toascii/image.py)(`source`: *`Union[str, bytes, IOBase]`*, `converter`: *`BaseConverter`*)
 - *class for converting an image to ascii*
 - Parameters:
@@ -119,3 +119,8 @@ toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32
     - `view`() -> *`None`* - *prints out each frame of the converted video*
         - if the video source is not live, this method will first generate all frames and cache them in memory for a smoother playback
         - if the `loop` parameter was set to `True` earlier, then this will play the video and restart it when it finishes unless the source is live
+
+## Extensions
+- For each converter available, there is a separate implementation written in [Nim](https://nim-lang.org/)
+- These implementations are generally orders of magnitude faster than their Python counterparts
+- To use these extensions you must [install Nim](https://nim-lang.org/install.html) and install the `to-ascii[speedups]` package via pip or your package manager of choice
