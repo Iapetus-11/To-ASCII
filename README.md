@@ -1,11 +1,9 @@
-# To-Ascii ![Code Quality](https://www.codefactor.io/repository/github/iapetus-11/to-ascii/badge/master) ![PYPI Version](https://img.shields.io/pypi/v/to-ascii.svg) ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=0FAE6E) ![Views](https://api.ghprofile.me/view?username=iapetus-11.to-ascii&color=0FAE6E&label=views&style=flat)
+# To-Ascii ![Code Quality](https://www.codefactor.io/repository/github/iapetus-11/to-ascii/badge/master) ![PYPI Version](https://img.shields.io/pypi/v/to-ascii.svg) ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=0FAE6E)
 *Converts videos, images, gifs, and even live video into ascii art!*
 
 [\[Example\]](https://www.youtube.com/watch?v=S5-_BzdrOkQ) [\[Example 2\]](https://www.youtube.com/watch?v=eX4pYQjCyYg)
 
-* Works on most common image types
-* Works on most common video types
-* Works on GIFs
+* Works on most common image and video types including GIFs
 * Works on LIVE VIDEO
 
 ## Installation
@@ -14,64 +12,107 @@ Via pip:
 pip install to-ascii
 ```
 
-## CLI Usage:
+## CLI Usage
 *Note: Required arguments are surrounded in `<>`, optional arguments are surrounded in `[]`.*
-
 ```
-asciify <type> <source> <scale> [width stretch] [gradient] [loop]
+toascii <media_type> <source> <converter> [--gradient <string>] [--width <int>] [--height <int>] [--xstretch <float>] [--ystretch <float>] [--saturation <float>] [--contrast <float>] [--loop]
 ```
 
-### CLI Arguments:
-- `type` - The type of content, either IMAGE, VIDEO, or LIVE.
-- `source` - The source, either a file path or video device.
-- `scale` - Used to scale down the image to fit in your console, recommended value is 0.1.
-- `width stretch`- Used to account for console characters being taller than they are wide, default value is 2.0.
-- `gradient` - The gradient used, one of BLOCK, HIGH, LOW, or a custom gradient as a string.
-- `loop` - If "loop" is the 5th argument, the displayed ASCII video will loop until interrupted.
+### CLI Arguments
+- `media_type` - the type of media, either `image` or `video`
+- `source` - the source for the media, this is the primary argument in constructing an instance of an [OpenCV `VideoCapture`](https://docs.opencv.org/3.4/d8/dfe/classcv_1_1VideoCapture.html)
+- `converter` - the converter used to convert the media, check [this file]() for the available options
+- `gradient` - the characters used when converting an image to ascii
+- `width` - an integer value for the width in characters of the final converted image
+- `height` - an integer value for the height in characters of the final converted image
+- `xstretch` - the amount to stretch the width by
+- `ystretch` - the amount to stretch the height by
+- `saturation` - how much to saturate the image, a value from -1.0 to 1.0.
+- `contrast` - how much to modify the contrast, a value from 0.0 to 1.0
+- `loop` - whether or not to loop the video when it is done playing
 
-### CLI Examples:
+### CLI Examples
+```bash
+# live video
+toascii video 0 grayscaleconverternim --xstretch 3 --height 56 --saturation .25 --contrast .01
 ```
-asciify image ~/Downloads/image4.gif .6 2.5 block loop
-asciify live 0 .055 4.5 low
-asciify image ~/Downloads/image4.png .6 2.5 block
-asciify image ~/Downloads/image4.png .6 2.5 kkadjfjkdfkaj
-asciify video ~/Videos/bruhh.mp4 .05 3.5 high
+```bash
+toascii image "C:\Users\miloi\Pictures\my_image.png" colorconverter
+```
+```bash
+toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32 --width 48 --saturation 0.5 --contrast 0.01 --loop
 ```
 
 ## API Reference
-- *class* toascii.**ImageConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*)
-  - Parameters:
-    - `filename` - *the file path of the image to convert*
-    - `scale` - *the value to scale the image by*
-    - `width_stretch` - *the value to scale the width extra by*
-    - `gradient` - *the gradient to use when asciifying the image*
-  - Attributes:
-    - `ascii_image` - *the asciified image as a string, only present after `ImageConverter.convert()` has been called*
-  - Methods:
-    - `convert()` - *converts the source image into ascii and stores it in the `ascii_image` attribute*
-    - `view()` - *displays the converted image in the console*
-
-
-- *class* toascii.**VideoConverter**(filename: *str*, scale: *float*, width_stretch: *float*, gradient: *str*, loop: *bool*)
-  - Parameters:
-    - `filename` - *the file path of the video to convert*
-    - `scale` - *the value to scale the video dimensions by*
-    - `width_stretch` - *the value to scale the video width extra by*
-    - `gradient` - *the gradient to use when asciifying the video*
-    - `loop` - *whether to loop the video at the end when viewing it, defaults to `False`*
-  - Attributes:
-    - `ascii_frames` - *the asciified video's frames in a list, only present after `VideoConverter.convert()` has been called*
-  - Methods:
-    - `convert()` - *converts the source video into ascii and stores it in the `ascii_frames` attribute*
-    - `view()` - *plays the converted video in the console*
-
-
-- *class* toascii.**LiveVideoConverter**(source: *Union[str, int]*, scale: *float*, width_stretch: *float*, gradient: *str*)
-  - Parameters:
-    - `source` - *the source device / camera to grab the frames from*
-    - `scale` - *the value to scale the video dimensions by*
-    - `width_stretch` - *the value to scale the video width extra by*
-    - `gradient` - *the gradient to use when asciifying the video*
-  - Methods:
-    - `get_ascii_frame()` - *grabs a frame from the camera and converts it*
-    - `view()` - *view the live video in the console*
+- *class* [`ConverterOptions`]()(\*, `gradient`: *`str`*, `width`: *`Optional[int]`*, `height`: *`Optional[int]`*, `x_stretch`: *`float`*, `y_stretch`: *`float`*, `saturation`: *`float`*, `contrast`: *`Optional[float]`*)
+    - *pydantic model for converter options*
+    - Parameters / Attributes:
+        - `gradient`: *`str`* - *string containing the characters the converter will use when converting the image to ascii*
+            - must be at least one character
+        - `width`: *`Optional[int]`* - *width in characters of the final converted image*
+            - default value is `None`
+            - must be greater than `0`
+        - `height`: *`Optional[int]`* - *height in characters of the final converted image*
+            - default value is `None`
+            - must be greater than `0`
+        - `x_stretch`: *`float`* - *how much to stretch the width by*
+            - default value is `1.0` (which doesn't change the width by anything)
+            - must be greater than `0.0`
+        - `y_stretch`: *`float`* - *how much to stretch the height by*
+            - default value is `1.0` (which doesn't change the height by anything)
+            - must be greater than `0.0`
+        - `saturation`: *`float`* - *how much to adjust the saturation*
+            - default value is `0.5` (which increases the saturation)
+            - must be between `-1.0` and `1.0`, `0.0` is no change to saturation
+        - `contrast`: *`Optional[float]`* - *how much to increase the contrast by*
+            - default value is `None` (which doesn't apply any contrast filter)
+            - must be between `0.0` and `1.0`
+- *class* [`ConverterBase`]()(`options`: *`ConverterOptions`*)
+    - *base class for implementing converters*
+    - Parameters:
+        - `options`: *`ConverterOptions`* - *Options used when converting media*
+    - Methods:
+        - *abstract* `asciify_image`(`image`: *`numpy.ndarray`*) -> *`str`*
+        - `calculate_dimensions`(`initial_height`: *`int`*, `initial_width`: *`int`*) -> *`Tuple[int, int]`*
+        - `resize_image`(`image`: *`numpy.ndarray`*) -> *`numpy.ndarray`*
+    - Implementations:
+        - [`GrayscaleConverter`]() - *converts media to grayscale ascii*
+        - [`GrayscaleConverterNim`]() - *converters media to grayscale ascii, implemented in [Nim](), requires the [Nim compiler]()*
+        - [`ColorConverter`]() - *converts media to colored ascii using [Colorama]()*
+        - [`ColorConverterNim`]() - *converts media to colored ascii using [Colorama]() implemented in [Nim](), requires the [Nim compiler]()*
+        - [`HtmlColorConverter`]() - *converts media to ascii in colored html spans*
+        - [`HtmlColorConverterNim`]() - *converts media to ascii in colored html spans implemented in [Nim](), requires the [Nim compiler]()*
+- *class* [`Image`]()(`source`: *`Union[str, bytes, IOBase]`*, `converter`: *`BaseConverter`*)
+    - *class for converting an image to ascii*
+    - Parameters:
+        - `source`: *`Union[str, bytes, IOBase]`* - *the source of the image that is to be loaded and converted*
+            - if `source` is a `str`, it's assumed that it's a path to an image file
+            - if `source` is `bytes` or `IOBase` it's assumed to be the data of an image and is decoded in-memory
+        - `converter`: *`ConverterBase`* - *the converter used to convert the image*
+            - takes anything that implements `ConverterBase`
+    - Methods:
+        - `to_ascii`() -> `str`
+            - *returns the image converted by the converter*
+        - `view`() -> `None`
+            - *prints out the converted image to the console*
+- *class* [`Video`]()(`source`: *`Union[str, int, bytes, IOBase]`*, `converter`: *`BaseConverter`*, \*, `fps`: *`Optional[float]`*, `loop`: *`bool`*)
+    - *class for converting a video to ascii*
+    - Parameters:
+        - `source`: *`Union[str, int bytes, IOBase]`* - *the source of the video that is to be loaded and converted*
+            - if `source` is a `str`, it's assumed that it's a path to an image file
+            - if `source` is `bytes` or `IOBase` it's assumed to be the data of an image and is decoded in-memory
+            - if `source` is an `int`, it's assumed to be the index of a camera device
+            - see [OpenCV's `VideoCapture`](https://docs.opencv.org/3.4/d8/dfe/classcv_1_1VideoCapture.html) for more information
+        - `converter`: *`ConverterBase`* - *the converter used to convert the image*
+            - takes anything that implements `ConverterBase`
+        - `fps`: *`Optional[float]`* - *the fps to play the video at*
+            - default value is `None`
+            - if `None` then the fps used is fetched from OpenCV's `VideoCapture` API
+        - `loop`: *`bool`* - *whether or not to loop the video when it's done playing*
+            - default value is `False`
+            - if the video source is live, this parameter is ignored
+    - Methods:
+        - `get_ascii_frames`() -> `Generator[str, None, None]` - *returns a generator which yields each ascii frame as it is converted*
+        - `view`() -> `None` - *prints out each frame of the converted video*
+            - if the video source is not live, this method will first generate all frames and cache them in memory for a smoother playback
+            - if the `loop` parameter was set to `True` earlier, then this will play the video and restart it when it finishes unless the source is live

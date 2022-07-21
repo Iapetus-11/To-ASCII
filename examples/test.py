@@ -6,25 +6,27 @@ from toascii.image import Image
 from toascii.video import Video
 
 # p = "C:\\Users\\miloi\\Pictures\\walle2adj.png"
-# i = Image(p, ConverterOptions(scale=0.15, width_stretch=2.1, gradient=LOW), ColorConverter())
+# i = Image(p, ColorConverter(ConverterOptions(scale=0.15, width_stretch=2.1, gradient=LOW)))
 
 # i.view()
 
 # ## 16 pt ft
 
 # p = "C:\\Users\miloi\\Videos\\based_omni_man.mp4"
-# v = Video(p, ConverterOptions(gradient=LOW, height=48, x_stretch=6, saturation=1, contrast=.25), ColorConverterNim())
+# v = Video(p, ColorConverterNim(ConverterOptions(gradient=LOW, height=48, x_stretch=6, saturation=1, contrast=.25)))
 # v.view()
 
 # p = "C:\\Users\miloi\\Downloads\\rick_roll.mp4"
-# v = Video(p, ConverterOptions(gradient=LOW, height=48, x_stretch=4, saturation=1, contrast=.25), ColorConverterNim())
+# v = Video(p, ColorConverterNim(ConverterOptions(gradient=LOW, height=48, x_stretch=4, saturation=1, contrast=.25)))
 # v.view()
 
 v = Video(
     0,
-    ConverterOptions(
-        gradient=LOW, height=56, x_stretch=4, saturation=0.5, contrast=0.01
+    ColorConverterNim(
+        ConverterOptions(
+            gradient=LOW, height=56, x_stretch=4, saturation=0.5, contrast=0.01
+        ),
     ),
-    ColorConverterNim(),
 )
+print(v)
 v.view()

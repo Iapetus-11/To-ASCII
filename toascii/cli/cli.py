@@ -1,11 +1,13 @@
 import os
 from typing import Union
 
-from .. import ConverterOptions, Image, Video, gradients
+from .. import ConverterOptions, Image, Video, gradients, __version__
 from .args import MediaType, get_args
 
 
 def main():
+    print(f"To-ASCII version {__version__}")
+    
     args = get_args()
 
     if "gradient" not in args:
@@ -26,7 +28,7 @@ def main():
 
     cls = {MediaType.IMAGE: Image, MediaType.VIDEO: Video}[args["media_type"]]
 
-    cls_inst: Union[Image, Video] = cls(args["source"], conv_opts, args["converter"]())
+    cls_inst: Union[Image, Video] = cls(args["source"], args["converter"](conv_opts))
     cls_inst.view()
 
 

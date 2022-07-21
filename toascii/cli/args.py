@@ -1,7 +1,7 @@
 import enum
 import shlex
 import sys
-from typing import Any, Callable, Dict, Generic, List, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
 
 from .. import converters
 
@@ -26,7 +26,7 @@ class ArgDef(Generic[T]):
         self,
         name: str,
         prefix: Union[str, int],
-        converter: Callable[[str], T],
+        converter: Optional[Callable[[str], T]],
         optional: bool = False,
     ):
         self.name = name
@@ -35,6 +35,9 @@ class ArgDef(Generic[T]):
         self.optional = optional
 
     def convert(self, value: str) -> T:
+        if self.converter is None:
+            raise RuntimeError("This argument type does not have a value.")
+
         try:
             return self.converter(value)
         except ArgConverterException as e:
@@ -115,6 +118,7 @@ ARGS: Dict[Union[str, int], ArgDef] = {
         ArgDef("y_stretch", "--ystretch", ca_float, optional=True),
         ArgDef("saturation", "--saturation", ca_float, optional=True),
         ArgDef("contrast", "--contrast", ca_float, optional=True),
+        ArgDef("loop", "--loop", None, optional=True)
     ]
 }
 
@@ -134,13 +138,22 @@ def get_args() -> Dict[str, Any]:
 
     for i, arg in enumerate(argvj):
         if arg_def := ARGS.get(arg.lower()):
-            if i == len(argvj) - 1 or argvj[i + 1].startswith("-"):
-                error(f"missing value for argument {arg_def}")
+            # if an argument definition has a converter, that means it takes a value
+            if arg_def.converter:
+                if i == len(argvj) - 1 or argvj[i + 1].startswith("-"):
+                    error(f"missing value for argument {arg_def}")
 
-            args[arg_def.name] = arg_def.convert(argvj[i + 1])
+                args[arg_def.name] = arg_def.convert(argvj[i + 1])
+            else:
+                args[arg_def.name] = True
 
     for arg_def in ARGS.values():
+        # check for missing arguments
         if arg_def.name not in args and not arg_def.optional:
             error(f"missing required argument {arg_def}")
+
+        # make sure all boolean / non-value-taking args are present in the args dict
+        if arg_def.name not in args and not arg_def.converter:
+            args[arg_def.name] = False
 
     return args

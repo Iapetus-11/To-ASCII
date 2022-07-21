@@ -1,15 +1,14 @@
-from .converters import BaseConverter, ConverterOptions
+from .converters import BaseConverter
 from .media_source import IMAGE_SOURCE, load_image
 
 
 class Image:
     def __init__(
-        self, source: IMAGE_SOURCE, options: ConverterOptions, converter: BaseConverter
+        self, source: IMAGE_SOURCE, converter: BaseConverter
     ):
         self.source = source
-        self.options = options
         self.converter = converter
-        self.converter.options = options
+        self.options = converter.options
 
     def to_ascii(self) -> str:
         image = load_image(self.source)

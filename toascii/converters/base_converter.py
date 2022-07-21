@@ -8,19 +8,8 @@ from .options import ConverterOptions
 
 
 class BaseConverter(ABC):
-    def __init__(self):
-        self._options = None
-
-    @property
-    def options(self) -> ConverterOptions:
-        if self._options is None:
-            raise RuntimeError(f"{type(self).__qualname__}.options was not set.")
-
-        return self._options
-
-    @options.setter
-    def options(self, value: ConverterOptions) -> None:
-        self._options = value
+    def __init__(self, options: ConverterOptions):
+        self.options = options
 
     @abstractmethod
     def asciify_image(self, image: np.ndarray) -> str:
