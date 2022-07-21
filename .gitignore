@@ -2,3 +2,5 @@ hentai_test.mp4
 __pycache__/
 nim-extensions/
 MANIFEST.in
+dist/
+.venv/

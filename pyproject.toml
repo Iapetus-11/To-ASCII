@@ -7,6 +7,9 @@ license = "MIT"
 packages = [
     { include = "toascii" }
 ]
+readme = "README.md"
+repository = "https://github.com/Iapetus-11/To-ASCII"
+keywords = ["ascii", "color", "colors", "ascii-art", "video", "image", "nim"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -29,3 +32,12 @@ toascii = "toascii.cli.cli:main"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py38']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 100
