@@ -4,6 +4,9 @@ version = "5.0.0"
 description = "Convert videos, images, gifs, and even live video to ASCII art!"
 authors = ["Milo Weinberg <iapetus011@gmail.com>"]
 license = "MIT"
+packages = [
+    { include = "toascii" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -19,6 +22,9 @@ black = "^22.6.0"
 
 [tool.poetry.extras]
 speedups = ["nimporter"]
+
+[tool.poetry.scripts]
+toascii = "toascii.cli.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

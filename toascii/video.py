@@ -22,9 +22,14 @@ class Video:
         self.converter.options = options
         self.fps = fps
 
+    @staticmethod
+    def _validate_source(video: cv2.VideoCapture) -> None:
+        if video.get(cv2.CAP_PROP_FRAME_HEIGHT) == 0:
+            raise ValueError("Invalid video source provided")
+
     def _frames_to_ascii(self, video) -> Generator[str, None, None]:
         resize_dims = self.converter.calculate_dimensions(
-            video.get(cv2.CAP_PROP_FRAME_WIDTH),
+            video.get(cv2.CAP_PROP_FRAME_HEIGHT),
             video.get(cv2.CAP_PROP_FRAME_HEIGHT),
         )
 
@@ -39,11 +44,15 @@ class Video:
 
     def frames_to_ascii(self) -> Generator[str, None, None]:
         with VideoSource(self.source) as video:
+            self._validate_source(video)
+
             for frame in self._frames_to_ascii(video):
                 yield frame
 
     def view(self) -> None:
         with VideoSource(self.source) as video:
+            self._validate_source(video)
+
             height = self.options.height or int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
             frames = self._frames_to_ascii(video)
 
@@ -61,7 +70,9 @@ class Video:
 
             line_breaks = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
 
+            start = time.time()
+
             for frame in frames:
-                start = time.time()
                 print(line_breaks + frame, end="\r")
                 time.sleep(seconds_per_frame - (start - time.time()))
+                start = time.time()

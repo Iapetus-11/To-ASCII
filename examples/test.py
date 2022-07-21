@@ -1,5 +1,5 @@
 from toascii.converters import (ColorConverter, ColorConverterNim,
-                                GrayscaleConverter)
+                                GrayscaleConverter, GrayscaleConverterNim)
 from toascii.converters.options import ConverterOptions
 from toascii.gradients import BLOCK, HIGH, LOW
 from toascii.image import Image
@@ -23,8 +23,8 @@ from toascii.video import Video
 v = Video(
     0,
     ConverterOptions(
-        gradient=LOW, height=56, x_stretch=4, saturation=0.15, contrast=0.1
+        gradient=LOW, height=56, x_stretch=4, saturation=0.5, contrast=0.01
     ),
-    ColorConverterNim(),
+    ColorConverterNim()
 )
 v.view()

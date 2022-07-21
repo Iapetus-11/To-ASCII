@@ -18,7 +18,6 @@ def _gen_colors() -> Generator[T_COLOR, None, None]:
             for b in range(0, COLOR_TRUNC_TO):
                 yield (r, g, b)
 
-
 def _dist_3d(a: T_COLOR, b: T_COLOR) -> float:
     return abs((b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2)
 
@@ -138,20 +137,20 @@ def _hsl2rgb(c: T_HSL_COLOR) -> T_COLOR:
     return [r, g, b]
 
 
-def _saturate(pixel: T_COLOR, saturation: float) -> T_COLOR:
-    hsl = _rgb2hsl(pixel)
-
-    if saturation >= 0:
-        gray_factor = hsl[1] / 100.0
-        var_interval = 100.0 - hsl[1]
-        hsl[1] = hsl[1] + saturation * var_interval * gray_factor
-    else:
-        hsl[1] = hsl[1] + saturation * hsl[1]
-
-    return _hsl2rgb(hsl)
-
-
 class ColorConverter(GrayscaleConverter):
+    @staticmethod
+    def _saturate(pixel: T_COLOR, saturation: float) -> T_COLOR:
+        hsl = _rgb2hsl(pixel)
+
+        if saturation >= 0:
+            gray_factor = hsl[1] / 100.0
+            var_interval = 100.0 - hsl[1]
+            hsl[1] = hsl[1] + saturation * var_interval * gray_factor
+        else:
+            hsl[1] = hsl[1] + saturation * hsl[1]
+
+        return _hsl2rgb(hsl)
+
     def _contrast(self, image: np.ndarray) -> np.ndarray:
         if self.options.contrast is not None:
             image = ((image - image.min()) / (image.max() - image.min())) * 255
@@ -169,13 +168,12 @@ class ColorConverter(GrayscaleConverter):
 
         row: np.ndarray
         for row in image:
-            for pixel in row:
-                pixel = list(reversed(pixel))
+            for b, g, r in row:
                 yield RGB_TO_ASCII_CODE[
-                    _trunc_color(*_saturate(pixel, self.options.saturation))
+                    _trunc_color(*self._saturate((r, g, b), self.options.saturation))
                 ]
 
-                lum = self._luminosity(*pixel)
+                lum = self._luminosity(r, g, b)
                 yield self.options.gradient[int((lum / 255) * g_l_m)]
 
             yield "\n"

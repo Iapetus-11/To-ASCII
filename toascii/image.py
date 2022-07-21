@@ -13,8 +13,11 @@ class Image:
 
     def to_ascii(self) -> str:
         image = load_image(self.source)
-        image = self.converter.resize_image(image)
-        return self.converter.asciify_image()
+
+        if image is None:
+            raise ValueError("Invalid image source provided")
+
+        return self.converter.asciify_image(self.converter.resize_image(image))
 
     def view(self) -> None:
         print(self.to_ascii())

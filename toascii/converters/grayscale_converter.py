@@ -16,8 +16,7 @@ class GrayscaleConverter(BaseConverter):
         row: np.ndarray
         for row in image:
             for b, g, r in row:
-                lumination: float = 0.2126 * r + 0.7152 * g + 0.0722 * b
-
+                lumination = self._luminosity(r, g, b)
                 yield self.options.gradient[int((lumination / 255) * g_l_m)]
 
             yield "\n"
