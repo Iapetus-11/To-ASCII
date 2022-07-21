@@ -1,9 +1,6 @@
-"""A package which can convert videos, images, gifs, and even live video to ASCII art!"""
-
-__version__ = "4.0.1"
-
-from .image import ImageConverter
-from .video import VideoConverter
-from .live import LiveVideoConverter
-
 from . import gradients
+from .converters import *
+from .image import Image
+from .video import Video
+
+__version__ = "5.0.0"

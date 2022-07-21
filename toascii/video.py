@@ -1,58 +1,83 @@
-import time
-import cv2
 import os
+import time
+from typing import Generator, Optional
 
-from .converter import Converter
+import cv2
+
+from .converters import BaseConverter
+from .media_source import VIDEO_SOURCE, VideoSource
 
 
-class VideoConverter(Converter):
-    """A converter class to handle converting videos and gifs to ASCII."""
-
-    def __init__(self, filename: str, scale: float, width_stretch: float, gradient: str, loop: bool = False):
-        if not os.path.isfile(filename):
-            raise FileNotFoundError(filename)
-
-        self.filename = filename
-        self.scale = scale
-        self.width_stretch = width_stretch
-        self.gradient = list(gradient)
+class Video:
+    def __init__(
+        self,
+        source: VIDEO_SOURCE,
+        converter: BaseConverter,
+        *,
+        fps: Optional[float] = None,
+        loop: bool = False,
+    ):
+        self.source = source
+        self.converter = converter
+        self.options = converter.options
+        self.fps = fps
         self.loop = loop
 
-        self._gradient_len = len(gradient)
-        self._video = cv2.VideoCapture(filename)
-        self._fps = self._video.get(cv2.CAP_PROP_FPS)
-        self._width = self._video.get(3)
-        self._height = self._video.get(4)
-        self._scaled_dims = (
-            round(self._width * self.scale * self.width_stretch),
-            round(self._height * self.scale),
+    @staticmethod
+    def _validate_source(video: cv2.VideoCapture) -> None:
+        if video.get(cv2.CAP_PROP_FRAME_HEIGHT) == 0:
+            raise ValueError("Invalid video source provided")
+
+    def _get_ascii_frames(self, video) -> Generator[str, None, None]:
+        resize_dims = self.converter.calculate_dimensions(
+            video.get(cv2.CAP_PROP_FRAME_HEIGHT),
+            video.get(cv2.CAP_PROP_FRAME_HEIGHT),
         )
-        self._line_breaks = ("\n" * (os.get_terminal_size().lines - self._scaled_dims[1])) + "\r"
 
-        self.ascii_frames = []
-
-    def convert(self):
         while True:
-            success, frame = self._video.read()
+            success, frame = video.read()
 
+            # break out of loop if failed to get next frame
             if not success:
                 break
 
-            frame = cv2.resize(frame, self._scaled_dims).tolist()
-            self.ascii_frames.append("".join(self.asciify(frame)))
+            yield self.converter.asciify_image(cv2.resize(frame, resize_dims))
 
-        return self
+    def get_ascii_frames(self) -> Generator[str, None, None]:
+        with VideoSource(self.source) as video:
+            self._validate_source(video)
 
-    def view(self, fps: float = None):
-        spf = 1 / self._fps if fps is None else 1 / fps
-        try:
-            while True:
-                for frame in self.ascii_frames:
+            for frame in self._get_ascii_frames(video):
+                yield frame
+
+    def view(self) -> None:
+        with VideoSource(self.source) as video:
+            self._validate_source(video)
+
+            height = self.options.height or int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            frames = self._get_ascii_frames(video)
+
+            # check if video is live
+            if (max_frames := int(video.get(cv2.CAP_PROP_FRAME_COUNT))) > -1:
+                genned_frames = []
+                for i, frame in enumerate(frames, start=1):
+                    genned_frames.append(frame)
+                    print(f"Generating frames... ({i}/{max_frames})", end="\r")
+
+                frames = genned_frames
+
+            video_fps = video.get(cv2.CAP_PROP_FPS)
+            seconds_per_frame = 1 / (self.fps if self.fps else video_fps)
+            line_breaks = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
+
+            def _view():
+                start = time.time()
+
+                for frame in frames:
+                    print(line_breaks + frame, end="\r")
+                    time.sleep(seconds_per_frame - (start - time.time()))
                     start = time.time()
-                    print(self._line_breaks + frame, end="")
-                    time.sleep(spf - (start - time.time()))
 
-                if not self.loop:
-                    break
-        except KeyboardInterrupt:
-            print()
+            _view()
+            while self.loop:
+                _view()
