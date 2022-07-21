@@ -3,6 +3,7 @@ from typing import Generator
 import numpy as np
 
 from .extension_utils import build_extensions
+
 build_extensions()
 
 from ..grayscale_converter import GrayscaleConverter

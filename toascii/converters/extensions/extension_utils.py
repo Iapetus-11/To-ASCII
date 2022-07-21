@@ -1,7 +1,9 @@
-import nimporter
 import pathlib
 
+import nimporter
+
 _did_build_extensions = False
+
 
 def build_extensions() -> None:
     global _did_build_extensions
