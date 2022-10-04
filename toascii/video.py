@@ -47,8 +47,7 @@ class Video:
         with VideoSource(self.source) as video:
             self._validate_source(video)
 
-            for frame in self._get_ascii_frames(video):
-                yield frame
+            yield from self._get_ascii_frames(video)
 
     @staticmethod
     def _is_live(video: cv2.VideoCapture) -> bool:

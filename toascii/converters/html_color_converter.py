@@ -1,18 +1,8 @@
-from typing import Generator, Tuple
+from typing import Generator
 
 import numpy as np
 
 from .color_converter import ColorConverter
-
-COLOR_TRUNC = 64
-
-
-def _trunc_color(r: int, g: int, b: int) -> Tuple[int, int, int]:
-    return (r // COLOR_TRUNC, g // COLOR_TRUNC, b // COLOR_TRUNC)
-
-
-def _untrunc_color(r: int, g: int, b: int) -> Tuple[int, int, int]:
-    return (r * COLOR_TRUNC, g * COLOR_TRUNC, b * COLOR_TRUNC)
 
 
 class HtmlColorConverter(ColorConverter):
