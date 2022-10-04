@@ -13,10 +13,13 @@ def main():
 
     if args["help"]:
         print("Usage:")
-        print("\ttoascii <media_type> <source> <converter> [--gradient <string>] [--width <int>] [--height <int>] "
-              "[--xstretch <float>] [--ystretch <float>] [--saturation <float>] [--contrast <float>] [--loop]"
+        print(
+            "\ttoascii <media_type> <source> <converter> [--gradient <string>] [--width <int>] [--height <int>] "
+            "[--xstretch <float>] [--ystretch <float>] [--saturation <float>] [--contrast <float>] [--loop]"
         )
-        print("\n(Required arguments are surrounded in <>, optional arguments are surrounded in [])")
+        print(
+            "\n(Required arguments are surrounded in <>, optional arguments are surrounded in [])"
+        )
         return
 
     if errors:
