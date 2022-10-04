@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    types: [opened]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: install poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: configure poetry
+        run: poetry config virtualenvs.in-project true
+
+      - name: load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: install dependencies
+#        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install
+
+      - name: auto-flake
+        run: poetry run autoflake --remove-all-unused-imports --expand-star-imports --ignore-init-module-imports --in-place --recursive toascii/
+
+      - name: black fix
+        run: poetry run black .
+
+      - name: isort fix
+        run: poetry run isort .
+
+      - name: auto commit
+        uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        with:
+          commit_message: format / fix code

@@ -4,15 +4,6 @@ import nimpy/[raw_buffers]
 import nimpy_numpy
 import converter_utils
 
-# const
-#     COLOR_TRUNC = 64
-
-# proc truncColor(c: Color): Color {.inline.} =
-#     return (c.r div COLOR_TRUNC, c.g div COLOR_TRUNC, c.b div COLOR_TRUNC)
-
-# proc unTruncColor(c: Color): Color {.inline.} = 
-#     return (c.r * COLOR_TRUNC, c.g * COLOR_TRUNC, c.b * COLOR_TRUNC)
-
 proc colorToCss(c: Color): string {.inline.} =
     return "rgb(" & $c.r & "," & $c.g & "," & $c.b & ")"
 

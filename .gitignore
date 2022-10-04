@@ -4,3 +4,4 @@ nim-extensions/
 MANIFEST.in
 dist/
 .venv/
+.idea/

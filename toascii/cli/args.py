@@ -1,15 +1,8 @@
 import enum
-import shlex
 import sys
-from typing import Any, Callable, Dict, Generic, List, Optional, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, List, Optional, Tuple, TypeVar, Union
 
 from .. import converters
-
-
-def error(message: str) -> None:
-    print("ERROR:", message)
-    sys.exit(1)
-
 
 T = TypeVar("T")
 
@@ -38,10 +31,7 @@ class ArgDef(Generic[T]):
         if self.converter is None:
             raise RuntimeError("This argument type does not have a value.")
 
-        try:
-            return self.converter(value)
-        except ArgConverterException as e:
-            error(f"parsing argument failed [{self.name}]: {e.message}")
+        return self.converter(value)
 
     def __str__(self) -> str:
         arg_crtype = self.converter.__annotations__.get("return", str)
@@ -62,7 +52,9 @@ def ca_media_type(value: str) -> MediaType:
     try:
         return MediaType[value.upper()]
     except KeyError:
-        raise ArgConverterException(f"invalid value: {value!r}")
+        raise ArgConverterException(
+            f"invalid value: {value!r} (must be one of [{', '.join([repr(m.name.lower()) for m in MediaType])}])"
+        )
 
 
 def ca_source(value: str) -> Union[str, int]:
@@ -119,20 +111,26 @@ ARGS: Dict[Union[str, int], ArgDef] = {
         ArgDef("saturation", "--saturation", ca_float, optional=True),
         ArgDef("contrast", "--contrast", ca_float, optional=True),
         ArgDef("loop", "--loop", None, optional=True),
+        ArgDef("help", "--help", None, optional=True),
     ]
 }
 
 
-def get_args() -> Dict[str, Any]:
+def parse_args() -> Tuple[Dict[str, Any], List[str]]:
     argvj = sys.argv[1:]
     args = {}
+    errors = []
 
-    for prefix, arg_def in ARGS.items():
-        if isinstance(prefix, int):
-            if prefix > len(argvj) - 1:
-                error(f"missing required positional argument {arg_def}")
+    try:
+        for prefix, arg_def in ARGS.items():
+            if isinstance(prefix, int):
+                if prefix > len(argvj) - 1:
+                    errors.append(f"missing required positional argument {arg_def}")
+                    continue
 
-            args[arg_def.name] = arg_def.convert(argvj[prefix])
+                args[arg_def.name] = arg_def.convert(argvj[prefix])
+    except ArgConverterException as e:
+        errors.append(e.message)
 
     argvj = argvj[len(args) :]
 
@@ -141,7 +139,8 @@ def get_args() -> Dict[str, Any]:
             # if an argument definition has a converter, that means it takes a value
             if arg_def.converter:
                 if i == len(argvj) - 1 or argvj[i + 1].startswith("-"):
-                    error(f"missing value for argument {arg_def}")
+                    errors.append(f"missing value for argument {arg_def}")
+                    continue
 
                 args[arg_def.name] = arg_def.convert(argvj[i + 1])
             else:
@@ -150,10 +149,11 @@ def get_args() -> Dict[str, Any]:
     for arg_def in ARGS.values():
         # check for missing arguments
         if arg_def.name not in args and not arg_def.optional:
-            error(f"missing required argument {arg_def}")
+            errors.append(f"missing required argument {arg_def}")
+            continue
 
         # make sure all boolean / non-value-taking args are present in the args dict
         if arg_def.name not in args and not arg_def.converter:
             args[arg_def.name] = False
 
-    return args
+    return args, errors

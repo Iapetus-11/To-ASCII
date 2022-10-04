@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "to-ascii"
-version = "5.0.1"
+version = "5.1.0"
 description = "Convert videos, images, gifs, and even live video to ASCII art!"
 authors = ["Milo Weinberg <iapetus011@gmail.com>"]
 license = "MIT"
@@ -19,15 +19,16 @@ colorama = "^0.4.5"
 nimporter = { version = "^1.1.0", optional = true}
 pydantic = "^1.9.1"
 
-[tool.poetry.dev-dependencies]
-isort = "^5.10.1"
-black = "^22.6.0"
-
 [tool.poetry.extras]
 speedups = ["nimporter"]
 
 [tool.poetry.scripts]
 toascii = "toascii.cli.cli:main"
+
+[tool.poetry.group.dev.dependencies]
+autoflake = "^1.6.1"
+isort = "^5.10.1"
+black = "^22.8.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
