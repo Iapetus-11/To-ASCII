@@ -50,6 +50,10 @@ class Video:
             for frame in self._get_ascii_frames(video):
                 yield frame
 
+    @staticmethod
+    def _is_live(video: cv2.VideoCapture) -> bool:
+        return video.get(cv2.CAP_PROP_FRAME_COUNT) <= 0
+
     def view(self) -> None:
         with VideoSource(self.source) as video:
             self._validate_source(video)
@@ -57,9 +61,11 @@ class Video:
             height = self.options.height or int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
             frames = self._get_ascii_frames(video)
 
-            # check if video is live
-            if (max_frames := int(video.get(cv2.CAP_PROP_FRAME_COUNT))) > -1:
+            # if video isn't live we should pre-gen frames
+            if not self._is_live(video):
+                max_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
                 genned_frames = []
+
                 for i, frame in enumerate(frames, start=1):
                     genned_frames.append(frame)
                     print(f"Generating frames... ({i}/{max_frames})", end="\r")
