@@ -1,5 +1,3 @@
-import std/[math]
-
 import nimpy/[raw_buffers]
 
 import nimpy_numpy
