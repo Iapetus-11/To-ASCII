@@ -62,16 +62,16 @@ def _rgb2hsl(c: T_COLOR) -> T_HSL_COLOR:
     r = c[0] / 255.0
     g = c[1] / 255.0
     b = c[2] / 255.0
-    cMin = min(r, min(g, b))
-    cMax = max(r, max(g, b))
-    delta = cMax - cMin
+    c_min = min(r, min(g, b))
+    c_max = max(r, max(g, b))
+    delta = c_max - c_min
     h, s, l = [0.0] * 3
 
     if delta == 0.0:
         h = 0.0
-    elif cMax == r:
+    elif c_max == r:
         h = ((g - b) / delta) % 6.0
-    elif cMax == g:
+    elif c_max == g:
         h = ((b - r) / delta) + 2.0
     else:
         h = ((r - g) / delta) + 4.0
@@ -81,7 +81,7 @@ def _rgb2hsl(c: T_COLOR) -> T_HSL_COLOR:
     if h < 0.0:
         h += 360.0
 
-    l = (cMax + cMin) / 2.0
+    l = (c_max + c_min) / 2.0
 
     if delta == 0.0:
         s = 0.0

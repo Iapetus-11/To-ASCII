@@ -1,3 +1,4 @@
+import enum
 import os
 import time
 from typing import Generator, Optional
@@ -8,6 +9,13 @@ from .converters import BaseConverter
 from .media_source import VIDEO_SOURCE, VideoSource
 
 
+class FrameClearStrategy(enum.Enum):
+    NONE = enum.auto()
+    DOUBLE_LINE_BREAK = enum.auto()
+    TERMINAL_HEIGHT_LINE_BREAKS = enum.auto()
+    ANSI_LINE_TRAVEL = enum.auto()
+
+
 class Video:
     def __init__(
         self,
@@ -16,12 +24,14 @@ class Video:
         *,
         fps: Optional[float] = None,
         loop: bool = False,
+        frame_clear_strategy: FrameClearStrategy = FrameClearStrategy.DOUBLE_LINE_BREAK,
     ):
         self.source = source
         self.converter = converter
         self.options = converter.options
         self.fps = fps
         self.loop = loop
+        self.frame_clear_strategy = frame_clear_strategy
 
     @staticmethod
     def _validate_source(video: cv2.VideoCapture) -> None:
@@ -73,13 +83,22 @@ class Video:
 
             video_fps = video.get(cv2.CAP_PROP_FPS)
             seconds_per_frame = 1 / (self.fps if self.fps else video_fps)
-            line_breaks = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
+
+            print_prefix = ""
+            print_suffix = "\n"
+            if self.frame_clear_strategy is FrameClearStrategy.DOUBLE_LINE_BREAK:
+                print_prefix = "\n\n"
+            elif self.frame_clear_strategy is FrameClearStrategy.TERMINAL_HEIGHT_LINE_BREAKS:
+                print_prefix = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
+                print_suffix = "\r"
+            elif self.frame_clear_strategy is FrameClearStrategy.ANSI_LINE_TRAVEL:
+                print_prefix = "\033[F" * os.get_terminal_size().lines
 
             def _view():
                 start = time.time()
 
                 for frame in frames:
-                    print(line_breaks + frame, end="\r")
+                    print(print_prefix + frame, end=print_suffix)
                     time.sleep(seconds_per_frame - (start - time.time()))
                     start = time.time()
 

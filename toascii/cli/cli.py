@@ -2,6 +2,7 @@ import os
 import sys
 from typing import Union
 
+from toascii.video import FrameClearStrategy
 from .. import ConverterOptions, Image, Video, __version__, gradients
 from .args import MediaType, parse_args
 
@@ -40,7 +41,9 @@ def main():
 
     cls = {MediaType.IMAGE: Image, MediaType.VIDEO: Video}[args["media_type"]]
 
-    cls_inst: Union[Image, Video] = cls(args["source"], args["converter"](conv_opts))
+    extra_args = {"loop": args["loop"], "frame_clear_strategy": FrameClearStrategy.ANSI_LINE_TRAVEL} if cls is Video else {}
+
+    cls_inst: Union[Image, Video] = cls(args["source"], args["converter"](conv_opts), **extra_args)
     cls_inst.view()
 
 
