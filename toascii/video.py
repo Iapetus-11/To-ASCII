@@ -13,7 +13,9 @@ class FrameClearStrategy(enum.Enum):
     NONE = enum.auto()
     DOUBLE_LINE_BREAK = enum.auto()
     TERMINAL_HEIGHT_LINE_BREAKS = enum.auto()
-    ANSI_LINE_TRAVEL = enum.auto()
+    ANSI_ERASE_IN_LINE = enum.auto()
+    ANSI_ERASE_IN_DISPLAY = enum.auto()
+    ANSI_CURSOR_POS = enum.auto()
 
 
 class Video:
@@ -24,7 +26,7 @@ class Video:
         *,
         fps: Optional[float] = None,
         loop: bool = False,
-        frame_clear_strategy: FrameClearStrategy = FrameClearStrategy.DOUBLE_LINE_BREAK,
+        frame_clear_strategy: FrameClearStrategy = FrameClearStrategy.ANSI_ERASE_IN_DISPLAY,
     ):
         self.source = source
         self.converter = converter
@@ -85,14 +87,19 @@ class Video:
             seconds_per_frame = 1 / (self.fps if self.fps else video_fps)
 
             print_prefix = ""
-            print_suffix = "\n"
+            print_suffix = ""
             if self.frame_clear_strategy is FrameClearStrategy.DOUBLE_LINE_BREAK:
                 print_prefix = "\n\n"
+                print_suffix = "\n"
             elif self.frame_clear_strategy is FrameClearStrategy.TERMINAL_HEIGHT_LINE_BREAKS:
                 print_prefix = ("\n" * (os.get_terminal_size().lines - height)) + "\r"
                 print_suffix = "\r"
-            elif self.frame_clear_strategy is FrameClearStrategy.ANSI_LINE_TRAVEL:
-                print_prefix = "\033[F" * os.get_terminal_size().lines
+            elif self.frame_clear_strategy is FrameClearStrategy.ANSI_ERASE_IN_LINE:
+                print_prefix = f"\033[{height}A\033[2K"
+            elif self.frame_clear_strategy is FrameClearStrategy.ANSI_ERASE_IN_DISPLAY:
+                print_prefix = "\033[2J"
+            elif self.frame_clear_strategy is FrameClearStrategy.ANSI_CURSOR_POS:
+                print_prefix = f"\033[H"
 
             def _view():
                 start = time.time()

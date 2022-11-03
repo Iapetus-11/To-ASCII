@@ -33,7 +33,7 @@ def main():
     if "height" not in args:
         height = os.get_terminal_size().lines // 2
         height -= 5 if height > 10 else 0
-        args["height"] = max(height, 16)
+        args["height"] = max(height, 32)
 
     conv_opts = ConverterOptions(
         **{k: v for k, v in args.items() if k in ConverterOptions.schema()["properties"].keys()}
@@ -41,7 +41,7 @@ def main():
 
     cls = {MediaType.IMAGE: Image, MediaType.VIDEO: Video}[args["media_type"]]
 
-    extra_args = {"loop": args["loop"], "frame_clear_strategy": FrameClearStrategy.ANSI_LINE_TRAVEL} if cls is Video else {}
+    extra_args = {"loop": args["loop"], "frame_clear_strategy": FrameClearStrategy.ANSI_ERASE_IN_LINE} if cls is Video else {}
 
     cls_inst: Union[Image, Video] = cls(args["source"], args["converter"](conv_opts), **extra_args)
     cls_inst.view()
