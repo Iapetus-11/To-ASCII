@@ -2,9 +2,16 @@ import enum
 import sys
 from typing import Any, Callable, Dict, Generic, List, Optional, Tuple, TypeVar, Union
 
-from .. import converters
+from .. import converters, gradients
 
 T = TypeVar("T")
+
+GRADIENTS = {
+    'BLOCK': gradients.BLOCK,
+    'LOW': gradients.LOW,
+    'HIGH': gradients.HIGH,
+    'OXXO': gradients.OXXO
+}
 
 
 class ArgConverterException(ValueError):
@@ -68,6 +75,12 @@ def ca_str(value: str) -> str:
     return value.strip('"')
 
 
+def ca_gradient(value: str) -> str:
+    value = value.strip('"')
+
+    return GRADIENTS.get(value.upper(), value)
+
+
 def ca_converter(value: str) -> converters.BaseConverter:
     opts = {
         c.__name__.lower(): c
@@ -103,7 +116,7 @@ ARGS: Dict[Union[str, int], ArgDef] = {
         ArgDef("media_type", 0, ca_media_type),
         ArgDef("source", 1, ca_source),
         ArgDef("converter", 2, ca_converter),
-        ArgDef("gradient", "--gradient", ca_str, optional=True),
+        ArgDef("gradient", "--gradient", ca_gradient, optional=True),
         ArgDef("width", "--width", ca_int, optional=True),
         ArgDef("height", "--height", ca_int, optional=True),
         ArgDef("x_stretch", "--xstretch", ca_float, optional=True),
