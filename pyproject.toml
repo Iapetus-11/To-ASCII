@@ -23,12 +23,15 @@ pydantic = "^1.9.1"
 speedups = ["nimporter"]
 
 [tool.poetry.scripts]
-toascii = "toascii.cli.cli:main"
+toascii = "toascii.cli:toascii_command"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^1.6.1"
 isort = "^5.10.1"
 black = "^22.8.0"
+
+[tool.poetry.group.cli.dependencies]
+click = "^8.1.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

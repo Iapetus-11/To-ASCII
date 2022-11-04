@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Tuple
+from typing import Optional, Tuple
 
 import cv2
 import numpy as np
@@ -35,5 +35,11 @@ class BaseConverter(ABC):
 
         return (int(width), int(height))
 
-    def resize_image(self, image: np.ndarray) -> np.ndarray:
-        return cv2.resize(image, self.calculate_dimensions(*image.shape[:2]))
+    def apply_opencv_fx(self, image: np.ndarray, *, resize_dims: Optional[Tuple[int, int]] = None) -> np.ndarray:
+        if resize_dims is None:
+            resize_dims = self.calculate_dimensions(*image.shape[:2])
+
+        if self.options.blur is not None:
+            image = cv2.blur(image, (self.options.blur, self.options.blur))
+
+        return cv2.resize(image, resize_dims)

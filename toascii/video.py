@@ -53,7 +53,7 @@ class Video:
             if not success:
                 break
 
-            yield self.converter.asciify_image(cv2.resize(frame, resize_dims))
+            yield self.converter.asciify_image(self.converter.apply_opencv_fx(frame, resize_dims=resize_dims))
 
     def get_ascii_frames(self) -> Generator[str, None, None]:
         with VideoSource(self.source) as video:
@@ -100,6 +100,8 @@ class Video:
                 print_prefix = "\033[2J"
             elif self.frame_clear_strategy is FrameClearStrategy.ANSI_CURSOR_POS:
                 print_prefix = f"\033[H"
+
+            import sys
 
             def _view():
                 start = time.time()
