@@ -35,7 +35,9 @@ class BaseConverter(ABC):
 
         return (int(width), int(height))
 
-    def apply_opencv_fx(self, image: np.ndarray, *, resize_dims: Optional[Tuple[int, int]] = None) -> np.ndarray:
+    def apply_opencv_fx(
+        self, image: np.ndarray, *, resize_dims: Optional[Tuple[int, int]] = None
+    ) -> np.ndarray:
         if resize_dims is None:
             resize_dims = self.calculate_dimensions(*image.shape[:2])
 
