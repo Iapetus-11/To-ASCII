@@ -4,7 +4,7 @@ import time
 from typing import Generator, Optional, Tuple, Union
 
 from .converters import BaseConverter
-from .media_source import OpenCVVideoSource, VIDEO_SOURCE, AbstractVideoSource
+from .media_source import VIDEO_SOURCE, AbstractVideoSource, OpenCVVideoSource
 
 
 class FrameClearStrategy(enum.Enum):
@@ -26,7 +26,9 @@ class Video:
         loop: bool = False,
         frame_clear_strategy: FrameClearStrategy = FrameClearStrategy.ANSI_ERASE_IN_DISPLAY,
     ):
-        self.source = source if isinstance(source, AbstractVideoSource) else OpenCVVideoSource(source)
+        self.source = (
+            source if isinstance(source, AbstractVideoSource) else OpenCVVideoSource(source)
+        )
         self.converter = converter
         self.options = converter.options
         self.fps = fps
@@ -37,7 +39,9 @@ class Video:
         resize_dims = self.converter.calculate_dimensions(video.width, video.height)
 
         for frame in video:
-            yield self.converter.asciify_image(self.converter.apply_opencv_fx(frame, resize_dims=resize_dims))
+            yield self.converter.asciify_image(
+                self.converter.apply_opencv_fx(frame, resize_dims=resize_dims)
+            )
 
     def get_ascii_frames(self) -> Generator[str, None, None]:
         with self.source as video:
@@ -52,7 +56,9 @@ class Video:
             print_prefix = "\n\n"
             print_suffix = "\n"
         elif self.frame_clear_strategy is FrameClearStrategy.TERMINAL_HEIGHT_LINE_BREAKS:
-            print_prefix = ("\n" * (os.get_terminal_size().lines - (self.options.height or video.height))) + "\r"
+            print_prefix = (
+                "\n" * (os.get_terminal_size().lines - (self.options.height or video.height))
+            ) + "\r"
             print_suffix = "\r"
         elif self.frame_clear_strategy is FrameClearStrategy.ANSI_ERASE_IN_LINE:
             print_prefix = f"\033[{video.height}A\033[2K"
