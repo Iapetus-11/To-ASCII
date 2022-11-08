@@ -170,7 +170,7 @@ speedups = ["nimporter"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f62618b09cb2a13c7b861f12672dc485385f69d9d8c49c1eb3a7020e33a3ed90"
+content-hash = "d31aaa65cc5d6e66f5cc99591ac12d7c725e2c48d10afb74131e616df6b68951"
 
 [metadata.files]
 autoflake = [

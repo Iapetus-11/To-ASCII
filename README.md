@@ -11,38 +11,40 @@
 ## Installation
 Via pip:
 ```
-pip install to-ascii
+pip install to-ascii[speedups,cli]
 ```
+- The `speedups` extra is recommended, [see below](#extensions)
+- The `cli` extra is required for CLI use (it adds [click](https://pypi.org/project/click/) as a dependency)
 
 ## CLI Usage
-*Note: Required arguments are surrounded in `<>`, optional arguments are surrounded in `[]`.*
 ```
-toascii <media_type> <source> <converter> [--gradient <string>] [--width <int>] [--height <int>] [--xstretch <float>] [--ystretch <float>] [--saturation <float>] [--contrast <float>] [--loop]
-```
+Usage: toascii [OPTIONS] {image|video} SOURCE {colorconverter|colorconverternim|grayscaleconverter|grayscaleconverternim|htmlcolorconverter|htmlcolorconverternim}
 
-### CLI Arguments
-- `media_type` - the type of media, either `image` or `video`
-- `source` - the source for the media, this is the primary argument in constructing an instance of an [OpenCV `VideoCapture`](https://docs.opencv.org/3.4/d8/dfe/classcv_1_1VideoCapture.html)
-- `converter` - the converter used to convert the media, check [this file](toascii/converters/__init__.py) for the available options
-- `gradient` - the characters used when converting an image to ascii
-- `width` - an integer value for the width in characters of the final converted image
-- `height` - an integer value for the height in characters of the final converted image
-- `xstretch` - the amount to stretch the width by
-- `ystretch` - the amount to stretch the height by
-- `saturation` - how much to saturate the image, a value from -1.0 to 1.0.
-- `contrast` - how much to modify the contrast, a value from 0.0 to 1.0
-- `loop` - whether or not to loop the video when it is done playing
+Options:
+  -g, --gradient TEXT
+  -w, --width INTEGER RANGE       [x>=1]
+  -h, --height INTEGER RANGE      [x>=1]
+  --x-stretch, --xstretch FLOAT RANGE
+                                  [x>0.0]
+  --y-stretch, --ystretch FLOAT RANGE
+                                  [x>0.0]
+  --saturation FLOAT RANGE        [-1.0<=x<=1.0]
+  --contrast FLOAT RANGE          [0.0<=x<=1.0]
+  --blur INTEGER RANGE            [x>=2]
+  --loop
+  --help                          Show this message and exit.
+```
 
 ### CLI Examples
 ```bash
 # live video
-toascii video 0 grayscaleconverternim --xstretch 3 --height 56 --saturation .25 --contrast .01
+toascii video 0 colorconverternim -h 103 --x-stretch 3.5 --blur 10 --contrast 0.01 --saturation 0.0
 ```
 ```bash
-toascii image "C:\Users\miloi\Pictures\my_image.png" colorconverter
+toascii image sammie.jpg grayscaleconverter -h 32 --x-stretch 2.1 --blur 20 --contrast 0.0 --saturation 0.0
 ```
 ```bash
-toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32 --width 48 --saturation 0.5 --contrast 0.01 --loop
+toascii video IMG_7845.MOV colorconverternim -h 81 --x-stretch 2.5 --blur 15 --contrast 0.01 --saturation 0.0 --loop
 ```
 
 ## API Reference
@@ -70,6 +72,9 @@ toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32
     - `contrast`: *`Optional[float]`* - *how much to increase the contrast by*
         - default value is `None` (which doesn't apply any contrast filter)
         - must be between `0.0` and `1.0`
+    - `blur`: *`Optional[int]`* - *how much to blur the image by*
+        - default value is `None` (which doesn't apply any blur)
+        - must be greater than `0`
 #### *class* [`ConverterBase`](toascii/converters/base_converter.py)(`options`: *`ConverterOptions`*)
 - *base class for implementing converters*
 - Parameters:
@@ -77,7 +82,7 @@ toascii video "C:\Users\miloi\Videos\omni_man.mp4" colorconverternim --height 32
 - Methods:
     - *abstract* `asciify_image`(`image`: *`numpy.ndarray`*) -> *`str`*
     - `calculate_dimensions`(`initial_height`: *`int`*, `initial_width`: *`int`*) -> *`Tuple[int, int]`*
-    - `resize_image`(`image`: *`numpy.ndarray`*) -> *`numpy.ndarray`*
+    - `apply_opencv_fx`(`image`: *`numpy.ndarray`*, \*, `resize_dims`: *`Optional[Tuple[int, int]]`*) -> *`numpy.ndarray`*
 - Implementations:
     - [`GrayscaleConverter`](toascii/converters/grayscale_converter.py) - *converts media to grayscale ascii*
     - [`GrayscaleConverterNim`](toascii/converters/extensions/grayscale_converter_nim.py) - *converters media to grayscale ascii, see the [Extensions](#extensions) section*
