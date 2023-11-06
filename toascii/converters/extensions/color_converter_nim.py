@@ -2,12 +2,12 @@ from typing import Generator
 
 import numpy as np
 
+from ..color_converter import RGB_TO_ASCII_CODE, ColorConverter
 from .extension_utils import build_extensions
 
 build_extensions()
 
-from ..color_converter import RGB_TO_ASCII_CODE, ColorConverter
-from . import color_converter
+from . import color_converter  # noqa
 
 color_converter.setRgbValuesMap(list(RGB_TO_ASCII_CODE.items()))
 

@@ -1,9 +1,6 @@
 name: CI
 
-on:
-  push:
-  pull_request:
-    types: [opened]
+on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   ci:
@@ -11,10 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: set up python 3.8
+      - name: set up python 3.10
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.10"
 
       - name: install poetry
         run: curl -sSL https://install.python-poetry.org | python3 -
@@ -30,19 +27,13 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: install dependencies
-#        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install
 
-      - name: auto-flake
-        run: poetry run autoflake --remove-all-unused-imports --expand-star-imports --ignore-init-module-imports --in-place --recursive toascii/
+      - name: black check
+        run: poetry run black . --check
 
-      - name: black fix
-        run: poetry run black .
+      - name: isort check
+        run: poetry run isort . --check
 
-      - name: isort fix
-        run: poetry run isort .
-
-      - name: auto commit
-        uses: stefanzweifel/git-auto-commit-action@v4.14.1
-        with:
-          commit_message: format / fix code
+      - name: ruff
+        run: poetry run ruff . --no-fix

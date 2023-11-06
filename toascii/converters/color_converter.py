@@ -58,6 +58,7 @@ RGB_TO_ASCII_CODE: Dict[T_COLOR, str] = {
 }
 
 
+# ruff: noqa: E741
 def _rgb2hsl(c: T_COLOR) -> T_HSL_COLOR:
     r = c[0] / 255.0
     g = c[1] / 255.0

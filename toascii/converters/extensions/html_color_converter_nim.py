@@ -2,12 +2,12 @@ from typing import Generator
 
 import numpy as np
 
+from ..html_color_converter import HtmlColorConverter
 from .extension_utils import build_extensions
 
 build_extensions()
 
-from ..html_color_converter import HtmlColorConverter
-from . import html_color_converter
+from . import html_color_converter  # noqa
 
 
 class HtmlColorConverterNim(HtmlColorConverter):
