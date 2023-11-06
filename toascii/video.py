@@ -65,7 +65,7 @@ class Video:
         elif self.frame_clear_strategy is FrameClearStrategy.ANSI_ERASE_IN_DISPLAY:
             print_prefix = "\033[2J"
         elif self.frame_clear_strategy is FrameClearStrategy.ANSI_CURSOR_POS:
-            print_prefix = f"\033[H"
+            print_prefix = "\033[H"
 
         return print_prefix, print_suffix
 

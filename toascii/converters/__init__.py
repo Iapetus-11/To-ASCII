@@ -23,3 +23,14 @@ except Exception as e:
     HtmlColorConverterNim = unsupported_extension(
         "html_color_converter_nim.HtmlColorConverterNim", e
     )
+
+__all__ = (
+    "BaseConverter",
+    "ColorConverter",
+    "GrayscaleConverter",
+    "HtmlColorConverter",
+    "ConverterOptions",
+    "ColorConverterNim",
+    "GrayscaleConverterNim",
+    "HtmlColorConverterNim",
+)

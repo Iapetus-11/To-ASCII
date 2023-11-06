@@ -2,12 +2,12 @@ from typing import Generator
 
 import numpy as np
 
+from ..grayscale_converter import GrayscaleConverter
 from .extension_utils import build_extensions
 
 build_extensions()
 
-from ..grayscale_converter import GrayscaleConverter
-from . import grayscale_converter
+from . import grayscale_converter  # noqa
 
 
 class GrayscaleConverterNim(GrayscaleConverter):
