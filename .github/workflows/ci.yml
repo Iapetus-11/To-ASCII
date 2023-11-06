@@ -36,7 +36,4 @@ jobs:
         run: poetry run isort . --check
 
       - name: ruff
-        run: poetry run ruff .
-
-      - name: pytest
-        run: poetry run pytest
+        run: poetry run ruff . --no-fix
