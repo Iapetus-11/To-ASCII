@@ -47,43 +47,37 @@ class AbstractVideoSource(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def is_live(self) -> bool:
-        ...
+    def is_live(self) -> bool: ...
 
     @property
     @abc.abstractmethod
-    def fps(self) -> float:
-        ...
+    def fps(self) -> float: ...
 
     @property
     @abc.abstractmethod
-    def width(self) -> int:
-        ...
+    def width(self) -> int: ...
 
     @property
     @abc.abstractmethod
-    def height(self) -> int:
-        ...
+    def height(self) -> int: ...
 
     @property
     @abc.abstractmethod
-    def frame_count(self) -> int:
-        ...
+    def frame_count(self) -> int: ...
 
     def __iter__(self) -> typing_extensions.Self:
         return self
 
     @abc.abstractmethod
-    def __next__(self) -> numpy.ndarray:
-        ...
+    def __next__(self) -> numpy.ndarray: ...
 
     @abc.abstractmethod
-    def __enter__(self) -> typing_extensions.Self:
-        ...
+    def __enter__(self) -> typing_extensions.Self: ...
 
     @abc.abstractmethod
-    def __exit__(self, exc_type: Type[BaseException], exc_val: BaseException, exc_tb: Any) -> None:
-        ...
+    def __exit__(
+        self, exc_type: Type[BaseException], exc_val: BaseException, exc_tb: Any
+    ) -> None: ...
 
 
 class OpenCVVideoSource(AbstractVideoSource):
