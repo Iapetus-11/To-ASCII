@@ -34,16 +34,6 @@ ruff = "^0.9.1"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 100
-target-version = ['py38']
-include = '\.pyi?$'
-
-[tool.isort]
-profile = "black"
-line_length = 100
-
 [tool.ruff]
 line-length = 100
-#ignore = ["E501", "E266", "E203", "E741", "W293", "W291"]
-target-version = "py38"
+target-version = "py39"
