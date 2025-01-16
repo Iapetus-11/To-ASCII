@@ -1,8 +1,8 @@
-# To-Ascii ![Code Quality](https://www.codefactor.io/repository/github/iapetus-11/to-ascii/badge/master) ![PYPI Version](https://img.shields.io/pypi/v/to-ascii.svg) ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=0FAE6E)
+# To-ASCII ![Code Quality](https://www.codefactor.io/repository/github/iapetus-11/to-ascii/badge/master) ![PYPI Version](https://img.shields.io/pypi/v/to-ascii.svg) ![PYPI Downloads](https://img.shields.io/pypi/dw/to-ascii?color=0FAE6E)
 *Converts videos, images, gifs, and even live video into ascii art!*
 
-* Works on most image and video types including GIFs
-* Works on LIVE VIDEO
+- Works on most image and video types including GIFs
+- Works on LIVE VIDEO
 
 <img src="https://user-images.githubusercontent.com/38477514/180253533-e0725ba5-6c6d-408d-a643-ff02f021cff8.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180254306-9e8eca93-ea38-47bf-b1c2-72ad75244604.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180251469-8826a23d-a292-42b2-83c6-c9a637214b5e.png" width="360" /> <img src="https://user-images.githubusercontent.com/38477514/180251666-49b07f5f-da3c-4790-85b9-ba72dbca606b.png" width="360" />
 

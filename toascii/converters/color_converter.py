@@ -11,6 +11,7 @@ T_HSL_COLOR = Union[List[float], Tuple[float, float, float]]
 COLOR_TRUNC = 128
 COLOR_TRUNC_TO = 256 // COLOR_TRUNC
 
+
 # generates all colors possible within the color space COLOR_TRUNC_TO
 def _gen_colors() -> Generator[T_COLOR, None, None]:
     for r in range(0, COLOR_TRUNC_TO):

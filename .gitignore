@@ -5,3 +5,4 @@ MANIFEST.in
 dist/
 .venv/
 .idea/
+.ruff_cache/

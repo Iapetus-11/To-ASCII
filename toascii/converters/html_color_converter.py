@@ -24,7 +24,7 @@ class HtmlColorConverter(ColorConverter):
                         yield "</span>"
 
                     last_color = color
-                    yield f"""<span style="color:rgb({','.join(map(str, color))})">"""
+                    yield f"""<span style="color:rgb({",".join(map(str, color))})">"""
 
                 yield char
 
