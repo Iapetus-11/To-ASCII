@@ -1,3 +1,5 @@
+import std/math
+
 import nimpy/[raw_buffers]
 
 import nimpy_numpy
@@ -29,7 +31,7 @@ proc rgb2hsl*(c: Color): HslColor {.inline.} =
     var h, s, l: float = 0.0
 
     if delta == 0.0: h = 0.0
-    elif cMax == r: h = ((g - b) / delta) mod 6.0
+    elif cMax == r: h = floorMod((g - b) / delta, 6.0)
     elif cMax == g: h = ((b - r) / delta) + 2.0
     else: h = ((r - g) / delta) + 4.0
 
@@ -56,7 +58,7 @@ proc hsl2rgb*(c: HslColor): Color {.inline.} =
     var
         r, g, b: float = 0.0
         c = (1.0 - abs(2 * l - 1.0)) * s
-        x = c * (1.0 - abs((h / 60.0) mod 2.0 - 1.0))
+        x = c * (1.0 - abs(floorMod(h / 60.0, 2.0) - 1.0))
         m = l - c / 2.0
 
     if (0 <= h and h < 60):
