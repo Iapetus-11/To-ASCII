@@ -13,11 +13,11 @@ proc asciifyImage(imgPyo: PyObject, gradient: openArray[string], saturation: flo
     elif saturation < -1: saturation = -1
 
     result = ""
-    let gradientLen = gradient.len.float
+    let gradientLen = gradient.high.float
     var lastColor = ""
 
     var imgBuf: RawPyBuffer
-    imgPyo.getBuffer(imgBuf, PyBUF_WRITABLE or PyBuf_ND)
+    imgPyo.getBuffer(imgBuf, PyBUF_ND)
     defer: imgBuf.release()
     
     for rowIdx in 0 .. imgBuf.dimShape(0) - 1:
@@ -36,3 +36,6 @@ proc asciifyImage(imgPyo: PyObject, gradient: openArray[string], saturation: flo
             result &= gChar
 
         result &= "<br>"
+
+    if lastColor != "":
+        result &= "</span>"
