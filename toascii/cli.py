@@ -40,7 +40,11 @@ def cb_converter(
 
 
 def cb_gradient(ctx: click.Context, param: click.Parameter, value: str) -> str:
-    return GRADIENTS.get(value, value)
+    if isinstance(value, str) and value in GRADIENTS:
+        return GRADIENTS[value]
+    if isinstance(value, str):
+        return GRADIENTS.get(value.lower(), value)
+    return value
 
 
 @click.command(name="toascii", no_args_is_help=True)
@@ -51,7 +55,14 @@ def cb_gradient(ctx: click.Context, param: click.Parameter, value: str) -> str:
     type=click.Choice(list(CONVERTER_TYPE_OPTIONS), case_sensitive=False),
     callback=cb_converter,
 )
-@click.option("--gradient", "-g", type=click.STRING, callback=cb_gradient, default=gradients.LOW)
+@click.option(
+    "--gradient",
+    "-g",
+    type=click.Choice(list(GRADIENTS), case_sensitive=False),
+    callback=cb_gradient,
+    default="low",
+    show_default=True,
+)
 @click.option("--width", "-w", type=click.IntRange(min=1))
 @click.option("--height", "-h", type=click.IntRange(min=1))
 @click.option(
